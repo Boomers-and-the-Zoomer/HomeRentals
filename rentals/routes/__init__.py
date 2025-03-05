@@ -1,14 +1,18 @@
 from bottle import route, static_file
 
-from ..components import html
+from ..components import html, with_navbar
 from .. import db
+
+from . import sign_up
 
 
 @route("/")
 def index():
-    # cnx = db.db_cnx()
+    cnx = db.db_cnx()
     return html(
-        "Hello world", "<h1>Hello world</h1>", body={"class": "foo", "id": "bar"}
+        "Hello world",
+        with_navbar("<h1>Hello world</h1>"),
+        body={"class": "foo", "id": "bar"},
     )
 
 

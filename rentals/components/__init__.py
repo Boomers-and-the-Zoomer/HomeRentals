@@ -25,3 +25,21 @@ def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
         </body>
     </html>
     """
+
+
+def with_navbar(content: str) -> str:
+    """ """
+    return f"""
+        <div id="navigated">
+            <nav>
+                <ul>
+                    <li id="nav-homerentals"><a href="/">HomeRentals</a></li>
+                    <li id="nav-active-bookings"><a href="/bookings/active">View Active Bookings</a></li>
+                    <li id="nav-rent-cta"><a href="/listings/create">Rent out your property</a></li>
+                    <li id="nav-user">TODO: User</li>
+                </ul>
+            </nav>
+            <div id="nav-dummy" aria-hidden="true"></div>
+            {content}
+        </div>
+    """

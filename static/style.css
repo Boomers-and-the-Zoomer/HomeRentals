@@ -41,4 +41,125 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
+/* ================================ GLOBALS ================================ */
+
+:root {
+  --corner: 6px;
+  --navbar-height: 60px;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+}
+
 /* =============================== COMPONENTS =============================== */
+
+div#navigated {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  > nav {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: var(--navbar-height);
+    background: var(--slate-700);
+
+    > ul {
+      display: flex;
+      padding: 0px 10px;
+      height: 100%;
+      list-style-type: none;
+      justify-content: space-between;
+
+      > li {
+        display: inline-flex;
+        height: 100%;
+        align-items: center;
+
+        > a {
+          color: white;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  > div#nav-dummy {
+    flex-grow: 0;
+    height: var(--navbar-height);
+  }
+
+  > * {
+    flex-grow: 1;
+    align-self: stretch;
+  }
+}
+
+/* ================================= PAGES ================================== */
+
+main#sign-up {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    position: fixed;
+    top: 250px;
+    height: fit-content;
+    border-radius: var(--corner);
+    background-color: var(--slate-100);
+    padding: 20px 10px;
+
+    > form {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      padding-left: 5ch;
+      padding-right: 12.5ch;
+      width: max-content;
+      justify-content: center;
+      column-gap: 5px;
+      row-gap: 5px;
+      font-size: 1.25em;
+
+      > label {
+        grid-column: 1;
+        display: inline;
+        text-align: end;
+      }
+
+      > input {
+        grid-column: 2;
+        min-width: none;
+        border-radius: var(--corner);
+        border: 1px solid var(--slate-700);
+      }
+
+      > button, > h1, > p, > a {
+        grid-column: 2;
+        width: fit-content;
+        justify-self: center;
+      }
+
+      > button {
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
+        border-radius: var(--corner);
+      }
+
+      > p, > a {
+        font-size: 0.7em;
+      }
+    }
+  }
+}
