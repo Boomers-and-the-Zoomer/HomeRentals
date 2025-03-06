@@ -4,6 +4,7 @@ from ..components import html, with_navbar
 from .. import db
 
 from . import sign_up
+from . import register_new_listing
 
 
 @route("/")

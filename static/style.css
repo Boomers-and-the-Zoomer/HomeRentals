@@ -112,6 +112,41 @@ div#navigated {
 }
 
 /* ================================= PAGES ================================== */
+main#register_new_listing {
+  display: flex;
+  flex-direction: column;
+
+  > #page1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+
+    > .maintext {
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+      width: 850px;
+      height: 425px;
+
+      h1 {
+        font-size: 2.8em;
+      }
+
+      h2 {
+        font-size: 2.2em;
+      }
+    }
+
+    > .container > .bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      padding: 20px;
+      font-size: 1.5em;
+    }
+  }
+}
 
 main#sign-up {
   display: flex;
