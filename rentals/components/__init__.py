@@ -15,6 +15,7 @@ def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+            <link rel="stylesheet" href="/static/fonts/inter/inter.css">
             <link rel="stylesheet" href="/static/style.css">
             <script src="/static/htmx.min.js"></script>
             <meta name="htmx-config" content='{{"defaultSwapStyle": "outerHTML"}}'>

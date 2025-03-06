@@ -60,6 +60,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* =============================== COMPONENTS =============================== */
 
+html {
+  font-family: "Inter";
+}
+
 div#navigated {
   display: flex;
   min-height: 100vh;
