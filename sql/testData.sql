@@ -1,5 +1,12 @@
+INSERT INTO UserAccount (Email, PasswordHash) VALUES
+-- password: alice123
+('alice@example.com', '$argon2id$v=19$m=65536,t=3,p=4$iF3lCPZBIFJHT4tVn5Yz3g$rJb1rl/suzDVeG0lpHw+tojmRiJHzLDdtBE/GM2L7Us'),
+-- password: bob123
+('bob@example.com', '$argon2id$v=19$m=65536,t=3,p=4$r6iszVqXFfA2Idd9zeCe/g$qt3uC1t5oaSiiJkKE2+t7yVqo40y0T4H5grg+gdlZjo'),
+-- password: carol123
+('carol@example.com', '$argon2id$v=19$m=65536,t=3,p=4$KMNIFqWNwlwAhm8/MfVDXQ$/4gNW/toVI0DdQ9Kb3tY7hX6mfSl1vfnjDoPzRUdx84'); 
 
-INSERT INTO User (Email, ExternalID, FirstName, LastName, PhoneNumber, HomeAdress, PostalCode) VALUES
+INSERT INTO User (Email, ExternalID, FirstName, LastName, PhoneNumber, HomeAddress, PostalCode) VALUES
 ('alice@example.com', 1, 'Alice', 'Smith', '1234567890', '123 Main St, City', '10001'),
 ('bob@example.com', 2, 'Bob', 'Johnson', '0987654321', '456 Elm St, City', '10002'),
 ('carol@example.com', 3, 'Carol', 'Williams', '1112223333', '789 Oak St, City', '10003');
