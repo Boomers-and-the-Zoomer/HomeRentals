@@ -153,6 +153,9 @@ form.simple-account-form {
     width: fit-content;
     justify-self: center;
   }
+  > p {
+    width: 35ch;
+  }
 
   > .column2 {
     grid-column: 2;
