@@ -202,3 +202,8 @@ main#sign-up {
     }
   }
 }
+
+main#book-calendar {
+  display: flex;
+  justify-content: center;
+}

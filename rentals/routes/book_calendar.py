@@ -30,22 +30,24 @@ def view_rental_template(rental):
     return html(
         f"Rental Unit {rental[2]}",
         with_navbar(f"""
+                <main id="book-calendar">
                 
-                <h1>Adress: {rental[2]}</h1>
-                <ul>Information</ul>
-                    <li>Bedrooms: {rental[4]}</li>
-                    <li>Bathrooms: {rental[5]}</li>
-                    <li>{rental[6]} m2</li>
-                    <li>Parking spots: {rental[7]}</li>
-                    <li>Kitchens: {rental[8]}</li>
-                <form action="/book-rental" method="post">
-                    <label for="from_date">From Date:</label>
-                    <input type="date" id="from_date" name="from_date" required><br>
-                    <label for="to_date">To Date:</label>
-                    <input type="date" id="to_date" name="to_date" required><br>
-                    <input type="hidden" name="PropertyListingID" value="{rental[0]}">
-                    <button type="submit">Book Now</button>
-                </form>
+                    <h1>Address: {rental[2]}</h1>
+                    <ul>Information</ul>
+                        <li>Bedrooms: {rental[4]}</li>
+                        <li>Bathrooms: {rental[5]}</li>
+                        <li>{rental[6]} m2</li>
+                        <li>Parking spots: {rental[7]}</li>
+                        <li>Kitchens: {rental[8]}</li>
+                    <form action="/book-rental" method="post">
+                        <label for="from_date">From Date:</label>
+                        <input type="date" id="from_date" name="from_date" required><br>
+                        <label for="to_date">To Date:</label>
+                        <input type="date" id="to_date" name="to_date" required><br>
+                        <input type="hidden" name="PropertyListingID" value="{rental[0]}">
+                        <button type="submit">Book Now</button>
+                    </form>
+                </main>
         """),
     )
 
