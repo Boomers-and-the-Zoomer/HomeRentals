@@ -203,6 +203,73 @@ main#sign-up {
   }
 }
 
+main#search-bar {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--slate-300);
+  }
+
+  .search-container {
+    display: flex;
+    background: var(--slate-200);
+    padding: 10px;
+    border-radius: 8px;
+    gap: 10px;
+  }
+
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    background: var(--slate-50);
+    padding: 10px;
+    border-radius: 8px;
+    width: 150px;
+    cursor: pointer;
+    position: relative; /* Sørger for at dropdown blir plassert relativt til boksen */
+  }
+
+  .input-box label {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--slate-900);
+  }
+
+  .input-box input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--slate-900);
+    background: none;
+  }
+
+  .search-btn {
+    background: #fa0418;
+    color: var(--slate-100);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .dropdown {
+    position: absolute;
+    background: var(--slate-100);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    margin-top: 10px;
+    display: none; /* Skjult som standard */
+  }
+
+  .dropdown.active {
+    display: block; /* Vis dropdown når den er aktiv */
+  }
+}
+
 main#book-calendar {
   display: flex;
   justify-content: center;

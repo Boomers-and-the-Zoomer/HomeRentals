@@ -13,7 +13,7 @@ def search_bar():
                     <div class="input-box" onclick="toggleDropdown('location-box')">
                         <label>Where</label>
                         <input type="text" placeholder="search destination" readonly>
-                        <div id="text"location-box" class="dropdown">
+                        <div id="location-box" class="dropdown">
                             <ul>
                                 <li>Hønefoss</li>
                                 <li>Trondheim</li>
@@ -23,7 +23,7 @@ def search_bar():
                             </ul>
                         </div>
                     </div>
-                    <div class="input-box" onclick="toggleDropdown"('checkin-box')">
+                    <div class="input-box" onclick="toggleDropdown('checkin-box')">
                         <label>Check in</label>
                         <input type="text" placeholder="Add dates" readonly>
                         <div id="checkin-box" class="dropdown">
