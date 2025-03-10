@@ -18,6 +18,7 @@ def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
             <link rel="stylesheet" href="/static/fonts/inter/inter.css">
             <link rel="stylesheet" href="/static/style.css">
             <script src="/static/htmx.min.js"></script>
+            <script src="/static/script.js"></script>
             <meta name="htmx-config" content='{{"defaultSwapStyle": "outerHTML"}}'>
             <title>{title}</title>
         </head>
