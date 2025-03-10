@@ -5,6 +5,7 @@ from .. import db
 
 from . import sign_up
 from . import register_new_listing
+from . import book_calendar
 
 
 @route("/")
