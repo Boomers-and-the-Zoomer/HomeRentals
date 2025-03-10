@@ -31,8 +31,13 @@ def view_rental_template(rental):
         f"Rental Unit {rental[2]}",
         with_navbar(f"""
                 
-                <h1>Placeholder 2</h1>
-                <p>Placeholder 3</p>
+                <h1>Adress: {rental[2]}</h1>
+                <ul>Information</ul>
+                    <li>Bedrooms: {rental[4]}</li>
+                    <li>Bathrooms: {rental[5]}</li>
+                    <li>{rental[6]} m2</li>
+                    <li>Parking spots: {rental[7]}</li>
+                    <li>Kitchens: {rental[8]}</li>
                 <form action="/book-rental" method="post">
                     <label for="from_date">From Date:</label>
                     <input type="date" id="from_date" name="from_date" required><br>
