@@ -111,6 +111,19 @@ div#navigated {
   }
 }
 
+div.simple-account-form-position {
+  display: flex;
+  justify-content: center;
+  > div {
+    position: fixed;
+    top: 250px;
+    height: fit-content;
+    border-radius: var(--corner);
+    background-color: var(--slate-100);
+    padding: 20px 10px;
+  }
+}
+
 form.simple-account-form {
   display: grid;
   grid-template-columns: max-content max-content;
@@ -190,20 +203,6 @@ main#register_new_listing {
       padding: 20px;
       font-size: 1.5em;
     }
-  }
-}
-
-main#sign-up {
-  display: flex;
-  justify-content: center;
-
-  > div {
-    position: fixed;
-    top: 250px;
-    height: fit-content;
-    border-radius: var(--corner);
-    background-color: var(--slate-100);
-    padding: 20px 10px;
   }
 }
 

@@ -4,26 +4,33 @@ from argon2 import PasswordHasher
 from bottle import get, post, request
 
 
-from ..components import html, simple_account_form, with_navbar
+from ..components import (
+    html,
+    simple_account_form,
+    simple_account_form_position,
+    with_navbar,
+)
 from .. import db
 
 
 @get("/sign-up")
 def sign_up():
-    form = simple_account_form(
-        "sign-up",
-        """
-        <h1>Sign up</h1>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" placeholder="ola.nordmann@gmail.com" required>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" placeholder="********" required>
-        <label for="confirm-password">Confirm password:</label>
-        <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
-        <button>Sign up</button>
-        <p>Already have an account?</p>
-        <p><a href="log-in">Log in instead</a></p>
-        """,
+    form = simple_account_form_position(
+        simple_account_form(
+            "sign-up",
+            """
+            <h1>Sign up</h1>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="ola.nordmann@gmail.com" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="********" required>
+            <label for="confirm-password">Confirm password:</label>
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
+            <button>Sign up</button>
+            <p>Already have an account?</p>
+            <p><a href="log-in">Log in instead</a></p>
+            """,
+        )
     )
     return html(
         "Sign up",

@@ -47,6 +47,16 @@ def with_navbar(content: str) -> str:
     """
 
 
+def simple_account_form_position(content: str) -> str:
+    return f"""
+        <div class="simple-account-form-position">
+            <div>
+                {content}
+            </div>
+        </div>
+    """
+
+
 def simple_account_form(name: str, content: str) -> str:
     return f"""
         <form class="simple-account-form" action="" method="post">
