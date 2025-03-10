@@ -244,20 +244,23 @@ main#register_new_listing {
 }
 
 main#search-bar {
-  body {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: var(--slate-300);
   }
 
   .search-container {
     display: flex;
+    align-items: center;
     background: var(--slate-200);
-    padding: 10px;
-    border-radius: 8px;
+    padding: 10px 15px;
+    border-radius: 12px;
     gap: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .input-box {
@@ -266,9 +269,9 @@ main#search-bar {
     background: var(--slate-50);
     padding: 10px;
     border-radius: 8px;
-    width: 150px;
+    width: 160px;
     cursor: pointer;
-    position: relative; /* Sørger for at dropdown blir plassert relativt til boksen */
+    position: relative;
   }
 
   .input-box label {
@@ -289,9 +292,14 @@ main#search-bar {
     background: #fa0418;
     color: var(--slate-100);
     border: none;
-    padding: 10px 15px;
-    border-radius: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
 
   .dropdown {
