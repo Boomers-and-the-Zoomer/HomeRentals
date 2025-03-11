@@ -59,7 +59,7 @@ def simple_account_form_position(content: str) -> str:
 
 def simple_account_form(name: str, content: str) -> str:
     return f"""
-        <form class="simple-account-form" action="" method="post">
+        <form class="simple-account-form" name="{name}" action="" method="post">
             {content}
         </form>
     """

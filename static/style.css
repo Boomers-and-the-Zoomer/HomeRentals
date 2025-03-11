@@ -151,10 +151,14 @@ form.simple-account-form {
   > button, > h1, > p, > a {
     grid-column: 2;
     width: fit-content;
+  }
+
+  > .centered, > button, > h1 {
     justify-self: center;
   }
+
   > p {
-    width: 35ch;
+    max-width: 35ch;
   }
 
   > .column2 {

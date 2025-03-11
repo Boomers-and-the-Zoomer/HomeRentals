@@ -26,8 +26,9 @@ def log_in():
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" placeholder="********" required>
             <button>Log in</button>
-            <p>Don't have an account?</p>
-            <p><a href="sign-up">Log in instead</a></p>
+            <p class="centered"><a href="reset-password">Forgot your password?</a></p>
+            <p class="centered">Don't have an account?</p>
+            <p class="centered"><a href="sign-up">Sign up instead</a></p>
             """,
         )
     )

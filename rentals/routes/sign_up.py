@@ -27,8 +27,8 @@ def sign_up():
             <label for="confirm-password">Confirm password:</label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
             <button>Sign up</button>
-            <p>Already have an account?</p>
-            <p><a href="log-in">Log in instead</a></p>
+            <p class="centered">Already have an account?</p>
+            <p class="centered"><a href="log-in">Log in instead</a></p>
             """,
         )
     )
