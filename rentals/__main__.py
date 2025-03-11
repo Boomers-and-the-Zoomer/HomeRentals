@@ -2,7 +2,7 @@ import bottle
 
 from dotenv import load_dotenv
 
-from rentals import db, util, routes, auth
+from rentals import db, util, routes, auth, icons
 
 
 def main():

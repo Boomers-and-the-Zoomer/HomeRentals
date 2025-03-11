@@ -1,3 +1,4 @@
+from .. import icons
 from ..util import dict_to_attr_string
 
 
@@ -33,12 +34,16 @@ def with_navbar(content: str) -> str:
     """ """
     return f"""
         <div id="navigated">
-            <nav>
+            <nav id="top-nav">
                 <ul>
                     <li id="nav-homerentals"><a href="/">HomeRentals</a></li>
                     <li id="nav-active-bookings"><a href="/bookings/active">View Active Bookings</a></li>
                     <li id="nav-rent-cta"><a href="/listings/create">Rent out your property</a></li>
-                    <li id="nav-user">TODO: User</li>
+                    <li id="nav-user">
+                        <div>
+                            {icons.user()}
+                        </div>
+                    </li>
                 </ul>
             </nav>
             <div id="nav-dummy" aria-hidden="true"></div>

@@ -96,6 +96,29 @@ div#navigated {
             text-decoration: underline;
           }
         }
+
+        &#nav-user {
+          > div {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+            background-color: var(--slate-900);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+
+            svg {
+              height: 90%;
+              width: auto;
+
+              path {
+                stroke: #ffffff;
+                stroke-width: 1px;
+              }
+            }
+          }
+        }
       }
     }
   }
