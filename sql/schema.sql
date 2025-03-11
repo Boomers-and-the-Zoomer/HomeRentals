@@ -25,7 +25,7 @@ CREATE TABLE Session
 (
     Token BINARY(16) PRIMARY KEY,
     Email CHAR(30) NOT NULl,
-    ExpiryTime TIMESTAMP NOT NULL,
+    ExpiryTime DATETIME NOT NULL,
     CONSTRAINT SessionUserFK FOREIGN KEY (Email) REFERENCES User(Email)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE ResetLink
 (
     Link CHAR(100) PRIMARY KEY,
     Email CHAR(30) NOT NULl,
-    ExpiryTime TIMESTAMP NOT NULL,
+    ExpiryTime DATETIME NOT NULL,
     CONSTRAINT ResetLinkUserFK FOREIGN KEY (Email) REFERENCES User(Email)
 );
 
