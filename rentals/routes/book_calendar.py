@@ -41,9 +41,9 @@ def view_rental_template(rental):
                         <li>Kitchens: {rental[8]}</li>
                     <form action="/book-rental" method="post">
                         <label for="from_date">From Date:</label>
-                        <input type="date" id="from_date" name="from_date" required><br>
+                        <input type="datetime-local" id="from_date" name="from_date" required><br>
                         <label for="to_date">To Date:</label>
-                        <input type="date" id="to_date" name="to_date" required><br>
+                        <input type="datetime-local" id="to_date" name="to_date" required><br>
                         <input type="hidden" name="PropertyListingID" value="{rental[0]}">
                         <button type="submit">Book Now</button>
                     </form>
@@ -55,18 +55,39 @@ def view_rental_template(rental):
 @route("/book-rental", method="POST")
 def book_rental():
     PropertyListingID = request.forms.get("PropertyListingID")
-    Email = request.forms.get("Email")
-    from_date = request.forms.get("from_date")
-    to_date = request.forms.get("to_date")
+    Email = "test.testerson@example.com"  # Dette er en placeholder for email, slik at jeg får booket noe inn i DB
+    raw_from_date = request.forms.get("from_date")
+    raw_to_date = request.forms.get("to_date")
+
+    try:
+        from_date = datetime.strptime(raw_from_date, "%Y-%m-%dT%H:%M")
+        to_date = datetime.strptime(raw_to_date, "%Y-%m-%dT%H:%M")
+    except ValueError:
+        raise HTTPError(400, "Invalid date format provided.")
+
+    if from_date >= to_date:
+        raise HTTPError(400, "Invalid booking: Start date must be before end date")
+
+    cnx = db.db_cnx()
+    cursor = cnx.cursor()
+
+    overlappingSjekk = """
+        SELECT * FROM Booking
+        WHERE PropertyListingID=%s
+            AND (StartTime<%s AND EndTime >%s)
+    """
+    parameterForBooking = (PropertyListingID, to_date, from_date)
+
+    cursor.execute(overlappingSjekk, parameterForBooking)
+
+    if cursor.fetchone() is not None:
+        raise HTTPError(400, "Booking dates overlap with an existing booking.")
 
     print(
         "Booking rental: PropertyListingID={}, Email={}, from_date={}, to_date={}".format(
             PropertyListingID, Email, from_date, to_date
         )
     )
-
-    cnx = db.db_cnx()
-    cursor = cnx.cursor()
 
     cursor.execute(
         """
@@ -76,5 +97,6 @@ def book_rental():
         (PropertyListingID, Email, from_date, to_date),
     )
     cnx.commit()
+    cnx.close()
 
     redirect("/view-rental/{}".format(PropertyListingID))
