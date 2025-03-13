@@ -314,3 +314,26 @@ main#book-calendar {
   display: flex;
   justify-content: center;
 }
+
+main#user-profile {
+  > .profile_box {
+    display: flex;
+    border-radius: var(--corner);
+    background-color: var (--slate-400);
+    border: 2em solid-black;
+    padding: 5em;
+    width: 20%;
+    font-size: 2em;
+    padding: 100px;
+  }
+  > .flex-item-profil {
+
+  }
+  > .Profile_picture {
+    border-radius:100em;
+    size:10%
+  }
+  > p {
+    color: blue;
+  }
+}
