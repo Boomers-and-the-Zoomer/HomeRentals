@@ -355,6 +355,7 @@ main#book-calendar {
 main#book-confirm {
   display: flex;
   justify-content: center;
+}
 main#user-profile {
   > .profile_box {
     display: flex;
