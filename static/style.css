@@ -244,14 +244,15 @@ main#register_new_listing {
 }
 
 main#search-bar {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    background-color: var(--slate-300);
-  }
+  position: absolute;
+  top: max(15%, var(--navbar-height));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background-color: var(--slate-300);
+  padding: 15px;
+  border-radius: 10px;
 
   .search-container {
     display: flex;
@@ -272,20 +273,21 @@ main#search-bar {
     width: 160px;
     cursor: pointer;
     position: relative;
-  }
 
-  .input-box label {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--slate-900);
-  }
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--slate-900);
+    }
 
-  .input-box input {
-    border: none;
-    outline: none;
-    font-size: 14px;
-    color: var(--slate-900);
-    background: none;
+    input {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: var(--slate-900);
+      background: none;
+      text-align: center;
+    }
   }
 
   .search-btn {
@@ -300,6 +302,11 @@ main#search-bar {
     align-items: center;
     justify-content: center;
     height: 100%;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #d40313;
+    }
   }
 
   .dropdown {
@@ -309,12 +316,34 @@ main#search-bar {
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     width: 200px;
-    margin-top: 10px;
-    display: none; /* Skjult som standard */
-  }
+    margin-top: 5px;
+    z-index: 1000;
+    display: none;
 
-  .dropdown.active {
-    display: block; /* Vis dropdown når den er aktiv */
+    &.active {
+      display: block;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--slate-300);
+      text-align: center;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: var(--slate-200);
+      }
+    }
   }
 }
 
