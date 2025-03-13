@@ -62,3 +62,16 @@ CREATE TABLE Booking
     CONSTRAINT BookingUserFK FOREIGN KEY (Email) REFERENCES User(Email)
 );
 
+CREATE TABLE BookingSession (
+    Token BINARY(16) NOT NULL,
+    PropertyListingID INT NOT NULL,
+    StartTime TIMESTAMP NOT NULL,
+    EndTime TIMESTAMP NOT NULL,
+    ExpiryTime TIMESTAMP NOT NULL,
+    CONSTRAINT BookingSessionPK PRIMARY KEY (Token, PropertyListingID, StartTime, EndTime),
+    CONSTRAINT BookingSessionSessionFK FOREIGN KEY (Token) REFERENCES Session(Token),
+    CONSTRAINT BookingSessionPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID)
+);
+
+
+

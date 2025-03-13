@@ -352,6 +352,9 @@ main#book-calendar {
   justify-content: center;
 }
 
+main#book-confirm {
+  display: flex;
+  justify-content: center;
 main#user-profile {
   > .profile_box {
     display: flex;
