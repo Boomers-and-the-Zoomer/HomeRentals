@@ -40,12 +40,29 @@ def with_navbar(content: str) -> str:
                     <li id="nav-active-bookings"><a href="/bookings/active">View Active Bookings</a></li>
                     <li id="nav-rent-cta"><a href="/listings/create">Rent out your property</a></li>
                     <li id="nav-user">
-                        <div>
+                        <button popovertarget="top-nav-user-popover">
                             {icons.user()}
-                        </div>
+                        </button>
                     </li>
                 </ul>
             </nav>
+            <div popover id="top-nav-user-popover">
+                <h1>Account</h1>
+                <a href="/log-in">
+                    {icons.log_in()}
+                    <span>Log in</span>
+                    {icons.chevron_right()}
+                </a>
+                <a href="/sign-up">
+                    {icons.user_plus()}
+                    <span>Sign up</span>
+                    {icons.chevron_right()}
+                </a>
+                <button form="log-out-form" type="submit">
+                    {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
+                </button>
+                <form id="log-out-form" action="/log-out" method="post"></form>
+            </div>
             <div id="nav-dummy" aria-hidden="true"></div>
             {content}
         </div>
