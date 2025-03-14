@@ -1,7 +1,7 @@
 import mysql.connector
 from bottle import route, response, request
 from ..components import html, with_navbar
-
+import json
 from .. import db
 
 
@@ -11,7 +11,7 @@ def get_search_results(location, check_in, check_out, guests):
 
     query = """
         SELECT * FROM PropertyListing
-        WHERE Adress = %s AND check_in <= %s AND check_out >= AND guests >= %s
+        WHERE Address = %s AND check_in <= %s AND check_out >= %s AND guests >= %s
     """
     cursor.execute(query, (location, check_in, check_out, guests))
     results = cursor.fetchall()
@@ -66,15 +66,20 @@ def get_location():
 
 def get_dates():
     response.content_type = "application/json"
-    return {
-        "check_in": get_data("SELECT DISTINCT check_in FROM Booking"),
-        "check_out": get_data("SELECT DISTINCT check:out FROM Booking"),
+    dates = {
+        "check_in": [
+            str(date) for date in get_data("SELECT DISTINCT StartTime FROM Booking")
+        ],
+        "check_out": [
+            str(date) for date in get_data("SELECT DISTINCT EndTime FROM Booking")
+        ],
     }
+    return json.dumps(dates)
 
 
 def get_guests():
     response.content_type = "application/json"
-    return {"guests": get_data("SELECT DISTINCT guests FROM Booking")}
+    return json.dumps({"guests": []})
 
 
 @route("/searchbar")

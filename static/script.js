@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   let searchBar = document.querySelector("main#search-bar");
-  if (!searchBar) return; // Stopp skriptet hvis vi ikke er på søkesiden
+  if (!searchBar) return;
 
   console.log("Søkesiden lastet, aktiverer søkefunksjoner...");
 
@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 🔹 Funksjon for å vise/skjule dropdown-meny
 function toggleDropdown(id) {
   let searchBar = document.querySelector("main#search-bar");
   if (!searchBar) return;
@@ -32,7 +31,6 @@ function toggleDropdown(id) {
   }
 }
 
-// 🔹 Justerer posisjon for dropdown-menyer
 function adjustDropdownPosition() {
   let searchBar = document.querySelector("main#search-bar");
   if (!searchBar) return;
@@ -46,64 +44,57 @@ function adjustDropdownPosition() {
   });
 }
 
-// 🔹 Henter data fra backend og fyller dropdown-menyer
 async function loadDropdownData() {
   let searchBar = document.querySelector("main#search-bar");
   if (!searchBar) return;
 
   try {
-    // 📍 Hent adresser ("Where")
     let locationResponse = await fetch("/get_locations");
     let locationData = await locationResponse.json();
     let locationBox = searchBar.querySelector("#location-box ul");
+    let locationInput = document.getElementById("location-input");
 
     if (locationBox) {
-      locationBox.innerHTML = locationData.map(loc =>
-        `<li onclick="selectOption('location-input', '${loc}')">${loc}</li>`
-      ).join("");
+      locationBox.innerHTML = locationData.map(loc => `<li data-value="${loc}">${loc}</li>`).join("");
     }
 
-    // 📍 Hent datoer ("Check in" og "Check out")
     let dateResponse = await fetch("/get_dates");
     let dateData = await dateResponse.json();
-    let checkinBox = searchBar.querySelector("#checkin-box");
-    let checkoutBox = searchBar.querySelector("#checkout-box");
+    let checkinBox = searchBar.querySelector("#checkin-box ul");
+    let checkoutBox = searchBar.querySelector("#checkout-box ul");
+    let checkinInput = document.getElementById("checkin-input");
+    let checkoutInput = document.getElementById("checkout-input");
 
     if (checkinBox) {
-      checkinBox.innerHTML = dateData.check_in.map(date =>
-        `<li onclick="selectOption('checkin-input', '${date}')">${date}</li>`
-      ).join("");
+      checkinBox.innerHTML = dateData.check_in.map(date => `<li data-value="${date}">${date}</li>`).join("");
     }
     if (checkoutBox) {
-      checkoutBox.innerHTML = dateData.check_out.map(date =>
-        `<li onclick="selectOption('checkout-input', '${date}')">${date}</li>`
-      ).join("");
+      checkoutBox.innerHTML = dateData.check_out.map(date => `<li data-value="${date}">${date}</li>`).join("");
     }
 
-    // 📍 Hent antall gjester ("Who")
     let guestResponse = await fetch("/get_guests");
     let guestData = await guestResponse.json();
-    let guestBox = searchBar.querySelector("#guests-box");
+    let guestBox = searchBar.querySelector("#guests-box ul");
+    let guestsInput = document.getElementById("guests-input");
 
     if (guestBox) {
-      guestBox.innerHTML = guestData.map(num =>
-        `<li onclick="selectOption('guests-input', '${num} guests')">${num} guests</li>`
-      ).join("");
+      guestBox.innerHTML = guestData.guests.map(num => `<li data-value="${num} guests">${num} guests</li>`).join("");
     }
+
+    document.querySelectorAll(".dropdown li").forEach(item => {
+      item.addEventListener("click", function() {
+        let inputBox = this.closest(".input-box").querySelector("input");
+        if (inputBox) {
+          inputBox.value = this.dataset.value;
+        }
+        this.closest(".dropdown").classList.remove("active");
+      });
+    });
   } catch (error) {
     console.error("Feil ved henting av dropdown-data:", error);
   }
 }
 
-// 🔹 Velg en verdi fra dropdown
-function selectOption(inputId, value) {
-  let inputField = document.getElementById(inputId);
-  if (inputField) {
-    inputField.value = value;
-  }
-}
-
-// 🔹 Håndterer søk når brukeren trykker på søkeknappen
 function handleSearch() {
   let searchBar = document.querySelector("main#search-bar");
   if (!searchBar) return;
