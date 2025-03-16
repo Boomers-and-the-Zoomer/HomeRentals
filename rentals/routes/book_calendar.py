@@ -132,11 +132,12 @@ def booking_confirmation(PropertyListingID, from_date):
     property_id = int(PropertyListingID)
     from_date_dt = datetime.fromisoformat(decoded_from_date)
 
-    cursor.execute(  # Dette er midlertidig som cleanup av BookingSessions
+    cursor.execute(  # Dette er midlertidig som cleanup av BookingSessions, vurderer å gjøre den om til en def.
         """DELETE FROM BookingSession WHERE ExpiryTime <= NOW()
     """
     )
     cnx.commit()
+    cnx.close()
 
     cursor.execute(
         """
@@ -187,10 +188,41 @@ def booking_confirmation_template(bConfirmation, rental):
                         I accept the <a href="https://www.boilerplate.co/terms-of-service" target="_blank">terms and conditions</a>
                     </label>
                     <button type="submit">Finalize booking</button>
-                </form> 
+                </form>
+                <form id="cancelBooking" action="/cancel-temp-booking" method="post">
+                    <input type="hidden" name="PropertyListingID" value="{rental[0]}">
+                    <input type="hidden" name="from_date" value="{bConfirmation[1]}">
+                    <button type="submit">Cancel booking</button>
+                </form>
             </main>
         """),
     )
+
+
+@route("/cancel-temp-booking", method="POST")
+def cancel_temp_booking():
+    cnx = db.db_cnx()
+    cursor = cnx.cursor()
+
+    property_id = request.forms.get("PropertyListingID")
+    token = request.get_cookie("token")
+    from_date_str = request.forms.get("from_date")
+
+    from_date_dt = datetime.fromisoformat(from_date_str)
+
+    cursor.execute(
+        """
+        DELETE FROM BookingSession
+        WHERE Token= %s AND PropertyListingID= %s AND StartTime= %s
+
+    """,
+        (token, property_id, from_date_dt),
+    )
+
+    cnx.commit()
+    cnx.close()
+
+    redirect(f"/view-rental/{property_id}")
 
 
 @route("/finalize-booking", method="POST")

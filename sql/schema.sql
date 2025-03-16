@@ -70,7 +70,7 @@ CREATE TABLE BookingSession
     StartTime TIMESTAMP NOT NULL,
     EndTime TIMESTAMP NOT NULL,
     ExpiryTime TIMESTAMP NOT NULL,
-    CONSTRAINT BookingSessionPK PRIMARY KEY (Token, PropertyListingID, StartTime, EndTime),
+    CONSTRAINT BookingSessionPK PRIMARY KEY (Token, PropertyListingID, StartTime),
     CONSTRAINT BookingSessionSessionFK FOREIGN KEY (Token) REFERENCES Session(Token),
     CONSTRAINT BookingSessionPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID)
 );
