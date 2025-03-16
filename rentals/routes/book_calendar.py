@@ -88,20 +88,21 @@ def book_rental():
     if cursor.fetchone() is not None:
         raise HTTPError(400, "Booking dates overlap with an existing booking.")
 
-    expiryTime = datetime.now() + timedelta(minutes=15)
-
     print(
         "Booking rental: PropertyListingID={}, from_date={}, to_date={}".format(
             PropertyListingID, from_date, to_date
         )
     )
 
+    expiryTime = datetime.now() + timedelta(
+        minutes=15
+    )  # TODO: Legg denne inn med JS, slik at brukeren kan se en timer på booking
     cursor.execute(
         """
-    INSERT INTO BookingSession (Token, PropertyListingID, StartTime, EndTime)
-    VALUES (%s, %s, %s, %s)
+    INSERT INTO BookingSession (Token, PropertyListingID, StartTime, EndTime, ExpiryTime)
+    VALUES (%s, %s, %s, %s, %s)
     """,
-        (token, PropertyListingID, from_date, to_date),
+        (token, PropertyListingID, from_date, to_date, expiryTime),
     )
 
     cnx.commit()
@@ -167,11 +168,13 @@ def booking_confirmation(PropertyListingID, from_date):
 
 
 def booking_confirmation_template(bConfirmation, rental):
+    expiryTime = bConfirmation[3]
     return html(
         f"Booking confirmation for: {rental[2]}",
         with_navbar(f"""
             <main id="book-confirm">
                 <h2>Confirm order</h2>
+                <input type="hidden" id="expiry_time" name="expiry_time" value="{expiryTime}">
                 <h1>Your booking summary for: {rental[2]}</h1>
                 <ul>
                     <li>Bedrooms: {rental[4]}</li>
