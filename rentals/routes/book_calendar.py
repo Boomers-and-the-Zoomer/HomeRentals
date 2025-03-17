@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import urllib.parse  # trengte litt hjelp fra denne for å få riktig format på URL(Hadde problemer med å overføre @)
 from urllib.parse import unquote
 
+from ..auth import requires_user_session, get_session_token
 from ..components import html, with_navbar
 from .. import db
 
@@ -55,14 +56,13 @@ def view_rental_template(rental):
 
 
 @route("/book-rental", method="POST")
+@requires_user_session(referer=True)
 def book_rental():
     PropertyListingID = request.forms.get("PropertyListingID")
-    token = request.get_cookie("token")
     raw_from_date = request.forms.get("from_date")
     raw_to_date = request.forms.get("to_date")
 
-    if not token:
-        raise HTTPError(403, "User not authenticated")
+    token = get_session_token()
 
     try:
         from_date = datetime.strptime(raw_from_date, "%Y-%m-%dT%H:%M")
@@ -120,14 +120,12 @@ def book_rental():
 
 
 @route("/booking-confirmation/<PropertyListingID>/<from_date>", method="GET")
+@requires_user_session()
 def booking_confirmation(PropertyListingID, from_date):
     cnx = db.db_cnx()
     cursor = cnx.cursor()
 
-    token = request.get_cookie("token")
-
-    if not token:
-        raise HTTPError(403, "User not authenticated")
+    token = get_session_token()
 
     decoded_from_date = unquote(from_date)
     property_id = int(PropertyListingID)

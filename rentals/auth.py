@@ -1,7 +1,7 @@
 import secrets
 
 from datetime import datetime, timezone, timedelta
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 import mysql.connector
 
@@ -41,26 +41,31 @@ def set_session_token(token: bytes):
     response.set_cookie("Session", token.hex(), maxage=3600, secure=True, httponly=True)
 
 
-def initialize_session(email: str):
+def initialize_session(email: str) -> bytes:
     """
     Create a session token, insert it into the DB, and set the session token
     cookie  in the response
     """
     token = create_and_insert_session_token(email)
     set_session_token(token)
+    return token
 
 
-def validate_session_or_refresh() -> bool:
-    """
-    Returns `True` if the user has a valid session.
-    """
+def get_session_token() -> bytes | None:
     session_token = request.get_cookie("Session")
     if session_token == None:
-        return False
+        return None
+    else:
+        return bytes.fromhex(session_token)
+
+
+def get_session_and_refresh() -> bytes | None:
+    session_token = get_session_token()
+    if session_token == None:
+        return None
 
     cnx = db.db_cnx()
     with cnx.cursor() as cur:
-        session_token = bytes.fromhex(session_token)
         cur.execute(
             """
             SELECT ExpiryTime, Email
@@ -71,14 +76,14 @@ def validate_session_or_refresh() -> bool:
         )
         row = cur.fetchone()
         if row == None:
-            return False
+            return None
         expiry_time, email = row
         expiry_time = expiry_time.replace(tzinfo=timezone.utc)
         refresh_time = expiry_time - timedelta(hours=0.5)
         now = datetime.now(timezone.utc)
         if expiry_time >= now:
             if now >= refresh_time:
-                initialize_session(email)
+                current_token = initialize_session(email)
                 cur.execute(
                     """
                     DELETE FROM Session
@@ -87,25 +92,41 @@ def validate_session_or_refresh() -> bool:
                     (session_token,),
                 )
                 cnx.commit()
-            return True
-    return False
+            else:
+                current_token = session_token
+            return current_token
+    return None
 
 
-def requires_user_session(func):
+def validate_session_or_refresh() -> bool:
+    """
+    Returns `True` if the user has a valid session.
+    """
+    return get_session_and_refresh() != None
+
+
+def requires_user_session(referer: bool = False):
     """
     Decorator that ensures that a user is logged in before running the decorated function.
     """
 
-    def inner():
-        if validate_session_or_refresh():
-            return func()
-        else:
-            query = request.urlparts[3]
-            if query != "":
-                query = "?" + query
-            raise HTTPResponse(
-                status=303,
-                location=f"/log-in?return-to={quote(request.urlparts[2] + query)}",
-            )
+    def inner_decorator(func):
+        def inner():
+            if validate_session_or_refresh():
+                return func()
+            else:
+                if not referer:
+                    url = request.urlparts
+                else:
+                    url = urlparse(request.get_header("Referer"))
+                query = url.path
+                if url.query != "":
+                    query += "?" + url.query
+                raise HTTPResponse(
+                    status=303,
+                    location=f"/log-in?return-to={quote(query)}",
+                )
 
-    return inner
+        return inner
+
+    return inner_decorator
