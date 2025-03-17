@@ -53,7 +53,7 @@ def get_location():
     response.content_type = "text/html"
     locations = get_data("SELECT DISTINCT Address FROM PropertyListing")
     location_list_html = "".join(
-        f'<li onclick=\'selectOption("location-input", "{loc}")\'>{loc}</li>'
+        f'<li onclick=\'selectOption(this, "location-input", "{loc}")\'>{loc}</li>'
         for loc in locations
     )
 
@@ -79,7 +79,8 @@ def get_dates():
 
 def get_guests():
     response.content_type = "application/json"
-    return json.dumps({"guests": []})
+    guests = get_data("SELECT DISTINCT Beds FROM PropertyListing")
+    return json.dumps({"guests": guests})
 
 
 @route("/searchbar")
@@ -89,18 +90,10 @@ def search_bar():
         with_navbar("""
             <main id="search-bar">
                 <div class="search-container">
-                    <div hx-get="/get_locations" hx-target="find div.dropdown" class="input-box" onclick="toggleDropdown('location-box')">
+                    <div hx-get="/get_locations" hx-target="find div.dropdown" hx-swap="innerHTML" class="input-box" onclick="toggleDropdown('location-box')">
                         <label>Where</label>
-                        <input type="text" placeholder="search destination" readonly>
-                        <div id="location-box" class="dropdown">
-                            <ul>
-                                <li>Hønefoss</li>
-                                <li>Trondheim</li>
-                                <li>Bergen</li>
-                                <li>Hamar</li>
-                                <li>Oslo</li>
-                            </ul>
-                        </div>
+                        <input id="location-input" type="text" placeholder="search destination" readonly>
+                        <div id="location-box" class="dropdown"></div>
                     </div>
                     <div class="input-box" onclick="toggleDropdown('checkin-box')">
                         <label>Check in</label>
@@ -121,9 +114,7 @@ def search_bar():
                         <input type="text" placeholder="Add guest" readonly>
                         <div id="guests-box" class="dropdown">
                             <p>Adults (13+ years): <button>-</button> 0 <button>+</button></p>
-                            <p>Children (2-12 years): <button>-</button> 0 <button>+</button></p>
-                            <p>Infant (Under 2 years): <button>-</button> 0 <button>+</button></p>
-                            <p>Pet: <button>-</button> 0 <button>+</button></p>
+                            <p>Children (0-12 years): <button>-</button> 0 <button>+</button></p>
                         </div>
                     </div>
                     <button class="search-btn">🔍 Søk</button>
