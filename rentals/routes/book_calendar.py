@@ -100,13 +100,12 @@ def book_rental():
     cursor.execute(
         """
     INSERT INTO BookingSession (Token, PropertyListingID, StartTime, EndTime, ExpiryTime)
-    VALUES (%s, %s, %s, %s, %s)
+    VALUES (_binary %s, %s, %s, %s, %s)
     """,
         (token, PropertyListingID, from_date, to_date, expiryTime),
     )
 
     cnx.commit()
-    cnx.close()
 
     from_date_str = (
         from_date.isoformat() if hasattr(from_date, "isoformat") else from_date
@@ -136,13 +135,12 @@ def booking_confirmation(PropertyListingID, from_date):
     """
     )
     cnx.commit()
-    cnx.close()
 
     cursor.execute(
         """
         SELECT PropertyListingID, StartTime, EndTime, ExpiryTime
         FROM BookingSession
-        WHERE Token = %s AND PropertyListingID = %s AND StartTime = %s AND ExpiryTime > NOW()
+        WHERE Token = _binary %s AND PropertyListingID = %s AND StartTime = %s AND ExpiryTime > NOW()
     """,
         (token, property_id, from_date_dt),
     )
@@ -201,12 +199,13 @@ def booking_confirmation_template(bConfirmation, rental):
 
 
 @route("/cancel-temp-booking", method="POST")
+@requires_user_session(referer=True)  # Legger til denne ved POST
 def cancel_temp_booking():
     cnx = db.db_cnx()
     cursor = cnx.cursor()
 
+    token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
-    token = request.get_cookie("token")
     from_date_str = request.forms.get("from_date")
 
     from_date_dt = datetime.fromisoformat(from_date_str)
@@ -214,25 +213,25 @@ def cancel_temp_booking():
     cursor.execute(
         """
         DELETE FROM BookingSession
-        WHERE Token= %s AND PropertyListingID= %s AND StartTime= %s
+        WHERE Token=_binary  %s AND PropertyListingID= %s AND StartTime= %s
 
     """,
         (token, property_id, from_date_dt),
     )
 
     cnx.commit()
-    cnx.close()
 
     redirect(f"/view-rental/{property_id}")
 
 
 @route("/finalize-booking", method="POST")
+@requires_user_session()
 def finalize_booking():
     cnx = db.db_cnx()
     cursor = cnx.cursor()
 
+    token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
-    token = request.get_cookie("token")
     from_date_str = request.forms.get("from_date")
     tos = request.forms.get("TOS")
 
@@ -244,7 +243,7 @@ def finalize_booking():
     cursor.execute(
         """
         SELECT * FROM BookingSession
-        WHERE Token= %s AND PropertyListingID= %s AND StartTime= %s
+        WHERE Token=_binary %s AND PropertyListingID= %s AND StartTime= %s
         AND ExpiryTime> NOW()
     
     """,
