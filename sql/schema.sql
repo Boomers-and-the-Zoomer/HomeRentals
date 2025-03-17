@@ -63,6 +63,10 @@ CREATE TABLE Booking
     CONSTRAINT BookingUserFK FOREIGN KEY (Email) REFERENCES User(Email)
 );
 
+-- NOTE: This job of this table could be done by a single column in the `Booking` table
+--       called `TempExpiryTime` with the type `TIMESTAMP NOT NULL`. A `NULL`-value
+--       represents a "finalized" booking, while a non-`NULL` value represents a "temporary"
+--       booking that expires at the given timestamp.
 CREATE TABLE BookingSession
 (
     Token BINARY(16) NOT NULL,
