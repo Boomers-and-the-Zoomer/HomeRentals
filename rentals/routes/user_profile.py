@@ -10,39 +10,45 @@ def user_profile():
         with_navbar("""
             <main id="user-profile">
                 <div class="top_page">
+                    <p class="button">Edit Profile</p>
                     <div class="profile_box">
                         <div class="circle">
                             <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
                         </div>
-                        <div>
-                            <p>Rating 2.4</p>
-                            <br><br>
-                            <p>Host since XXXX</p>
+                        <div class="profile_box_info">
+                            <p><u>Rating 2.4</u></p>
+                            <br>
+                            <p><u>Host since XXXX</u></p>
+                        </div>
+                        <div class="name">
+                            <p><b>Morty</b><p>
+                            <p>Host<p>
                         </div>
                     </div>
-                    <div>
+                    <div class="about">
                         <div class="fieldset">
                             <fieldset>
-                                <legend>About:</legend>
-                                <p><b>Lives in:</b></p>
-                                <p>Toronto, Canada</p>
+                                <legend><b>About:</b></legend>
+                                <p><b>Lives in:</b> Toronto, Canada</p>
                                 <br><br>
-                                <p><b>Languages:</b></p>
-                                <p>Norwegian, English, Urdu</p>
+                                <p><b>Languages:</b> Norwegian, English, Urdu</p>
                                 <br><br>
-                                <p><b>Age:</b></p>
-                                <p>Old</p>
+                                <p><b>Age:</b> Old</p>
+
                             </fieldset>
                         </div>
-                        <fieldset class="fieldset">
-                            <legend>Fun fact:</legend>
-                            <p>Knows Rick</p>
-                        </fieldset>
+                        <div class="fieldset">
+                            <fieldset>
+                                <legend><b>Fun fact:</b></legend>
+                                <p>Knows Rick</p>
+                            </fieldset>
+                        </div>
                     </div>
-                    <br><br>
                 </div>
                 <div class="ad_preview">
-                    <h3>Listings</h3>
+                    <h3>Listings:</h3>
+                    <img src="https://a0.muscache.com/im/pictures/miso/Hosting-756540177431085322/original/a89fcae1-05d1-469a-9b86-a8065abc22c2.jpeg?im_w=720" class="ad_picture" alt="Property listing">
+                    <img src="https://a0.muscache.com/im/pictures/074f8383-2194-4a3d-8f3d-ca8dce154cdb.jpg?im_w=720" class="ad_picture" alt="Property listing">
                 </div>
             </main>
         """),

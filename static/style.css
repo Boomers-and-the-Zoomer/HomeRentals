@@ -583,15 +583,31 @@ main#book-confirm {
 main#user-profile {
   > .top_page {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     margin: 2em 3em;
 
-    > .profile_box {
-      display: flex;
+    .button {
+      background-color: var(--slate-700);
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      top: 3em;
+      right: 1em;
+      font-size: 1.7em;
+      margin: 20px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
+    > .profile_box {
+      display: grid;
       border-radius: var(--corner);
-      background: var(--slate-400);
+      background: var(--slate-300);
       border: 2px solid black;
       margin-top: 2em;
       margin-left: 3em;
@@ -600,32 +616,62 @@ main#user-profile {
       padding: 10px;
 
       > .circle {
+        grid-column-start: 1;
+        grid-row-start: 1;
         width: 200px;
         height: 200px;
         border-radius: 50%;
         overflow: hidden;
 
         > .profile_picture {
-          width: 20%;
-          margin-right: 5em;
+          width: 100%;
         }
       }
+      > .profile_box_info {
+        grid-column-start: 2;
+        grid-row-start: 1;
+        padding: 1em;
+        margin-top: 2em;
+      }
+
+      > .name {
+        grid-column-start: 1;
+        grid-row-start: 2;
+        margin-left: 5em;
+        margin-top: 1em;
+      }
+    }
+    > .about {
+      margin-top: 2em;
+      margin-left: 10em;
+
       > .fieldset {
-        width: 40%;
+        width: 100%;
         margin: 2em;
+        padding: 1em;
       }
     }
   }
   > .ad_preview {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    height: 20%;
-    background-color: var(--slate-400);
+    width: 50%;
+    height: fit-content;
+    background-color: var(--slate-200);
     border-radius: var(--corner);
     border: 2px solid black;
     margin-top: 2em;
-    padding: 1em;
+    margin-left: 30em;
+    margin-bottom: 1em;
+
+    > h3 {
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    > .ad_picture {
+      width: 30%;
+      height: 30%;
+      margin: 2em;
+    }
   }
 }
