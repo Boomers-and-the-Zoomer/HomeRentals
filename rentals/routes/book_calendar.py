@@ -230,4 +230,29 @@ def cancel_temp_booking():
 
 @route("/finalize-booking", method="POST")
 def finalize_booking():
-    pass
+    cnx = db.db_cnx()
+    cursor = cnx.cursor()
+
+    property_id = request.forms.get("PropertyListingID")
+    token = request.get_cookie("token")
+    from_date_str = request.forms.get("from_date")
+    tos = request.forms.get("TOS")
+
+    from_date_dt = datetime.fromisoformat(from_date_str)
+
+    if not token or not tos:
+        raise HTTPError(403, "User not authenticated or TOS validation missing")
+
+    cursor.execute(
+        """
+        SELECT * FROM BookingSession
+        WHERE Token= %s AND PropertyListingID= %s AND StartTime= %s
+        AND ExpiryTime> NOW()
+    
+    """,
+        (token, property_id, from_date_dt),
+    )
+    sessionRecord = cursor.fetchone()
+
+    if not sessionRecord:
+        raise HTTPError(404, "Booking not found or session expired")
