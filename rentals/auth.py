@@ -111,9 +111,9 @@ def requires_user_session(referer: bool = False):
     """
 
     def inner_decorator(func):
-        def inner():
+        def inner(*args, **kwargs):
             if validate_session_or_refresh():
-                return func()
+                return func(*args, **kwargs)
             else:
                 if not referer:
                     url = request.urlparts
