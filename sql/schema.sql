@@ -31,7 +31,7 @@ CREATE TABLE Session
 
 CREATE TABLE ResetLink
 (
-    Link CHAR(100) PRIMARY KEY,
+    Token CHAR(30) PRIMARY KEY,
     Email CHAR(30) NOT NULl,
     ExpiryTime DATETIME NOT NULL,
     CONSTRAINT ResetLinkUserFK FOREIGN KEY (Email) REFERENCES User(Email)

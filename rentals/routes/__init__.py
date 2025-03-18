@@ -6,8 +6,7 @@ from .. import db
 from . import sign_up
 from . import log_in
 from . import search_bar
-from . import reset_password_side_1
-from . import reset_password_side_2
+from . import reset_password
 from . import register_new_listing
 from . import book_calendar
 from . import user_profile
