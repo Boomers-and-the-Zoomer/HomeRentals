@@ -182,6 +182,8 @@ def booking_confirmation_template(bConfirmation, rental):
                     <li>End: {bConfirmation[2]}</li>
                 </ul>
                 <form id="finalizeForm" action="/finalize-booking" method="post">
+                    <input type="hidden" name="PropertyListingID" value="{rental[0]}">
+                    <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                     <label for="TOS">
                         <input type="checkbox" id="TOS" name="TOS" required>
                         I accept the <a href="https://www.boilerplate.co/terms-of-service" target="_blank">terms and conditions</a>
@@ -190,7 +192,7 @@ def booking_confirmation_template(bConfirmation, rental):
                 </form>
                 <form id="cancelBooking" action="/cancel-temp-booking" method="post">
                     <input type="hidden" name="PropertyListingID" value="{rental[0]}">
-                    <input type="hidden" name="from_date" value="{bConfirmation[1]}">
+                    <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                     <button type="submit">Cancel booking</button>
                 </form>
             </main>
@@ -207,6 +209,8 @@ def cancel_temp_booking():
     token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
     from_date_str = request.forms.get("from_date")
+    if not from_date_str:
+        raise HTTPError(400, "Missing start date for booking.")
 
     from_date_dt = datetime.fromisoformat(from_date_str)
 
@@ -228,12 +232,14 @@ def cancel_temp_booking():
 @requires_user_session()
 def finalize_booking():
     cnx = db.db_cnx()
-    cursor = cnx.cursor()
+    cursor = cnx.cursor(buffered=True)
 
     token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
-    from_date_str = request.forms.get("from_date")
     tos = request.forms.get("TOS")
+    from_date_str = request.forms.get("from_date")
+    if not from_date_str:
+        raise HTTPError(400, "Missing start date for booking.")
 
     from_date_dt = datetime.fromisoformat(from_date_str)
 
@@ -253,3 +259,36 @@ def finalize_booking():
 
     if not sessionRecord:
         raise HTTPError(404, "Booking not found or session expired")
+
+    cursor.execute(
+        """
+        SELECT BookingSession.PropertyListingID, BookingSession.StartTime, BookingSession.EndTime, User.Email
+        FROM BookingSession, Session, User
+        WHERE BookingSession.Token=Session.Token
+            AND Session.Email=User.Email
+            AND BookingSession.Token=_binary %s
+    """,
+        (token,),
+    )
+    CompleteBooking = cursor.fetchone()
+
+    if CompleteBooking is None:
+        raise HTTPError(404, "Failed to retrive complete booking details")
+
+    if CompleteBooking is not None:
+        property_listing_id = CompleteBooking[0]
+        start_time = CompleteBooking[1]
+        end_time = CompleteBooking[2]
+        email = CompleteBooking[3]
+
+    cursor.execute(
+        """
+        INSERT INTO Booking (PropertyListingID, StartTime, EndTime, Email)
+        VALUES (%s, %s, %s, %s)
+
+    """,
+        (property_listing_id, start_time, end_time, email),
+    )
+    cnx.commit()
+
+    redirect(f"/bookings/active")

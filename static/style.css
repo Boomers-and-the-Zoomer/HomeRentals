@@ -607,6 +607,12 @@ main#book-confirm {
   display: flex;
   justify-content: center;
 }
+
+main#book-confirm {
+  display: flex;
+  justify-content: center;
+}
+
 main#user-profile {
   > .top_page {
     display: flex;
