@@ -1,4 +1,5 @@
 from .. import icons
+from ..auth import validate_session_or_refresh
 from ..util import dict_to_attr_string
 
 
@@ -32,6 +33,35 @@ def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
 
 def with_navbar(content: str) -> str:
     """ """
+
+    logged_in = validate_session_or_refresh()
+
+    def if_logged_in_else(logged_in_content: str, logged_out_content: str):
+        if logged_in:
+            return logged_in_content
+        else:
+            return logged_out_content
+
+    account_menu = if_logged_in_else(
+        f"""
+        <button form="log-out-form" type="submit">
+            {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
+        </button>
+        """,
+        f"""
+        <a href="/log-in">
+            {icons.log_in()}
+            <span>Log in</span>
+            {icons.chevron_right()}
+        </a>
+        <a href="/sign-up">
+            {icons.user_plus()}
+            <span>Sign up</span>
+            {icons.chevron_right()}
+        </a>
+        """,
+    )
+
     return f"""
         <div id="navigated">
             <nav id="top-nav">
@@ -48,19 +78,7 @@ def with_navbar(content: str) -> str:
             </nav>
             <div popover id="top-nav-user-popover">
                 <h1>Account</h1>
-                <a href="/log-in">
-                    {icons.log_in()}
-                    <span>Log in</span>
-                    {icons.chevron_right()}
-                </a>
-                <a href="/sign-up">
-                    {icons.user_plus()}
-                    <span>Sign up</span>
-                    {icons.chevron_right()}
-                </a>
-                <button form="log-out-form" type="submit">
-                    {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
-                </button>
+                {account_menu}
                 <form id="log-out-form" action="/log-out" method="post"></form>
             </div>
             <div id="nav-dummy" aria-hidden="true"></div>
