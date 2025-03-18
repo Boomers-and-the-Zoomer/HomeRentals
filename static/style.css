@@ -398,73 +398,73 @@ main#register_new_listing {
     font-weight: normal;
     padding: 0px;
   }
-}
 
-.page-counter {
-  position: fixed;
-  bottom: 0px;
-  padding: 20px;
-  font-size: 1.5em;
-}
+  .page-counter {
+    position: fixed;
+    bottom: 0px;
+    padding: 20px;
+    font-size: 1.5em;
+  }
 
-.back-button button {
-  position: absolute;
-  border: none;
-  background-color: inherit;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
-  bottom: 0px;
-  left: 0px;
-}
+  .back-button button {
+    position: absolute;
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    bottom: 0px;
+    left: 0px;
+  }
 
-.line-input {
-  border: none;
-  border-bottom: 2px solid black;
-  outline: none;
-  font-size: 26px;
-  font-weight: normal;
-  padding: 0px;
-}
+  .line-input {
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+    font-size: 26px;
+    font-weight: normal;
+    padding: 0px;
+  }
 
-input[name="address"] {
-  width: 375px !important;
-}
+  input[name="address"] {
+    width: 375px !important;
+  }
 
-input[name="postalcode"] {
-  width: 200px !important;
-}
+  input[name="postalcode"] {
+    width: 200px !important;
+  }
 
-.button {
-  background-color: var(--slate-700);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-size: 1.7em;
-  margin: 20px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  .button {
+    background-color: var(--slate-700);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-size: 1.7em;
+    margin: 20px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-.textarea textarea {
-  width: 550px;
-  height: 250px;
-  font-size: 16px;
-  resize: none;
-  margin-top: 45px;
-  border-radius: 10px;
-  font-weight: normal;
-}
+  .textarea textarea {
+    width: 550px;
+    height: 250px;
+    font-size: 16px;
+    resize: none;
+    margin-top: 45px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
 
-.pictures {
-  margin-top: 150px;
+  .pictures {
+    margin-top: 150px;
+  }
 }
 
 main#search-bar {
