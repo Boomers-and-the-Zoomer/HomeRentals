@@ -10,7 +10,7 @@ from bottle import request, response, HTTPResponse
 from . import db
 
 
-def create_and_insert_session_token(email: str) -> bytes:
+def _create_and_insert_session_token(email: str) -> bytes:
     """
     Create a session token and insert it into the DB
     """
@@ -34,7 +34,7 @@ def create_and_insert_session_token(email: str) -> bytes:
     return token
 
 
-def set_session_token(token: bytes):
+def _set_session_token(token: bytes):
     """
     Set the session token cookie in the response
     """
@@ -46,8 +46,8 @@ def initialize_session(email: str) -> bytes:
     Create a session token, insert it into the DB, and set the session token
     cookie  in the response
     """
-    token = create_and_insert_session_token(email)
-    set_session_token(token)
+    token = _create_and_insert_session_token(email)
+    _set_session_token(token)
     return token
 
 
@@ -60,6 +60,11 @@ def get_session_token() -> bytes | None:
 
 
 def get_session_and_refresh() -> bytes | None:
+    try:
+        return request.session_token
+    except AttributeError:
+        pass
+
     session_token = get_session_token()
     if session_token == None:
         return None
@@ -94,6 +99,7 @@ def get_session_and_refresh() -> bytes | None:
                 cnx.commit()
             else:
                 current_token = session_token
+            request.session_token = session_token
             return current_token
     return None
 
