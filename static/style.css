@@ -83,6 +83,7 @@ div#navigated {
     width: 100%;
     height: var(--navbar-height);
     background: var(--slate-700);
+    z-index: 1000000000;
 
     > ul {
       display: flex;
