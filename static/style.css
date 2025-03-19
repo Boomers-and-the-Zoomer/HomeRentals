@@ -717,7 +717,6 @@ main#user-profile {
     }
   }
   > .user_profile_edit {
-
     .circle {
       grid-column-start: 1;
       grid-row-start: 1;
@@ -725,5 +724,6 @@ main#user-profile {
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
+    }
   }
 }
