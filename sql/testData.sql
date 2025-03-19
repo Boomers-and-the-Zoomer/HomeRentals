@@ -22,9 +22,9 @@ INSERT INTO ResetLink (Token, Email, ExpiryTime) VALUES
 ('abcd1234', 'alice@example.com', '2025-12-31 23:59:59'),
 ('efgh5678', 'bob@example.com', '2025-12-31 23:59:59');
 
-INSERT INTO PropertyListing (Email, Address, PostalCode, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-('alice@example.com', '123 Main St, City', '10001', 3, 4, 2, 120, 1, 1),
-('bob@example.com', '456 Elm St, City', '10002', 2, 2, 1, 80, 0, 1);
+INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+('alice@example.com', '123 Main St, City', '10001', 'A nice little place to stay the night.', 3, 4, 2, 120, 1, 1),
+('bob@example.com', '456 Elm St, City', '10002', 'It may look a little shabby, but it''s a perfectly quaint apartment.', 2, 2, 1, 80, 0, 1);
 
 INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (1, 'carol@example.com', '2025-05-01 12:00:00', '2025-05-07 12:00:00'),

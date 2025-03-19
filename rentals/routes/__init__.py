@@ -7,6 +7,7 @@ from . import sign_up
 from . import log_in
 from . import search_bar
 from . import reset_password
+from . import view_rental
 from . import register_new_listing
 from . import book_calendar
 from . import user_profile
