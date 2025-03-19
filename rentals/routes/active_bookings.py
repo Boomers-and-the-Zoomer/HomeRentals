@@ -9,7 +9,7 @@ from .. import db
 
 
 @route("/bookings/active")
-@requires_user_session(referer=True)
+@requires_user_session()
 def view_active_bookings():
     token = get_session_token()
 
@@ -30,8 +30,8 @@ def view_active_bookings():
 
     cursor.execute(
         """
-        SELECT Booking.StartTime, Booking.EndTime, Booking.Email,
-                PropertyListing.Address, PropertyListing.Bedrooms, PropertyListing.Bathrooms, PropertyListing.ParkingSpots
+        SELECT Booking.PropertyListingID, Booking.StartTime, Booking.EndTime, Booking.Email, PropertyListing.Address,
+                PropertyListing.Bedrooms, PropertyListing.Bathrooms, PropertyListing.ParkingSpots
         FROM Booking, PropertyListing
         WHERE Booking.PropertyListingID = PropertyListing.PropertyListingID
             AND Booking.Email = %s
@@ -52,6 +52,7 @@ def active_booking_template(activeBookings, email):
     else:
         for booking in activeBookings:
             (
+                property_listing_id,
                 start_time,
                 end_time,
                 email,
@@ -70,6 +71,12 @@ def active_booking_template(activeBookings, email):
                     <li>Bedrooms: {bedrooms}</li>
                     <li>Bathrooms: {bathrooms}</li>
                     <li>Parking spots: {parking}</li>
+                <form id="CancelBookingPermanent" action="/cancel-booking" method="post">
+                    <input type="hidden" name="PropertyListingID" value="{activeBookings[0]}">
+                    <input type="hidden" name="StartTime" value="{activeBookings[1]}">
+                    <input type="hidden" name="Email" value="{activeBookings[3]}">
+                    <button type="submit">Cancel Booking</button>
+                </form>
                 </ul>
             </div><br>
             """
@@ -82,3 +89,29 @@ def active_booking_template(activeBookings, email):
     """)
 
     return html(f"Active Bookings for: {email}", full_page)
+
+
+@route("/cancel-booking", method="POST")
+@requires_user_session(referer=True)
+def cancel_temp_booking():
+    cnx = db.db_cnx()
+    cursor = cnx.cursor()
+
+    property_listing_id = request.forms.get("PropertyListingID")
+    start_time = request.forms.get("StartTime")
+    email = request.forms.get("Email")
+
+    cursor.execute(
+        """
+        DELETE FROM Booking
+        WHERE PropertyListingID= %s, StartTime= %s, Email= %s
+    """,
+        (property_listing_id, start_time, email),
+    )
+
+    cnx.commit()
+
+    redirect(f"/bookings/active")
+
+
+# TODO: Fix list index out of range.
