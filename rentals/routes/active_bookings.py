@@ -72,9 +72,9 @@ def active_booking_template(activeBookings, email):
                     <li>Bathrooms: {bathrooms}</li>
                     <li>Parking spots: {parking}</li>
                 <form id="CancelBookingPermanent" action="/cancel-booking" method="post">
-                    <input type="hidden" name="PropertyListingID" value="{activeBookings[0]}">
-                    <input type="hidden" name="StartTime" value="{activeBookings[1]}">
-                    <input type="hidden" name="Email" value="{activeBookings[3]}">
+                    <input type="hidden" name="PropertyListingID" value="{property_listing_id}">
+                    <input type="hidden" name="StartTime" value="{start_time}">
+                    <input type="hidden" name="Email" value="{email}">
                     <button type="submit">Cancel Booking</button>
                 </form>
                 </ul>
@@ -104,8 +104,8 @@ def cancel_temp_booking():
     cursor.execute(
         """
         DELETE FROM Booking
-        WHERE PropertyListingID= %s, StartTime= %s, Email= %s
-    """,
+        WHERE PropertyListingID= %s AND StartTime= %s AND Email= %s
+        """,
         (property_listing_id, start_time, email),
     )
 
