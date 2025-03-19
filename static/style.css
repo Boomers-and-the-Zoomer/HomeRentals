@@ -555,6 +555,14 @@ main#search-bar {
           display: grid;
           grid-template-columns: subgrid;
           grid-column: 1 / 5;
+          justify-items: start;
+          gap: 5px;
+
+          > button {
+            height: 1.2em;
+            display: flex;
+            align-items: center;
+          }
         }
       }
     }

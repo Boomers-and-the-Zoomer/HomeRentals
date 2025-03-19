@@ -66,20 +66,20 @@ def get_location():
     """
 
 
-def get_dates():
+def get_dates(select_id):
     response.content_type = "text/html"
     check_in_dates = get_data("SELECT DISTINCT StartTime FROM Booking")
     check_out_dates = get_data("SELECT DISTINCT EndTime FROM Booking")
 
     checkin_list_html = "".join(
-        '<li onclick=\'selectOption(this, "checkin-input", "{}")\'>'.format(date)
+        f'<li onclick=\'selectOption(this, "{select_id}", "{{}}")\'>'.format(date)
         + str(date)
         + "</li>"
         for date in check_in_dates
     )
 
     checkout_list_html = "".join(
-        '<li onclick=\'selectOption(this, "checkout-input", "{}")\'>'.format(date)
+        f'<li onclick=\'selectOption(this, "{select_id}", "{{}}")\'>'.format(date)
         + str(date)
         + "</li>"
         for date in check_out_dates
@@ -111,13 +111,13 @@ def search_bar():
                         <input id="location-input" type="text" placeholder="search destination" readonly>
                         <div id="location-box" class="dropdown"></div>
                     </div>
-                    <div hx-get="/get_dates" hx-trigger="click" hx-target="#checkin-box" hx-swap="innerHTML"
+                    <div hx-get="/get_dates/checkin-input" hx-trigger="click" hx-target="#checkin-box" hx-swap="innerHTML"
                         class="input-box" onclick="toggleDropdown('checkin-box')">
                         <label>Check in</label>
                         <input id="checkin-input" type="text" placeholder="Add dates" readonly>
                         <div id="checkin-box" class="dropdown"></div>
                     </div>
-                    <div hx-get="/get_dates" hx-trigger="click" hx-target="#checkout-box" hx-swap="innerHTML"
+                    <div hx-get="/get_dates/checkout-input" hx-trigger="click" hx-target="#checkout-box" hx-swap="innerHTML"
                         class="input-box" onclick="toggleDropdown('checkout-box')">
                         <label>Check out</label>
                         <input id="checkout-input" type="text" placeholder="Add dates" readonly>
@@ -144,9 +144,9 @@ def locations():
     return get_location()
 
 
-@route("/get_dates")
-def dates():
-    return get_dates()
+@route("/get_dates/<select_id>")
+def dates(select_id):
+    return get_dates(select_id)
 
 
 @route("/get_guests")
