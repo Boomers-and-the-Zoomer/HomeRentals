@@ -5,18 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Søkesiden lastet, aktiverer søkefunksjoner...");
 
   window.addEventListener("load", adjustDropdownPosition);
-
-  let searchButton = searchBar.querySelector(".search-btn");
-  if (searchButton) {
-    searchButton.addEventListener("click", handleSearch);
-  }
-
-  setGuestEventListeners();
 });
 
 function setGuestEventListeners() {
-  let guestsInput = document.getElementById("guests-input");
-
   let adultCount = document.getElementById("adult-count");
   let childrenCount = document.getElementById("children-count");
 
@@ -26,40 +17,37 @@ function setGuestEventListeners() {
   let increaseChildren = document.getElementById("increase-children");
   let decreaseChildren = document.getElementById("decrease-children");
 
-  if (increaseAdults && decreaseAdults && adultCount && guestsInput) {
+  if (increaseAdults && decreaseAdults && adultCount) {
     let adultGuests = 0;
     let childGuests = 0;
-
-    function updateGuests() {
-      guestsInput.value = `${adultGuests} Adults, ${childGuests} Children`;
-      guestsInput.setAttribute("value", guestsInput.value);
-    }
 
     increaseAdults.addEventListener("click", () => {
       adultGuests++;
       adultCount.innerText = adultGuests;
-      updateGuests();
+      adultCount.value = adultGuests;
+      adultCount.setAttribute("value", adultGuests);
     });
 
     decreaseAdults.addEventListener("click", () => {
       if (adultGuests > 0) {
         adultGuests--;
         adultCount.innerText = adultGuests;
-        updateGuests();
+        adultCount.value = adultGuests;
+        adultCount.setAttribute("value", adultGuests);
       }
     });
 
     increaseChildren.addEventListener("click", () => {
       childGuests++;
       childrenCount.innerText = childGuests;
-      updateGuests();
+      childrenCount.setAttribute("value", childGuests);
     });
 
     decreaseChildren.addEventListener("click", () => {
       if (childGuests > 0) {
         childGuests--;
         childrenCount.innerText = childGuests;
-        updateGuests();
+        childrenCount.setAttribute("value", childGuests);
       }
     });
   }
@@ -131,47 +119,4 @@ function loadGuests() {
       }
     })
     .catch(error => console.error("Feil ved lasting av guests:", error));
-}
-
-function handleSearch() {
-  let searchBar = document.querySelector("main#search-bar");
-  if (!searchBar) return;
-
-  let locationInput = document.getElementById("location-input");
-  let checkInInput = document.getElementById("checkin-input");
-  let checkOutInput = document.getElementById("checkout-input");
-  let guestsInput = document.getElementById("guests-input");
-  let searchResults = document.getElementById("searchResults");
-
-  if (!searchResults) {
-    console.error("Elementet #searchResults finnes ikke.");
-    return;
-  }
-
-  let location = locationInput ? locationInput.value.trim() : "";
-  let checkIn = checkInInput ? checkInInput.value.trim() : "";
-  let checkOut = checkOutInput ? checkOutInput.value.trim() : "";
-  let guests = guestsInput ? guestsInput.value.trim() : "";
-
-  if (!location || !checkIn || !checkOut || !guests) {
-    alert("Vennligst fyll ut alle feltene før du søker.");
-    return;
-  }
-
-  fetch(
-    `/search_results?location=${
-      encodeURIComponent(location)
-    }&check_in=${checkIn}&check_out=${checkOut}&guests=${guests}`,
-  )
-    .then(response => {
-      if (!response.ok) throw new Error("Feil ved henting av søkeresultater");
-      return response.text();
-    })
-    .then(data => {
-      searchResults.innerHTML = data;
-    })
-    .catch(error => {
-      console.error("Feil ved henting av søkeresultater:", error);
-      searchResults.innerHTML = "<p>En feil oppstod under søket.</p>";
-    });
 }
