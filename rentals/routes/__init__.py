@@ -10,6 +10,7 @@ from . import reset_password
 from . import register_new_listing
 from . import book_calendar
 from . import user_profile
+from . import user_profile_edit
 from . import active_bookings
 
 

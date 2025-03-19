@@ -629,7 +629,7 @@ main#user-profile {
     align-items: flex-start;
     margin: 2em 3em;
 
-    .button {
+    > .button {
       background-color: var(--slate-700);
       border: none;
       color: white;
@@ -715,5 +715,15 @@ main#user-profile {
       height: 30%;
       margin: 2em;
     }
+  }
+  > .user_profile_edit {
+
+    .circle {
+      grid-column-start: 1;
+      grid-row-start: 1;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
   }
 }

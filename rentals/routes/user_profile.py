@@ -10,7 +10,7 @@ def user_profile():
         with_navbar("""
             <main id="user-profile">
                 <div class="top_page">
-                    <p class="button">Edit Profile</p>
+                    <a href="http://localhost:8080/user-profile/edit" class="button">Edit profile</a>
                     <div class="profile_box">
                         <div class="circle">
                             <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
