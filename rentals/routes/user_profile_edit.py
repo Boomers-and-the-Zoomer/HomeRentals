@@ -8,15 +8,19 @@ def user_profile_edit():
     return html(
         "User Profile edit",
         with_navbar("""
-            <main id="user-profile" class="user_profile_edit">
-                <div class="top_page">
-                    <a href="http://localhost:8080/user-profile" class="button">Cancel</a>
-                        <div class="circle">
-                            <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
+            <main id="user-profile">
+                <div class="user_profile_edit">
+                    <a href="http://localhost:8080/user-profile" class="button_cancel">Cancel</a>
+                    <a href="http://localhost:8080/user-profile" class="button_confirm">Confirm</a>
+                        <div class="profile_pic">
+                            <div class="circle_edit">
+                                <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
+                            </div>
+                            <a href="http://localhost:8080/user-profile" class="button_picture">Update picture</a>
+                            <p class="item"><b>Name:</b><p>
+                             <textarea>Morty</textarea>
                         </div>
-                            <p><b>Morty</b><p>
-                        </div>
-                    <div class="about">
+                    <div class="info">
                         <div class="fieldset">
                             <form>
                                 <fieldset>

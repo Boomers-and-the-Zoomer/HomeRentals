@@ -726,6 +726,7 @@ main#user-profile {
         width: 100%;
         margin: 2em;
         padding: 1em;
+        font-size: 1.3em;
       }
     }
   }
@@ -752,13 +753,91 @@ main#user-profile {
     }
   }
   > .user_profile_edit {
-    .circle {
+    display: grid;
+
+    > .button_cancel {
+      background-color: var(--slate-700);
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      top: 4em;
+      right: 1.2em;
+      font-size: 1.7em;
+      margin: 20px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    > .button_confirm {
+      background-color: var(--slate-400);
+      border: none;
+      color: black;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      top: 10em;
+      right: 1em;
+      font-size: 1.7em;
+      margin: 20px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    > .profile_pic {
+      display: flex;
+      flex-direction: column;
       grid-column-start: 1;
       grid-row-start: 1;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      overflow: hidden;
+      width: 25em;
+      margin: 2em;
+      align-items: center;
+
+      > .circle_edit {
+        width: 22em;
+        height: 22em;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      > .button_picture {
+        background-color: var(--slate-400);
+        border: none;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        padding: 15px 32px;
+        font-size: 1.2em;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 50%;
+      }
+
+      > .item {
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+        margin-left: 5.4em;
+        align-self: flex-start;
+        font-size: 1.2em;
+      }
+    }
+    > .info {
+      grid-column-start: 2;
+      grid-row-start: 1;
+      margin-left: 2em;
+
+      > .fieldset {
+        font-size: 1.5em;
+        width: 60%;
+        margin: 2em;
+        padding: 1em;
+      }
     }
   }
 }
