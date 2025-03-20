@@ -13,6 +13,7 @@ from . import book_calendar
 from . import user_profile
 from . import user_profile_edit
 from . import active_bookings
+from . import log_out
 
 
 @route("/")
