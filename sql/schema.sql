@@ -18,6 +18,10 @@ CREATE TABLE User
     PhoneNumber CHAR(16) NOT NULL,
     HomeAddress CHAR(100) NOT NULL,
     PostalCode CHAR(10) NOT NULL,
+    Lives CHAR(40),
+    Languages CHAR(50),
+    Age CHAR(6),
+    FunFact CHAR(50),
     CONSTRAINT UserUserAccountFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 
