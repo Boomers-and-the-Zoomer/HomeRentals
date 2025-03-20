@@ -35,7 +35,7 @@ def view_active_bookings():
         FROM Booking, PropertyListing
         WHERE Booking.PropertyListingID = PropertyListing.PropertyListingID
             AND Booking.Email = %s
-            AND Booking.StartTime >= NOW()
+            AND Booking.EndTime >= NOW()
         ORDER BY Booking.StartTime
         """,
         (email,),
@@ -112,6 +112,3 @@ def cancel_temp_booking():
     cnx.commit()
 
     redirect(f"/bookings/active")
-
-
-# TODO: Fix list index out of range.
