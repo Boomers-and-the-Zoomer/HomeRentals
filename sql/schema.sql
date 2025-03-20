@@ -80,5 +80,11 @@ CREATE TABLE BookingSession
     CONSTRAINT BookingSessionPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID)
 );
 
+CREATE TABLE Picture
+(
+    PictureID INTO AUTO_INCREMENT PRIMARY KEY,
+    Filename VARCHAR(50) NOT NULL
+);
+
 
 
