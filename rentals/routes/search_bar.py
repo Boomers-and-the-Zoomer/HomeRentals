@@ -106,7 +106,7 @@ def get_data(query):
 def get_location():
     response.content_type = "text/html"
     locations = get_data("SELECT DISTINCT Address FROM PropertyListing")
-    location_list_html = "".join(
+    location_list_html = "\n".join(
         '<li onclick=\'selectOption(this, "location-input", "{}")\'>'.format(loc)
         + str(loc)
         + "</li>"
@@ -168,44 +168,48 @@ def search_bar():
     return html(
         "Search",
         with_navbar(f"""
-            <main id="search-bar">
-                <form class="search-container">
-                    <div hx-get="/get_locations" hx-target="find div.dropdown" hx-swap="innerHTML" class="input-box" onclick="toggleDropdown('location-box')">
-                        <label>Where</label>
-                        <input id="location-input" name="location" type="text" placeholder="search destination" readonly>
-                        <div id="location-box" class="dropdown"></div>
-                    </div>
-                    <div hx-get="/get_dates/checkin-input" hx-trigger="click" hx-target="#checkin-box" hx-swap="innerHTML"
-                        class="input-box" onclick="toggleDropdown('checkin-box')">
-                        <label>Check in</label>
-                        <input id="checkin-input" name="checkin" type="text" placeholder="Add dates" readonly>
-                        <div id="checkin-box" class="dropdown"></div>
-                    </div>
-                    <div hx-get="/get_dates/checkout-input" hx-trigger="click" hx-target="#checkout-box" hx-swap="innerHTML"
-                        class="input-box" onclick="toggleDropdown('checkout-box')">
-                        <label>Check out</label>
-                        <input id="checkout-input" name="checkout" type="text" placeholder="Add dates" readonly>
-                        <div id="checkout-box" class="dropdown"></div>
-                    </div>
-                    <div
-                        hx-get="/get_guests"
-                        hx-trigger="click"
-                        hx-target="#guests-box"
-                        hx-swap="innerHTML"
-                        hx-on::after-swap="setGuestEventListeners()"
-                        class="input-box" onclick="toggleDropdown('guests-box')">
-                        <label>Who</label>
-                        <input type="text" placeholder="Add guest" readonly>
-                        <div id="guests-box" class="dropdown" hx-trigger="click consume"></div>
-                    </div>
-                    <button
-                        type="submit"
-                        class="search-btn">🔍 Søk</button>
-                </form>
+            <main id="search-page">
+                <div class="spacer"></div>
+                <div id="search-bar">
+                    <form class="search-container">
+                        <div hx-get="/get_locations" hx-target="find div.dropdown" hx-swap="innerHTML" class="input-box" onclick="toggleDropdown('location-box')">
+                            <label>Where</label>
+                            <input id="location-input" name="location" type="text" placeholder="search destination" readonly>
+                            <div id="location-box" class="dropdown"></div>
+                        </div>
+                        <div hx-get="/get_dates/checkin-input" hx-trigger="click" hx-target="#checkin-box" hx-swap="innerHTML"
+                            class="input-box" onclick="toggleDropdown('checkin-box')">
+                            <label>Check in</label>
+                            <input id="checkin-input" name="checkin" type="text" placeholder="Add dates" readonly>
+                            <div id="checkin-box" class="dropdown"></div>
+                        </div>
+                        <div hx-get="/get_dates/checkout-input" hx-trigger="click" hx-target="#checkout-box" hx-swap="innerHTML"
+                            class="input-box" onclick="toggleDropdown('checkout-box')">
+                            <label>Check out</label>
+                            <input id="checkout-input" name="checkout" type="text" placeholder="Add dates" readonly>
+                            <div id="checkout-box" class="dropdown"></div>
+                        </div>
+                        <div
+                            hx-get="/get_guests"
+                            hx-trigger="click"
+                            hx-target="#guests-box"
+                            hx-swap="innerHTML"
+                            hx-on::after-swap="setGuestEventListeners()"
+                            class="input-box" onclick="toggleDropdown('guests-box')">
+                            <label>Who</label>
+                            <input type="text" placeholder="Add guest" readonly>
+                            <div id="guests-box" class="dropdown" hx-trigger="click consume"></div>
+                        </div>
+                        <button
+                            type="submit"
+                            class="search-btn">🔍 Søk</button>
+                    </form>
+                </div>
+                <div class="spacer"></div>
+                <div id="search-results">
+                    {result}
+                </div>
             </main>
-            <div id="search-results">
-                {result}
-            </div>
        """),
     )
 

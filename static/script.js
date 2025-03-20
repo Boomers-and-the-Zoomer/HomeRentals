@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let searchBar = document.querySelector("main#search-bar");
+  let searchBar = document.querySelector("main#search-page");
   if (!searchBar) return;
 
   console.log("Søkesiden lastet, aktiverer søkefunksjoner...");
@@ -62,7 +62,7 @@ function updateGuestsInput(adults, children) {
 }
 
 function toggleDropdown(id) {
-  let searchBar = document.querySelector("main#search-bar");
+  let searchBar = document.querySelector("#search-bar");
   if (!searchBar) return;
 
   let dropdown = searchBar.querySelector(`#${id}`);
@@ -80,7 +80,7 @@ function toggleDropdown(id) {
 }
 
 function adjustDropdownPosition() {
-  let searchBar = document.querySelector("main#search-bar");
+  let searchBar = document.querySelector("#search-bar");
   if (!searchBar) return;
 
   searchBar.querySelectorAll(".input-box").forEach(box => {
