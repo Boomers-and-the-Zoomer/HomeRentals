@@ -8,50 +8,63 @@ from ..components import html, with_navbar
 from .. import db
 
 
-@route("/view-rental/<PropertyListingID>")
-def view_rental(PropertyListingID):
-    print("Accessing view-rental", PropertyListingID)
+@route("/view-rental/<listing>")
+def view_rental(listing: int):
     cnx = db.db_cnx()
     cursor = cnx.cursor()
 
     cursor.execute(
         """
-        SELECT * FROM PropertyListing WHERE PropertyListingID = %s
+        SELECT PropertyListingID,Address,Description,Bedrooms,Beds,Bathrooms,ParkingSpots
+        FROM PropertyListing
+        WHERE PropertyListingID=%s
         """,
-        (PropertyListingID,),
+        (listing,),
     )
-    rental = cursor.fetchone()
-    print("Rental:", rental)
 
-    if not rental:
-        raise HTTPError(404, "Property listing not found")
+    PropertyListingID, address, description, bedrooms, beds, bathrooms, parking = (
+        cursor.fetchone()
+    )
 
-    return view_rental_template(rental)
+    var = f"""
+    <h1>{address}</h1>
+    <div class="left">
+        <div class="main-gallery">
+            <img width=485 height=270>
+            
+            <div class="sub-gallery">
+                <img width=230 height=130>
+                <img width=230 height=130>
+                <img width=230 height=130>
+                <img width=230 height=130>
+            </div>
+        </div>
+        
+        <p>{bedrooms} bedrooms · {beds} beds · {bathrooms} bathrooms · {parking} parking spots</p>
+        <p class="description">{description}</p>
+    </div>
+    <div class="calendar">
+    <form action="/book-rental" method="post">
+        <label for="from_date">From Date:</label>
+        <input type="datetime-local" id="from_date" name="from_date" required><br>
+        <label for="to_date">To Date:</label>
+        <input type="datetime-local" id="to_date" name="to_date" required><br>
+        <input type="hidden" name="PropertyListingID" value="{PropertyListingID}">
+        <button type="submit">Book Now</button>
+    </form>
+    
+    </div>
+    """
 
-
-def view_rental_template(rental):
     return html(
-        f"Rental Unit {rental[2]}",
-        with_navbar(f"""
-                <main id="book-calendar">
-                
-                    <h1>Address: {rental[2]}</h1>
-                    <ul>Information</ul>
-                        <li>Bedrooms: {rental[4]}</li>
-                        <li>Bathrooms: {rental[5]}</li>
-                        <li>{rental[6]} m²</li>
-                        <li>Parking spots: {rental[7]}</li>
-                        <li>Kitchens: {rental[8]}</li>
-                    <form action="/book-rental" method="post">
-                        <label for="from_date">From Date:</label>
-                        <input type="datetime-local" id="from_date" name="from_date" required><br>
-                        <label for="to_date">To Date:</label>
-                        <input type="datetime-local" id="to_date" name="to_date" required><br>
-                        <input type="hidden" name="PropertyListingID" value="{rental[0]}">
-                        <button type="submit">Book Now</button>
-                    </form>
-                </main>
-        """),
+        "View Rental",
+        with_navbar(
+            f"""
+            <main id="view-rental">
+            {var}
+            </main>
+            """
+        ),
     )
 
 
@@ -152,7 +165,8 @@ def booking_confirmation(PropertyListingID, from_date):
 
     cursor.execute(
         """
-        SELECT * FROM PropertyListing WHERE PropertyListingID = %s
+        SELECT * FROM PropertyListing 
+        WHERE PropertyListingID = %s
     """,
         (property_id,),
     )
@@ -173,11 +187,12 @@ def booking_confirmation_template(bConfirmation, rental):
                 <input type="hidden" id="expiry_time" name="expiry_time" value="{expiryTime}">
                 <h1>Your booking summary for: {rental[2]}</h1>
                 <ul>
-                    <li>Bedrooms: {rental[4]}</li>
-                    <li>Bathrooms: {rental[5]}</li>
-                    <li>Area: {rental[6]} m²</li>
-                    <li>Kitchens: {rental[8]}</li>
-                    <li>Parking spots allocated: {rental[7]}</li><br>
+                    <li>Bedrooms: {rental[5]}</li>
+                    <li>Beds: {rental[6]}</li>
+                    <li>Bathrooms: {rental[7]}</li>
+                    <li>Area: {rental[8]} m²</li>
+                    <li>Parking spots allocated: {rental[9]}</li>
+                    <li>Kitchens: {rental[10]}</li><br>
                     <li>Start: {bConfirmation[1]}</li>
                     <li>End: {bConfirmation[2]}</li>
                 </ul>
