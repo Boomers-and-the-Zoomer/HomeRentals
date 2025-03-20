@@ -55,4 +55,22 @@ INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (2, 'alice@example.com', '2025-06-01 12:00:00', '2025-06-07 12:00:00'),
 (1, 'test.testerson@example.com', '2025-07-01 12:00:00', '2025-07-07 12:00:00');
 
+INSERT INTO Picture (Filename) VALUES
+('hus1.jpg'),
+('hus2.jpg'),
+('hus3.jpg'),
+('hus4.jpg'),
+('hus5.jpg'),
+('hus6.jpg'),
+('hus7.jpg'),
+('hus8.jpg');
 
+INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8);

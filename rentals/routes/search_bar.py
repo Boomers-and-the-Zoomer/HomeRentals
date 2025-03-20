@@ -2,6 +2,7 @@ import mysql.connector
 from bottle import route, response, request
 from ..components import html, with_navbar
 import json
+import os
 from .. import db
 
 
@@ -23,20 +24,25 @@ def get_search_results(location, check_in, check_out, guests):
         location = f"%{location}%"
         params.insert(0, location)
         location_check = """PropertyListing.Address LIKE %s AND"""
+
     query = f"""
-        SELECT DISTINCT PropertyListing.*
+        SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address, 
+            PropertyListing.Description, PropertyListing.Beds, COALESCE(Picture.Filename, 'default.jpg') AS Filename
         FROM PropertyListing
+        LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID
+        LEFT JOIN Picture ON PropertyPicture.PictureID = Picture.PictureID
         WHERE {location_check} PropertyListing.PropertyListingID NOT IN (
             SELECT Booking.PropertyListingID
             FROM Booking
             WHERE (
                 (Booking.StartTime <= %s AND %s <= Booking.EndTime)
                 OR (%s < Booking.StartTime AND Booking.StartTime < %s)
-                OR (%s < Booking.EndTime AND Booking.EndTime < %s )
-            )
-        )
-        AND PropertyListing.Beds >= %s
-    """
+                OR (%s < Booking.EndTime AND Booking.EndTime < %s)
+    )
+)
+AND PropertyListing.Beds >= %s
+
+        """
     cursor.execute(
         query,
         tuple(params),
@@ -46,9 +52,20 @@ def get_search_results(location, check_in, check_out, guests):
     cursor.close()
     conn.close()
 
-    result_html = "".join(
-        f"<p>{row[1]} - {row[2]} NOK per natt - {row[5]} gjester</p>" for row in results
-    )
+    result_html = ""
+    for property_id, adress, description, beds, filename in results:
+        image_path = (
+            f"/static/uploads/{filename}" if filename else "/static/default.jpg"
+        )
+
+        result_html += f"""
+            <div class="property-card">
+                <img src="{image_path}" alt="Bilde av {adress}">
+                <h3>{adress}</h3>
+                <p>{description}</p>
+                <p>{beds} senger</p>
+            </div>
+        """
 
     return result_html if result_html else "<p>Ingen resultater funnet.</p>"
 

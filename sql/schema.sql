@@ -90,5 +90,13 @@ CREATE TABLE Picture
     Filename VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE PropertyPicture (
+    PropertyListingID INT NOT NULL,
+    PictureID INT NOT NULL,
+    FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID),
+    FOREIGN KEY (PictureID) REFERENCES Picture(PictureID),
+    PRIMARY KEY (PropertyListingID, PictureID)
+);
+
 
 
