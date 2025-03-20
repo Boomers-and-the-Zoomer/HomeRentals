@@ -8,17 +8,17 @@ INSERT INTO UserAccount (Email, PasswordHash) VALUES
 -- password: test123
 ('test.testerson@example.com', '$argon2id$v=19$m=65536,t=3,p=4$PzqPZKSkWFI3WfPZZxwDvg$h3kXj5bZx3VkZZm99SjV6h7DfNZ7GFk98J9SZ9h9WdP');
 -- password: charlie123
-('charlie@example.com', '$argon2id$v=19$m=65536,t=3,p=4$AFeFLgCBcb7hSZKr6CcvvQ$utzt36ugME8UeX0ODwlRWreyadLUJnmkWMaOVpNIfG4')
+('charlie@example.com', '$argon2id$v=19$m=65536,t=3,p=4$AFeFLgCBcb7hSZKr6CcvvQ$utzt36ugME8UeX0ODwlRWreyadLUJnmkWMaOVpNIfG4');
 -- password: diana456
-('diana@example.com', '$argon2id$v=19$m=65536,t=3,p=4$fcdLjjxg7Vyy9BIRj0tpwA$NkvT56TsXqAbXcjj2tb/Xie7CIoF07qTA5IgvBB31Gg')
+('diana@example.com', '$argon2id$v=19$m=65536,t=3,p=4$fcdLjjxg7Vyy9BIRj0tpwA$NkvT56TsXqAbXcjj2tb/Xie7CIoF07qTA5IgvBB31Gg');
 -- password: emmapass123
-('emma@example.com', '$argon2id$v=19$m=65536,t=3,p=4$Psq8sLrssz9Jqupgz6qibQ$ehaPd7jTwGHH/87Jmb+vhVOM5pfjCz50nDTBK2Oduw4')
+('emma@example.com', '$argon2id$v=19$m=65536,t=3,p=4$Psq8sLrssz9Jqupgz6qibQ$ehaPd7jTwGHH/87Jmb+vhVOM5pfjCz50nDTBK2Oduw4');
 -- password: frankthetank
-('frank@example.com', '$argon2id$v=19$m=65536,t=3,p=4$4vTDCXOOjaPP7HDF0cdR+g$ms2LpF0pXTrLNpzoR5xEsMf1xZ7O7ZIJS/TozlJi9jg')
+('frank@example.com', '$argon2id$v=19$m=65536,t=3,p=4$4vTDCXOOjaPP7HDF0cdR+g$ms2LpF0pXTrLNpzoR5xEsMf1xZ7O7ZIJS/TozlJi9jg');
 -- password: grace777
-('grace@example.com', '$argon2id$v=19$m=65536,t=3,p=4$b4V45zguYg2KQwRrg1ypiA$ej6NW2K8bmHYdZY42WGgskkCDhXk5PFxgnx7gUEmS0I')
+('grace@example.com', '$argon2id$v=19$m=65536,t=3,p=4$b4V45zguYg2KQwRrg1ypiA$ej6NW2K8bmHYdZY42WGgskkCDhXk5PFxgnx7gUEmS0I');
 -- password: henryford999
-('henry@example.com', '$argon2id$v=19$m=65536,t=3,p=4$PQBDWupWMYX3y9bDrid1dg$BHGZwsMq+sSI+liN3A3U8LmWGKONnVfSU9Vj3/rY7X4')
+('henry@example.com', '$argon2id$v=19$m=65536,t=3,p=4$PQBDWupWMYX3y9bDrid1dg$BHGZwsMq+sSI+liN3A3U8LmWGKONnVfSU9Vj3/rY7X4');
 
 INSERT INTO User (Email, ExternalID, FirstName, LastName, PhoneNumber, HomeAddress, PostalCode) VALUES
 ('alice@example.com', 1, 'Alice', 'Smith', '1234567890', '123 Main St, City', '10001'),
