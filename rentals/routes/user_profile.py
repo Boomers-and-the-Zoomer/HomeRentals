@@ -56,9 +56,7 @@ def user_profile():
                             <fieldset>
                                 <legend><b>About:</b></legend>
                                 <p><b>Lives in:</b> {lives}</p>
-                                <br><br>
                                 <p><b>Languages:</b> {languages}</p>
-                                <br><br>
                                 <p><b>Age:</b> {age}</p>
 
                             </fieldset>

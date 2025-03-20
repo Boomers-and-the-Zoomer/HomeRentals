@@ -40,16 +40,18 @@ def user_profile_edit():
             f"""
             <main id="user-profile">
                 <div class="user_profile_edit">
-                    <a href="http://localhost:8080/user-profile" class="button_cancel">Cancel</a>
-                    <button class="button_confirm" type="submit" form="update_info">Confirm</button>
-                        <div class="profile_pic">
-                            <div class="circle_edit">
-                                <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
-                            </div>
-                            <a href="http://localhost:8080/user-profile" class="button_picture">Update picture</a>
-                            <p class="item"><b>Name:</b><p>
-                             <textarea>{first_name}</textarea>
+                    <div class="buttons">
+                        <a href="http://localhost:8080/user-profile" class="button_cancel">Cancel</a>
+                        <button class="button_confirm" type="submit" form="update_info">Confirm</button>
+                    </div>
+                    <div class="profile_pic">
+                        <div class="circle_edit">
+                            <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
                         </div>
+                        <a href="http://localhost:8080/user-profile" class="button_picture">Update picture</a>
+                        <p class="item"><b>Name:</b><p>
+                         <textarea>{first_name}</textarea>
+                    </div>
                     <div class="info">
                         <div class="fieldset">
                             <form id="update_info" action="" method="POST">

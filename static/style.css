@@ -54,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 :root {
   --corner: 6px;
   --navbar-height: 60px;
+  --page-margin: 60px;
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
@@ -89,7 +90,7 @@ div#navigated {
       display: grid;
       gap: 30px;
       grid-template-columns: 1fr 1fr max-content;
-      padding: 0px 10px;
+      padding: 0px;
       height: 100%;
       list-style-type: none;
       justify-content: space-between;
@@ -220,6 +221,7 @@ div#navigated {
   > * {
     flex-grow: 1;
     align-self: stretch;
+    padding: 0px var(--page-margin);
   }
 }
 
@@ -352,7 +354,6 @@ form.simple-account-form {
 
 /* ================================= PAGES ================================== */
 main#view-rental {
-  margin-left: 60px;
   margin-top: 20px;
   display: grid;
   grid-template-columns: auto auto;
@@ -381,8 +382,7 @@ main#view-rental {
   }
   > .calendar {
     border: 1px solid #475569;
-    width: 300px;
-    height: 350px;
+    height: fit-content;
   }
 }
 
@@ -740,7 +740,6 @@ main#search-page {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    padding: 20px;
   }
 
   .property-card {
@@ -819,13 +818,20 @@ main#book-confirm {
 }
 
 main#user-profile {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: max-content 1fr max-content;
+  grid-template-rows: repeat(2, max-content);
+
   > .top_page {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: 2em 3em;
+    display: grid;
+    grid-column: 1 / 4;
+    grid-template-columns: subgrid;
+    margin: 2em 0px;
 
     > .button {
+      grid-column: 3;
+      grid-row: 1;
       background-color: var(--slate-700);
       border: none;
       color: white;
@@ -833,13 +839,11 @@ main#user-profile {
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      position: absolute;
-      top: 3em;
-      right: 1em;
       font-size: 1.7em;
-      margin: 20px 20px;
       border-radius: 5px;
       cursor: pointer;
+      width: fit-content;
+      height: fit-content;
     }
 
     > .profile_box {
@@ -847,9 +851,7 @@ main#user-profile {
       border-radius: var(--corner);
       background: var(--slate-300);
       border: 2px solid black;
-      margin-top: 2em;
-      margin-left: 3em;
-      width: fit-content;
+      width: 400px;
       height: fit-content;
       padding: 10px;
 
@@ -880,27 +882,32 @@ main#user-profile {
       }
     }
     > .about {
-      margin-top: 2em;
-      margin-left: 10em;
-
       > .fieldset {
         width: 100%;
-        margin: 2em;
-        padding: 1em;
+        padding: 0px;
         font-size: 1.3em;
+
+        > fieldset {
+          display: flex;
+          flex-direction: column;
+          padding: 0px;
+          border-radius: var(--corner);
+
+          /* Temporary hack since the page is relatively empty */
+          > p {
+            padding-bottom: 100px;
+          }
+        }
       }
     }
   }
   > .ad_preview {
+    grid-column: 2;
     display: flex;
-    width: 50%;
     height: fit-content;
     background-color: var(--slate-200);
     border-radius: var(--corner);
     border: 2px solid black;
-    margin-top: 2em;
-    margin-left: 30em;
-    margin-bottom: 1em;
 
     > h3 {
       margin-top: 5px;
@@ -915,41 +922,40 @@ main#user-profile {
   }
   > .user_profile_edit {
     display: grid;
+    gap: inherit;
+    margin-top: 32px;
 
-    > .button_cancel {
-      background-color: var(--slate-300);
-      border: none;
-      color: black;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      position: absolute;
-      top: 10em;
-      right: 1.2em;
-      font-size: 1.7em;
-      margin: 20px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 10%;
-    }
+    > .buttons {
+      display: flex;
+      gap: 40px;
+      flex-direction: column-reverse;
+      grid-column: 3;
 
-    > .button_confirm {
-      background-color: var(--slate-700);
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      position: absolute;
-      top: 4em;
-      right: 1em;
-      font-size: 1.7em;
-      margin: 20px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 11%;
+      > .button_cancel {
+        background-color: var(--slate-300);
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.7em;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      > .button_confirm {
+        background-color: var(--slate-700);
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.7em;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     }
 
     > .profile_pic {
@@ -957,13 +963,11 @@ main#user-profile {
       flex-direction: column;
       grid-column-start: 1;
       grid-row-start: 1;
-      width: 25em;
-      margin: 2em;
+      width: 400px;
       align-items: center;
 
       > .circle_edit {
-        width: 22em;
-        height: 22em;
+        aspect-ratio: 1 / 1;
         border-radius: 50%;
         overflow: hidden;
       }
@@ -993,13 +997,10 @@ main#user-profile {
     > .info {
       grid-column-start: 2;
       grid-row-start: 1;
-      margin-left: 2em;
 
       > .fieldset {
         font-size: 1.5em;
         width: 60%;
-        margin: 2em;
-        padding: 1em;
       }
     }
   }
