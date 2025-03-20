@@ -26,17 +26,31 @@ def view_rental(listing: int):
         cursor.fetchone()
     )
 
+    cursor.execute(
+        """
+        SELECT Filename
+        FROM PropertyPicture, Picture
+        WHERE PropertyPicture.PictureID=Picture.PictureID
+            AND PropertyListingID=%s
+        """,
+        (listing,),
+    )
+    pictures = cursor.fetchall()
+    imgs = [f'src="/static/uploads/{row[0]}" ' for row in pictures]
+    while len(imgs) < 5:
+        imgs += [""]
+
     var = f"""
     <h1>{address}</h1>
     <div class="left">
         <div class="main-gallery">
-            <img width=485 height=270>
+            <img {imgs[0]}width=485 height=270>
             
             <div class="sub-gallery">
-                <img width=230 height=130>
-                <img width=230 height=130>
-                <img width=230 height=130>
-                <img width=230 height=130>
+                <img {imgs[1]}width=230 height=130>
+                <img {imgs[2]}width=230 height=130>
+                <img {imgs[3]}width=230 height=130>
+                <img {imgs[4]}width=230 height=130>
             </div>
         </div>
         

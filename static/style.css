@@ -381,6 +381,8 @@ main#view-rental {
     }
   }
   > .calendar {
+    padding: 10px;
+    border-radius: var(--corner);
     border: 1px solid #475569;
     height: fit-content;
   }
