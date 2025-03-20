@@ -1000,7 +1000,12 @@ main#user-profile {
 
       > .fieldset {
         font-size: 1.5em;
-        width: 60%;
+
+        > form {
+          > fieldset {
+            display: grid;
+          }
+        }
       }
     }
   }
