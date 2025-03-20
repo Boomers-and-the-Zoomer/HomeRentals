@@ -282,6 +282,68 @@ form.simple-account-form {
   }
 }
 
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  > .image-upload-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    > .image {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+
+      > .img {
+        grid-area: 1 / 1 / 1 / 1;
+        border-radius: var(--corner);
+        border: 1px solid black;
+        background: url(/static/icons/plus.svg) no-repeat center
+          var(--slate-100);
+
+        &[src] {
+          background: unset;
+
+          &:hover, &:has(+ .overlay:focus) {
+            opacity: 0.5;
+          }
+        }
+      }
+
+      > .overlay {
+        z-index: -1;
+        grid-area: 1 / 1 / 1 / 1;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover:has(> .img[src]) > .overlay,
+      &:has(> .img[src]) > .overlay:focus {
+        z-index: unset;
+        display: grid;
+        place-items: center center;
+      }
+    }
+  }
+
+  > button {
+    width: fit-content;
+  }
+
+  > #image-upload-input {
+    display: none;
+    border-bottom: none;
+  }
+
+  > #image-upload-carrier {
+    display: none;
+  }
+}
+
 /* ================================= PAGES ================================== */
 main#view-rental {
   margin-left: 60px;
@@ -402,12 +464,15 @@ main#register_new_listing {
     border: none;
     border-bottom: 2px solid black;
     outline: none;
-    width: 150px;
     font-size: 26px;
     font-weight: normal;
     padding: 0px;
     text-align: center;
     display: inline-block;
+  }
+
+  input[type="text"] {
+    width: 150px;
   }
 
   input[type="number"] {
@@ -443,7 +508,7 @@ main#register_new_listing {
   }
 
   .back-button button {
-    position: absolute;
+    position: fixed;
     border: none;
     background-color: inherit;
     padding: 14px 28px;
@@ -464,11 +529,11 @@ main#register_new_listing {
   }
 
   input[name="address"] {
-    width: 375px !important;
+    width: 375px;
   }
 
   input[name="postalcode"] {
-    width: 200px !important;
+    width: 200px;
   }
 
   .button {
@@ -479,7 +544,7 @@ main#register_new_listing {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
     font-size: 1.7em;
@@ -500,6 +565,18 @@ main#register_new_listing {
 
   .pictures {
     margin-top: 150px;
+  }
+
+  .create-listing-button {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 80px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .image-upload-container {
+    flex-grow: 2;
   }
 }
 

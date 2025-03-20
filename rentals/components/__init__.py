@@ -68,7 +68,7 @@ def with_navbar(content: str) -> str:
                 <ul>
                     <li id="nav-homerentals"><a href="/">HomeRentals</a></li>
                     <li id="nav-active-bookings"><a href="/bookings/active">View Active Bookings</a></li>
-                    <li id="nav-rent-cta"><a href="/listings/create">Rent out your property</a></li>
+                    <li id="nav-rent-cta"><a href="/new-listing">Rent out your property</a></li>
                     <li id="nav-user">
                         <button popovertarget="top-nav-user-popover">
                             {icons.user()}
@@ -103,3 +103,43 @@ def simple_account_form(name: str, content: str) -> str:
             {content}
         </form>
     """
+
+
+def image_input():
+    """
+    An image output. As currently implemented, it only supports being instaniated once on a given page.
+    """
+
+    return f"""
+    <div class="image-upload">
+        <div class="image-upload-gallery">
+        {_single_image()}
+        {_single_image()}
+        {_single_image()}
+        {_single_image()}
+        {_single_image()}
+        </div>
+            <button type="none">
+                <label for="image-upload-input">
+                    Add image(s)
+                </label>
+            </button>
+        <input id="image-upload-input" name="empty" type="file" accept="image/*" multiple>
+        {image_input_carrier()}
+    </div>
+    """
+
+
+def _single_image():
+    return """
+    <div class="image">
+        <img class="img" width=200 height=200>
+        <button type="none" class="overlay">
+            <img src="/static/icons/x.svg">
+        </button>
+    </div>
+    """
+
+
+def image_input_carrier():
+    return """<input id="image-upload-carrier" hx-preserve name="image-files" type="file" accept="image/*" multiple>"""
