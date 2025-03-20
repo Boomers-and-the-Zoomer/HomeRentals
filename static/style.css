@@ -839,6 +839,24 @@ main#user-profile {
     display: grid;
 
     > .button_cancel {
+      background-color: var(--slate-300);
+      border: none;
+      color: black;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      top: 10em;
+      right: 1.2em;
+      font-size: 1.7em;
+      margin: 20px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 10%;
+    }
+
+    > .button_confirm {
       background-color: var(--slate-700);
       border: none;
       color: white;
@@ -848,28 +866,12 @@ main#user-profile {
       display: inline-block;
       position: absolute;
       top: 4em;
-      right: 1.2em;
-      font-size: 1.7em;
-      margin: 20px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    > .button_confirm {
-      background-color: var(--slate-400);
-      border: none;
-      color: black;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      position: absolute;
-      top: 10em;
       right: 1em;
       font-size: 1.7em;
       margin: 20px 20px;
       border-radius: 5px;
       cursor: pointer;
+      width: 11%;
     }
 
     > .profile_pic {
@@ -889,9 +891,9 @@ main#user-profile {
       }
 
       > .button_picture {
-        background-color: var(--slate-400);
+        background-color: var(--slate-700);
         border: none;
-        color: black;
+        color: white;
         text-align: center;
         text-decoration: none;
         display: inline-block;
