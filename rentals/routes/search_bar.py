@@ -18,6 +18,8 @@ def get_search_results(location, check_in, check_out, guests):
         params += [location]
         condition = """PropertyListing.Address LIKE %s"""
 
+    time_check = ""
+
     if check_in != "" and check_out != "":
         if condition != "":
             time_check += " AND "
@@ -53,8 +55,11 @@ def get_search_results(location, check_in, check_out, guests):
         FROM PropertyListing
         LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID
         LEFT JOIN Picture ON PropertyPicture.PictureID = Picture.PictureID
-        WHERE {condition}
         """
+    if condition:
+        query += f" WHERE {condition}"
+
+    
     print(query)
     cursor.execute(
         query,
@@ -66,18 +71,20 @@ def get_search_results(location, check_in, check_out, guests):
     conn.close()
 
     result_html = ""
-    for property_id, adress, description, beds, filename in results:
+    for property_id, address, description, beds, filename in results:
         image_path = (
             f"/static/uploads/{filename}" if filename else "/static/default.jpg"
         )
 
         result_html += f"""
-            <div class="property-card">
-                <img src="{image_path}" alt="Bilde av {adress}">
-                <h3>{adress}</h3>
-                <p>{description}</p>
-                <p>{beds} senger</p>
-            </div>
+            <a href="/property/{property_id}" class="property-link">
+                <div class="property-card">
+                    <img src="{image_path}" alt="Bilde av {address}">
+                    <h3>{address}</h3>
+                    <p>{description}</p>
+                    <p class="beds">{beds} Beds</p>
+                </div>
+            </a>
         """
 
     return result_html if result_html else "<p>Ingen resultater funnet.</p>"
