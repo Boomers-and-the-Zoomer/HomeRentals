@@ -606,6 +606,7 @@ main#search-page {
     padding: 15px;
     border-radius: 10px;
     width: max-content;
+    z-index: 100;
 
     .search-container {
       display: flex;
