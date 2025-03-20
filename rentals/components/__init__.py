@@ -49,6 +49,11 @@ def with_navbar(content: str) -> str:
             <span>Profile</span>
             {icons.chevron_right()}
         </a>
+        <a href="/bookings/active">
+            {icons.calendar_clock()}
+            <span>Active bookings</span>
+            {icons.chevron_right()}
+        </a>
         <button form="log-out-form" type="submit">
             {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
         </button>
@@ -72,7 +77,6 @@ def with_navbar(content: str) -> str:
             <nav id="top-nav">
                 <ul>
                     <li id="nav-homerentals"><a href="/">HomeRentals</a></li>
-                    <li id="nav-active-bookings"><a href="/bookings/active">View Active Bookings</a></li>
                     <li id="nav-rent-cta"><a href="/new-listing">Rent out your property</a></li>
                     <li id="nav-user">
                         <button popovertarget="top-nav-user-popover">

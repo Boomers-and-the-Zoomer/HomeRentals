@@ -86,7 +86,9 @@ div#navigated {
     z-index: 1000000000;
 
     > ul {
-      display: flex;
+      display: grid;
+      gap: 30px;
+      grid-template-columns: 1fr 1fr max-content;
       padding: 0px 10px;
       height: 100%;
       list-style-type: none;
@@ -96,6 +98,10 @@ div#navigated {
         display: inline-flex;
         height: 100%;
         align-items: center;
+
+        &#nav-rent-cta {
+          place-self: end;
+        }
 
         > a {
           color: white;
@@ -137,7 +143,7 @@ div#navigated {
 
   > div#top-nav-user-popover {
     position: fixed;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: max-content auto max-content;
     grid-template-rows: auto;
     align-items: center;
     column-gap: 10px;
