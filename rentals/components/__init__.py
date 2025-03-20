@@ -44,6 +44,11 @@ def with_navbar(content: str) -> str:
 
     account_menu = if_logged_in_else(
         f"""
+        <a href="/user-profile">
+            {icons.user()}
+            <span>Profile</span>
+            {icons.chevron_right()}
+        </a>
         <button form="log-out-form" type="submit">
             {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
         </button>
