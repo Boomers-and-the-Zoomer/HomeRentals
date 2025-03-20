@@ -59,7 +59,6 @@ def get_search_results(location, check_in, check_out, guests):
     if condition:
         query += f" WHERE {condition}"
 
-    
     print(query)
     cursor.execute(
         query,
@@ -77,7 +76,7 @@ def get_search_results(location, check_in, check_out, guests):
         )
 
         result_html += f"""
-            <a href="/property/{property_id}" class="property-link">
+            <a href="/view-rental/{property_id}" class="property-link">
                 <div class="property-card">
                     <img src="{image_path}" alt="Bilde av {address}">
                     <h3>{address}</h3>
