@@ -23,12 +23,7 @@ Request.MEMFILE_MAX = 16777216
 
 @route("/")
 def index():
-    cnx = db.db_cnx()
-    return html(
-        "Hello world",
-        with_navbar("<h1>Hello world</h1>"),
-        body={"class": "foo", "id": "bar"},
-    )
+    return search_bar.search_bar()
 
 
 @route("/static/<path:path>")

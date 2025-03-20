@@ -10,20 +10,42 @@ def get_search_results(location, check_in, check_out, guests):
     conn = db.db_cnx()
     cursor = conn.cursor()
 
-    params = [
-        check_in,
-        check_out,
-        check_in,
-        check_out,
-        check_in,
-        check_out,
-        guests,
-    ]
-    location_check = ""
+    params = []
+
+    condition = ""
     if location != "":
         location = f"%{location}%"
-        params.insert(0, location)
-        location_check = """PropertyListing.Address LIKE %s AND"""
+        params += [location]
+        condition = """PropertyListing.Address LIKE %s"""
+
+    if check_in != "" and check_out != "":
+        if condition != "":
+            time_check += " AND "
+        time_check += """
+        PropertyListing.PropertyListingID NOT IN (
+            SELECT Booking.PropertyListingID
+            FROM Booking
+            WHERE (
+                (Booking.StartTime <= %s AND %s <= Booking.EndTime)
+                OR (%s < Booking.StartTime AND Booking.StartTime < %s)
+                OR (%s < Booking.EndTime AND Booking.EndTime < %s)
+            )
+        )
+        """
+        params += [
+            check_in,
+            check_out,
+            check_in,
+            check_out,
+            check_in,
+            check_out,
+        ]
+
+    if guests != "":
+        if condition != "":
+            condition += " AND "
+        condition += "PropertyListing.Beds >= %s"
+        params += [guests]
 
     query = f"""
         SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address, 
@@ -31,18 +53,9 @@ def get_search_results(location, check_in, check_out, guests):
         FROM PropertyListing
         LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID
         LEFT JOIN Picture ON PropertyPicture.PictureID = Picture.PictureID
-        WHERE {location_check} PropertyListing.PropertyListingID NOT IN (
-            SELECT Booking.PropertyListingID
-            FROM Booking
-            WHERE (
-                (Booking.StartTime <= %s AND %s <= Booking.EndTime)
-                OR (%s < Booking.StartTime AND Booking.StartTime < %s)
-                OR (%s < Booking.EndTime AND Booking.EndTime < %s)
-    )
-)
-AND PropertyListing.Beds >= %s
-
+        WHERE {condition}
         """
+    print(query)
     cursor.execute(
         query,
         tuple(params),
@@ -76,9 +89,6 @@ def search_results():
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip() or 1
-
-    if not check_in or not check_out or not guests:
-        return "<p>Vennligst fyll ut alle feltene.</p>"
 
     return get_search_results(location, check_in, check_out, guests)
 
