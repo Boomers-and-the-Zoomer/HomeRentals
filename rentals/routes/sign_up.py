@@ -1,7 +1,7 @@
 import mysql.connector
 
 from argon2 import PasswordHasher
-from bottle import get, post, request
+from bottle import get, post, request, response
 
 
 from ..components import (
@@ -78,4 +78,5 @@ def sign_up_submit():
     cur.close()
 
     # TODO: Send actual confirmation email.
-    return html("Account registered", "Account registered")
+    response.status = 303
+    response.add_header("Location", "/log-in")
