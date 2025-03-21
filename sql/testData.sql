@@ -50,9 +50,9 @@ INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Bedrooms, 
 ('grace@example.com', '404 Cedar St, City', '10007', 'A charming cottage in a quiet neighborhood.', 3, 3, 2, 100, 1, 1),
 ('henry@example.com', '505 Walnut St, City', '10008', 'A sleek modern loft with open-concept living.', 1, 1, 1, 70, 0, 1);
 
-INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!',3, 4, 2, 200, 1, 1),
-(31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!',6, 9, 6, 1337, 9, 6);
+INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+(300, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!', 5, 3, 4, 2, 200, 1, 1),
+(301, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!', 6, 6, 9, 6, 1337, 9, 6);
 
 INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (1, 'carol@example.com', '2025-05-01 12:00:00', '2025-05-07 12:00:00'),
