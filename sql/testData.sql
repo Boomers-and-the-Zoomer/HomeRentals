@@ -66,6 +66,53 @@ INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Desc
 
 
 
+INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+(100, 'elin@strandvik.no', 'Strandvikvegen 553', '5643', 'Fin hytte i  Bjørnafjorden med god utsikt over fjorden.', '3', '7', '3', '220', '4', '1'),
+(101, 'maritkaren@manager.no', 'Berknesvegen 222', '6105', 'Flott ferie for hele familien. Koselig feriehus med egen sjøtomt og vakker hage.', '3', '7', '1', '65', '1', '1'),
+(102, 'sivisbjørn@gmail.com', 'Sklibreivegen 10', '6975', 'Nyt det avslappende, komfortable og lukkede stedet Birdbox. Sov rett ved siden av naturen og dens fantastiske omgivelser.', '1', '2', '1', '30', '1', '1'),
+(103, 'josteinbredpikk@pornhub.com', 'Soknaveien 60', '4158', 'Naustet er helt nytt og en del av sjøhusmiljøet mot Soknasundet. Det er brygge med firskemulighet. Bygg og møbler er laget av den anerkjente arkitekten Espen Surnevik.', '2', '3', '1', '130', '1', '1'),
+(104, 'mikkel.sverdsrup@dk.no', 'Furnesvegen 178B', '2319', 'Koselig og familievennlig sted hvor gode barndomsminner lages. Området er landlig med et godt lokalt ølbryggeri som er åpent hver dag.', '4', '8', '2', '200', '2', '1'),
+(105, 'unnifrahamar@hamkam.no', 'Karsetgutua 5', '2312', 'Huset ligger på en gård med aktivitet og aktiv gårdsdrift. Vi har gode turmuligheter i området. Perfekt for en helg alene, eller med familien. Huset leies ikke ut for en fest.', '1', '2', '1', '30', '1', '1');
+
+
+INSERT INTO Uploads (PictureID, Filename) VALUES
+(100, 'listing10pic1.jpg'),
+(101, 'listing10pic2.jpg'),
+(102, 'listing10pic3.jpg'),
+(103, 'listing10pic4.jpg'),
+(104, 'listing10pic5.jpg'),
+(105, 'listing11pic1.jpg'),
+(106, 'listing11pic2.jpg'),
+(107, 'listing11pic3.jpg'),
+(108, 'listing11pic4.jpg'),
+(109, 'listing11pic5.jpg'),
+(110, 'listing12pic1.jpg'),
+(111, 'listing12pic2.jpg'),
+(112, 'listing12pic3.jpg'),
+(113, 'listing12pic4.jpg'),
+(114, 'listing12pic5.jpg'),
+(115, 'listing13pic1.jpg'),
+(116, 'listing13pic2.jpg'),
+(117, 'listing13pic3.jpg'),
+(118, 'listing13pic4.jpg'),
+(119, 'listing13pic5.jpg'),
+(120, 'listing14pic1.jpg'),
+(121, 'listing14pic2.jpg'),
+(122, 'listing14pic3.jpg'),
+(123, 'listing14pic4.jpg'),
+(124, 'listing14pic5.jpg'),
+(125, 'listing15pic1.jpg'),
+(125, 'listing15pic2.jpg'),
+(126, 'listing15pic3.jpg'),
+(127, 'listing15pic4.jpg'),
+(128, 'listing15pic5.jpg');
+
+
+
+
+
+
+
 INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (1, 'carol@example.com', '2025-05-01 12:00:00', '2025-05-07 12:00:00'),
 (2, 'alice@example.com', '2025-06-01 12:00:00', '2025-06-07 12:00:00'),
