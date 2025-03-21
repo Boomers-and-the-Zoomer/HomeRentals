@@ -56,12 +56,12 @@ INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Desc
 
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(100, 'alice@example.com', 'Strandvikvegen 553', '5643', 'Fin hytte i  Bjørnafjorden med god utsikt over fjorden.', '2', '3', '7', '3', '220', '4', '1'),
-(101, 'alice@example.com', 'Berknesvegen 222', '6105', 'Flott ferie for hele familien. Koselig feriehus med egen sjøtomt og vakker hage.', '2', '3', '7', '1', '65', '1', '1'),
-(102, 'alice@example.com', 'Sklibreivegen 10', '6975', 'Nyt det avslappende, komfortable og lukkede stedet Birdbox. Sov rett ved siden av naturen og dens fantastiske omgivelser.', '2', '1', '2', '1', '30', '1', '1'),
-(103, 'alice@example.com', 'Soknaveien 60', '4158', 'Naustet er helt nytt og en del av sjøhusmiljøet mot Soknasundet. Det er brygge med firskemulighet. Bygg og møbler er laget av den anerkjente arkitekten Espen Surnevik.', '2', '2', '3', '1', '130', '1', '1'),
-(104, 'alice@example.com', 'Furnesvegen 178B', '2319', 'Koselig og familievennlig sted hvor gode barndomsminner lages. Området er landlig med et godt lokalt ølbryggeri som er åpent hver dag.', '2', '4', '8', '2', '200', '2', '1'),
-(105, 'alice@example.com', 'Karsetgutua 5', '2312', 'Huset ligger på en gård med aktivitet og aktiv gårdsdrift. Vi har gode turmuligheter i området. Perfekt for en helg alene, eller med familien. Huset leies ikke ut for en fest.', '2', '1', '2', '1', '30', '1', '1');
+(100, 'alice@example.com', 'Strandvikvegen 553, Strandvik', '5643', 'Fin hytte i  Bjørnafjorden med god utsikt over fjorden.', '2', '3', '7', '3', '220', '4', '1'),
+(101, 'alice@example.com', 'Berknesvegen 222, Volda', '6105', 'Flott ferie for hele familien. Koselig feriehus med egen sjøtomt og vakker hage.', '2', '3', '7', '1', '65', '1', '1'),
+(102, 'alice@example.com', 'Sklibreivegen 10, Knowhere', '6975', 'Nyt det avslappende, komfortable og lukkede stedet Birdbox. Sov rett ved siden av naturen og dens fantastiske omgivelser.', '2', '1', '2', '1', '30', '1', '1'),
+(103, 'alice@example.com', 'Soknaveien 60, Bru', '4158', 'Naustet er helt nytt og en del av sjøhusmiljøet mot Soknasundet. Det er brygge med firskemulighet. Bygg og møbler er laget av den anerkjente arkitekten Espen Surnevik.', '2', '2', '3', '1', '130', '1', '1'),
+(104, 'alice@example.com', 'Furnesvegen 178B, Hamar', '2319', 'Koselig og familievennlig sted hvor gode barndomsminner lages. Området er landlig med et godt lokalt ølbryggeri som er åpent hver dag.', '2', '4', '8', '2', '200', '2', '1'),
+(105, 'alice@example.com', 'Karsetgutua 5, Hamar', '2312', 'Huset ligger på en gård med aktivitet og aktiv gårdsdrift. Vi har gode turmuligheter i området. Perfekt for en helg alene, eller med familien. Huset leies ikke ut for en fest.', '2', '1', '2', '1', '30', '1', '1');
 
 
 INSERT INTO Picture (PictureID, Filename) VALUES
@@ -216,3 +216,35 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (31, 38),
 (31, 39);
 
+
+INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
+(100, 100),
+(100, 101),
+(100, 102),
+(100, 103),
+(100, 104),
+(101, 105),
+(101, 106),
+(101, 107),
+(101, 108),
+(101, 109),
+(102, 110),
+(102, 111),
+(102, 112),
+(102, 113),
+(102, 114),
+(103, 115),
+(103, 116),
+(103, 117),
+(103, 118),
+(103, 119),
+(104, 120),
+(104, 121),
+(104, 122),
+(104, 123),
+(104, 124),
+(105, 125),
+(105, 126),
+(105, 127),
+(105, 128),
+(105, 129);
