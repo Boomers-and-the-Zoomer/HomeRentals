@@ -201,9 +201,9 @@ def booking_confirmation_template(bConfirmation, rental):
         f"Booking confirmation for: {rental[2]}",
         with_navbar(f"""
             <main id="book-confirm">
-                <h2>Confirm order</h2>
+                <h1>Confirm order</h1>
                 <input type="hidden" id="expiry_time" name="expiry_time" value="{expiryTime}">
-                <h1>Your booking summary for: {rental[2]}</h1>
+                <h2>Your booking summary for: {rental[2]}</h2>
                 <ul>
                     <li>Bedrooms: {rental[5]}</li>
                     <li>Beds: {rental[6]}</li>
@@ -221,13 +221,15 @@ def booking_confirmation_template(bConfirmation, rental):
                         <input type="checkbox" id="TOS" name="TOS" required>
                         I accept the <a href="https://www.boilerplate.co/terms-of-service" target="_blank">terms and conditions</a>
                     </label>
-                    <button type="submit">Finalize booking</button>
                 </form>
                 <form id="cancelBooking" action="/cancel-temp-booking" method="post">
                     <input type="hidden" name="PropertyListingID" value="{rental[0]}">
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
-                    <button type="submit">Cancel booking</button>
                 </form>
+                <div>
+                <button form="finalizeForm" type="submit">Finalize booking</button>
+                <button form="cancelBooking" type="submit">Cancel booking</button>
+                </div>
             </main>
         """),
     )
