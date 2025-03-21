@@ -42,7 +42,7 @@ def get_search_results(location, check_in, check_out, guests):
             check_out,
         ]
 
-    if guests != "":
+    if guests != 0:
         if condition != "":
             condition += " AND "
         condition += "PropertyListing.Beds >= %s"
@@ -96,9 +96,19 @@ def search_results():
     children = request.query.get("children", "").strip()
     adults = request.query.get("adults", "").strip()
 
-    return get_search_results(
-        location, check_in, check_out, (int(children) + int(adults)) or 1
-    )
+    guests = 0
+    try:
+        guests += int(children)
+    except ValueError:
+        pass
+
+    try:
+        guests += int(adults)
+    except ValueError:
+        pass
+
+    print(children)
+    return get_search_results(location, check_in, check_out, guests)
 
 
 @route("/search")
