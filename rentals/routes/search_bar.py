@@ -68,8 +68,14 @@ def get_search_results(location, check_in, check_out, guests):
     cursor.close()
     conn.close()
 
+    # Hack around the SQL query returning one row per picture per property listing
+    properties_seen = []
     result_html = ""
     for property_id, address, description, beds, filename in results:
+        if property_id in properties_seen:
+            continue
+        properties_seen += [property_id]
+
         image_path = (
             f"/static/uploads/{filename}" if filename else "/static/default.jpg"
         )
