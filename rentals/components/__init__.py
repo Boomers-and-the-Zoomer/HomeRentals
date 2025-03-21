@@ -130,7 +130,7 @@ def image_input():
         </div>
             <button type="none">
                 <label for="image-upload-input">
-                    Add image(s)
+                    Add picture(s)
                 </label>
             </button>
         <input id="image-upload-input" name="empty" type="file" accept="image/*" multiple>

@@ -1,12 +1,13 @@
 from bottle import route, response, post, get, request
 
+from .. import db
 from ..components import html, with_navbar, image_input, image_input_carrier
 
 
 @route("/new-listing")
 def new_listing():
     response.status = 307
-    response.add_header("Location", "/new-listing/page1")
+    response.add_header("Location", "/new-listing/summary")
 
 
 def page_frame(content: str, n: int = None, prev: str = None, next: str = None) -> str:
@@ -254,45 +255,61 @@ def new_listing_summary():
 def new_listing_summary_content():
     return page_frame(
         f"""
-        <div id="summary" method="post">
+        <div id="summary">
             <div class="maintext">
                 <h1>Your summary!</h1>
-                {new_listing_page2_content()}
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <hr style="width: 750px; margin-left: auto; margin-right: auto;">
-                <br>
-                {new_listing_page3_content()}
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <hr style="width: 750px; margin-left: auto; margin-right: auto;">
-                <br>
-                {new_listing_page4_content()}
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <hr style="width: 750px; margin-left: auto; margin-right: auto;">
-                <br>
-                <br>
-                <br>
-                <br>
-                {new_listing_page5_content()}
+
+                <h2>Pictures</h2>
+                {image_input()}
+
+                <h2>Description</h2>
+                <div class="fields">
+                    <label>Description:</label>
+                    <textarea id="description" hx-preserve name="description" placeholder="Enter your description here"></textarea>
+                </div>
+
+                <h2>Location</h2>
+                <div class="fields">
+                    <label>Address:</label>
+                    <input id="address" hx-preserve type="text" name="address" class="line-input" required>
+                    <label>Postal code:</label>
+                    <input id="postalcode" hx-preserve type="text" name="postalcode" class="line-input" required>
+                </div>
+
+                <h2>Sleeping and hygiene</h2>
+                <div class="fields">
+                    <label>Bedrooms:</label>
+                    <input id="bedrooms" hx-preserve type="number" name="bedrooms" class="line-input" required>
+                    <label>Beds:</label>
+                    <input id="beds" hx-preserve type="number" name="beds" class="line-input" required>
+                    <label>Bathrooms:</label>
+                    <input id="bathrooms" hx-preserve type="number" name="bathrooms" class="line-input" required>
+                    <label>Square Meters:</label>
+                    <input id="squaremeters" hx-preserve type="number" name="squaremeters" class="line-input" required>
+                </div>
+
+                <h2>Other amenities:</h2>
+                <div class="fields">
+                    <label>Parking spots:</label>
+                    <input id="parking-spots" hx-preserve type="number" name="parking-spots" class="line-input" required>
+                    <label>Kitchens:</label>
+                    <input id="kitchens" hx-preserve type="number" name="kitchens" class="line-input" required>
+                </div class="fields">
+
+                <h2>Price</h2>
+                <div class="fields">
+                    <label>Price:</label>
+                    <input type="text" hx-preserve id="price" name="price" required>
+                </div class="fields">
+
+                <button
+                    hx-post=""
+                    hx-target="body"
+                    hx-include="input,textarea"
+                    hx-encoding="multipart/form-data"
+                    class="create-listing-button"
+                    >Create Listing</button>
             </div>
-            <button
-                hx-post=""
-                hx-target="body"
-                hx-include="input,textarea"
-                hx-encoding="multipart/form-data"
-                class="create-listing-button"
-                >Create Listing</button>
         </div>
         """,
         prev="page5",
@@ -301,14 +318,21 @@ def new_listing_summary_content():
 
 @post("/new-listing/summary")
 def new_listing_summary():
+    cnx = db.db_cnx()
+    cur = cnx.cursor()
+
+    cur.execute(
+        """
+        INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """,
+    )
+
     for file in request.files.getall("image-files"):
         print(file)
-        file.save("user-uploads")
-    return "<br>".join(
-        [
-            request.forms["description"],
-            request.forms["address"],
-            request.forms["postalcode"],
-            request.forms["price"],
-        ]
-    )
+        file.save("static/uploads")
+
+    response.status = 303
+    response.add_header("Location", "/user-profile")
+
+    cur.close()
