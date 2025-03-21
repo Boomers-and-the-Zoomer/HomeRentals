@@ -62,7 +62,7 @@ INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Desc
 (40,'alice@example.com', 'Mjogdalsvegen 5', '2662', 'A lovely cabin in Dovre, with a beautiful view.', 2, 5, 2, 100, 3, 1),
 (41,'grace@example.com', 'Husabøvegen 10', '6863', 'Central apartment in Leikanger, renovated in 2016.', 1, 2, 1, 80, 1, 1),
 (42,'henry@example.com', 'Smørbukkstien 6', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 1, 2, 1, 65, 1, 1),
-(43,'frank@example.com', 'Smørbukkstien 6', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 2, 4, 1, 90, 2, 1);
+(43,'frank@example.com', 'Kjerranveien 15', '8530', 'A Neat house in a neat place, perfect for people to relax and enjoy life.', 2, 4, 1, 90, 2, 1);
 
 
 
