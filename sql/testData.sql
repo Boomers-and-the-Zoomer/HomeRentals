@@ -50,9 +50,18 @@ INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bed
 ('grace@example.com', '404 Cedar St, City', '10007', 'A charming cottage in a quiet neighborhood.', 10, 3, 3, 2, 100, 1, 1),
 ('henry@example.com', '505 Walnut St, City', '10008', 'A sleek modern loft with open-concept living.', 10, 1, 1, 1, 70, 0, 1);
 
-INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(300, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!', 5, 3, 4, 2, 200, 1, 1),
-(301, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!', 6, 6, 9, 6, 1337, 9, 6);
+INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+<<<<<<< Updated upstream
+(30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!',3, 4, 2, 200, 1, 1),
+(31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!',6, 9, 6, 1337, 9, 6);
+=======
+>>>>>>> Stashed changes
+(40,'alice@example.com', 'Mjogdalsvegen 5', '2662', 'A lovely cabin in Dovre, with a beautiful view.', 2, 5, 2, 100, 3, 1),
+(41,'grace@example.com', 'Husabøvegen 10', '6863', 'Central apartment in Leikanger, renovated in 2016.', 1, 2, 1, 80, 1, 1),
+(42,'henry@example.com', 'Smørbukkstien 6', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 1, 2, 1, 65, 1, 1),
+(43,'frank@example.com', 'Smørbukkstien 6', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 2, 4, 1, 90, 2, 1);
+
+
 
 INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (1, 'carol@example.com', '2025-05-01 12:00:00', '2025-05-07 12:00:00'),
@@ -70,6 +79,28 @@ INSERT INTO Picture (Filename) VALUES
 ('hus8.jpg');
 
 INSERT INTO Picture (PictureID, Filename) VALUES
+(400,'listing40pic1.jpg'),
+(401,'listing40pic2.jpg'),
+(402,'listing40pic3.jpg'),
+(403,'listing40pic4.jpg'),
+(404,'listing40pic5.jpg'),
+(405,'listing41pic1.jpg'),
+(406,'listing41pic2.jpg'),
+(407,'listing41pic3.jpg'),
+(408,'listing41pic4.jpg'),
+(409,'listing41pic5.jpg'),
+(410,'listing42pic1.jpg'),
+(411,'listing42pic2.jpg'),
+(412,'listing42pic3.jpg'),
+(413,'listing42pic4.jpg'),
+(414,'listing42pic5.jpg'),
+(415,'listing43pic1.jpg'),
+(416,'listing43pic2.jpg'),
+(417,'listing43pic3.jpg'),
+(418,'listing43pic4.jpg'),
+(419,'listing43pic5.jpg');
+
+<<<<<<< Updated upstream
 (30, 'listing30pic1.png'),
 (31, 'listing30pic2.png'),
 (32, 'listing30pic3.png'),
@@ -90,6 +121,27 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (6, 6),
 (7, 7),
 (8, 8),
+(40, 400),
+(40, 401),
+(40, 402),
+(40, 403),
+(40, 404),
+(41, 405),
+(41, 406),
+(41, 407),
+(41, 408),
+(41, 409),
+(42, 410),
+(42, 411),
+(42, 412),
+(42, 413),
+(42, 414),
+(43, 415),
+(43, 416),
+(43, 417),
+(43, 418),
+(43, 419);
+<<<<<<< Updated upstream
 (300, 30),
 (300, 31),
 (300, 32),
@@ -100,4 +152,6 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (301, 37),
 (301, 38),
 (301, 39);
+=======
+>>>>>>> Stashed changes
 
