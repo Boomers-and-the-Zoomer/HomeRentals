@@ -50,6 +50,10 @@ INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Bedrooms, 
 ('grace@example.com', '404 Cedar St, City', '10007', 'A charming cottage in a quiet neighborhood.', 3, 3, 2, 100, 1, 1),
 ('henry@example.com', '505 Walnut St, City', '10008', 'A sleek modern loft with open-concept living.', 1, 1, 1, 70, 0, 1);
 
+INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+(30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!',3, 4, 2, 200, 1, 1)
+(31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!',6, 9, 6, 1337, 9, 6)
+
 INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 (1, 'carol@example.com', '2025-05-01 12:00:00', '2025-05-07 12:00:00'),
 (2, 'alice@example.com', '2025-06-01 12:00:00', '2025-06-07 12:00:00'),
@@ -65,6 +69,18 @@ INSERT INTO Picture (Filename) VALUES
 ('hus7.jpg'),
 ('hus8.jpg');
 
+INSERT INTO Picture (PictureID, Filename) VALUES
+(30, 'listing30pic1.png'),
+(31, 'listing30pic2.png'),
+(32, 'listing30pic3.png'),
+(33, 'listing30pic4.png'),
+(34, 'listing30pic5.png'),
+(35, 'listing31pic1.png'),
+(36, 'listing31pic2.png'),
+(37, 'listing31pic3.png'),
+(38, 'listing31pic4.png'),
+(39, 'listing31pic5.png');
+
 INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (1, 1),
 (2, 2),
@@ -73,4 +89,15 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (5, 5),
 (6, 6),
 (7, 7),
-(8, 8);
+(8, 8),
+(300, 30),
+(300, 31),
+(300, 32),
+(300, 33),
+(300, 34),
+(301, 35),
+(301, 36),
+(301, 37),
+(301, 38),
+(301, 39);
+
