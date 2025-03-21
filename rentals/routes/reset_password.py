@@ -137,13 +137,15 @@ def reset_password_with_token(reset_token):
 
     return html(
         "Reset Password",
-        with_navbar(f"""
+        with_navbar(
+            f"""
             <main id="reset-password-with-token">
                 <div>
                 {form}
                 </div>
             </main>
-            """),
+            """
+        ),
     )
 
 
@@ -172,11 +174,10 @@ def reset_password_with_token_submit(reset_token):
     hash = ph.hash(password1)
 
     # 1. Oppdater hashen i databasen
-    cur.execute
-    (
+    cur.execute(
         """
         UPDATE UserAccount
-        SET PasswordHash="%s"
+        SET PasswordHash=%s
         WHERE Email=%s
         """,
         (
