@@ -17,6 +17,7 @@ def _create_and_insert_session_token(email: str) -> bytes:
     cnx = db.db_cnx()
     with cnx.cursor() as cur:
         expiry_time = datetime.now(timezone.utc) + timedelta(hours=1)
+        failures = 0
         while True:
             token = secrets.token_bytes(16)
             try:
@@ -29,8 +30,10 @@ def _create_and_insert_session_token(email: str) -> bytes:
                 )
                 cnx.commit()
                 break
-            except mysql.connector.errors.IntegrityError:
-                pass
+            except mysql.connector.errors.IntegrityError as e:
+                failures += 1
+                if failures >= 5:
+                    raise e
     return token
 
 

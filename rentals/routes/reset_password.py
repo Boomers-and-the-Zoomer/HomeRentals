@@ -63,6 +63,7 @@ def reset_password_side_submit():
         #   hvis ingen integritetsfeil, retry=False
         expiry_time = datetime.now(timezone.utc) + timedelta(hours=24)
         loop = True
+        failures = 0
         while loop:
             token = secrets.token_urlsafe(16)
             try:
@@ -76,8 +77,12 @@ def reset_password_side_submit():
 
                 cnx.commit()
                 loop = False
-            except mysql.connector.errors.IntegrityError:
-                pass
+            except mysql.connector.errors.IntegrityError as e:
+                failures += 1
+                if failures >= 5:
+                    raise e
+
+    cur.close()
 
     response.status = 303
     response.add_header("Location", "/reset-password/sent")
