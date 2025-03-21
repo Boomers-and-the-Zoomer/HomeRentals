@@ -30,7 +30,7 @@ CREATE TABLE Session
     Token BINARY(16) PRIMARY KEY,
     Email CHAR(30) NOT NULl,
     ExpiryTime DATETIME NOT NULL,
-    CONSTRAINT SessionUserFK FOREIGN KEY (Email) REFERENCES User(Email)
+    CONSTRAINT SessionUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 
 CREATE TABLE ResetLink
@@ -38,7 +38,7 @@ CREATE TABLE ResetLink
     Token CHAR(30) PRIMARY KEY,
     Email CHAR(30) NOT NULl,
     ExpiryTime DATETIME NOT NULL,
-    CONSTRAINT ResetLinkUserFK FOREIGN KEY (Email) REFERENCES User(Email)
+    CONSTRAINT ResetLinkUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 
 CREATE TABLE PropertyListing
@@ -55,7 +55,7 @@ CREATE TABLE PropertyListing
     SquareMeters INT NOT NULL,
     ParkingSpots INT NOT NULL,
     Kitchens INT NOT NULL,
-    CONSTRAINT PropertyListingUserFK FOREIGN KEY (Email) REFERENCES User(Email)
+    CONSTRAINT PropertyListingUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 
 CREATE TABLE Booking
@@ -66,7 +66,7 @@ CREATE TABLE Booking
     EndTime TIMESTAMP NOT NULL,
     CONSTRAINT BookingPK PRIMARY KEY (PropertyListingID, Email, StartTime),
     CONSTRAINT BookingPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID),
-    CONSTRAINT BookingUserFK FOREIGN KEY (Email) REFERENCES User(Email)
+    CONSTRAINT BookingUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 
 -- NOTE: This job of this table could be done by a single column in the `Booking` table
@@ -81,7 +81,7 @@ CREATE TABLE BookingSession
     EndTime TIMESTAMP NOT NULL,
     ExpiryTime TIMESTAMP NOT NULL,
     CONSTRAINT BookingSessionPK PRIMARY KEY (Token, PropertyListingID, StartTime),
-    CONSTRAINT BookingSessionSessionFK FOREIGN KEY (Token) REFERENCES Session(Token),
+    CONSTRAINT BookingSessionSessionFK FOREIGN KEY (Token) REFERENCES Session(Token) ON DELETE CASCADE,
     CONSTRAINT BookingSessionPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID)
 );
 
