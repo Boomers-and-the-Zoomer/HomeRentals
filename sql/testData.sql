@@ -64,6 +64,12 @@ INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Desc
 (105, 'alice@example.com', 'Karsetgutua 5, Hamar', '2312', 'Huset ligger på en gård med aktivitet og aktiv gårdsdrift. Vi har gode turmuligheter i området. Perfekt for en helg alene, eller med familien. Huset leies ikke ut for en fest.', '2', '1', '2', '1', '30', '1', '1');
 
 
+INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+(50, 'henry@example.com', 'Enebakkveien 242', '1187', 'Small house in nice landscape', 100, 2, 3, 1, 70, 1, 1),
+(51, 'henry@example.com', 'Nedre Rømmesbakkan 2', '7300', 'Beautyfull house close to sea', 80, 3, 3, 2, 200, 2, 1),
+(52, 'henry@example.com', 'Stugguvollbekkvegen 100', '7590', 'Cosy cabin in the woods', 100, 155, 2, 3, 120, 20, 1),
+(53, 'henry@example.com', 'Bjerkerudveien 25', '1450', 'Cabin with a view', 900, 1, 2, 1, 80, 2, 1);
+
 INSERT INTO Picture (PictureID, Filename) VALUES
 (100, 'listing10pic1.jpg'),
 (101, 'listing10pic2.jpg'),
@@ -96,6 +102,27 @@ INSERT INTO Picture (PictureID, Filename) VALUES
 (128, 'listing15pic4.jpg'),
 (129, 'listing15pic5.jpg');
 
+INSERT INTO Picture (PictureID, Filename) VALUES
+(50, 'Listing50pic1.jpg'),
+(51, 'Listing50pic2.jpg'),
+(52, 'Listing50pic3.jpg'),
+(53, 'Listing50pic4.jpg'),
+(54, 'Listing50Pic5.jpg'),
+(55, 'Listing51pic1.jpg'),
+(56, 'Listing51pic2.jpg'),
+(57, 'Listing51pic3.jpg'),
+(58, 'Listing51pic4.jpg'),
+(59, 'Listing51pic5.jpg'),
+(60, 'Listing52pic1.jpg'),
+(61, 'Listing52pic2.jpg'),
+(62, 'Listing52pic3.jpg'),
+(63, 'Listing52pic4.jpg'),
+(64, 'Listing52pic5.jpg'),
+(65, 'Listing53pic1.jpg'),
+(66, 'Listing53pic2.jpg'),
+(67, 'Listing53pic3.jpg'),
+(68, 'Listing53pic4.jpg'),
+(69, 'Listing53pic5.jpg');
 
 -- INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
 
@@ -248,3 +275,24 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (105, 127),
 (105, 128),
 (105, 129);
+INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
+(50, 50),
+(50, 51),
+(50, 52),
+(50, 53),
+(50, 54),
+(51, 55),
+(51, 56),
+(51, 57),
+(51, 58),
+(51, 59),
+(52, 60),
+(52, 61),
+(52, 62),
+(52, 63),
+(52, 64),
+(53, 65),
+(53, 66),
+(53, 67),
+(53, 68),
+(53, 69);
