@@ -48,6 +48,7 @@ CREATE TABLE PropertyListing
     Address CHAR(100) NOT NULL,
     PostalCode CHAR(10) NOT NULL,
     Description VARCHAR(5000) NOT NULL,
+    Price INT NOT NULL,
     Bedrooms INT NOT NULL,
     Beds INT NOT NULL,
     Bathrooms INT NOT NULL,
