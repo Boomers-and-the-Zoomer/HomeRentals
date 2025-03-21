@@ -14,14 +14,14 @@ def user_profile():
 
     cur.execute(
         """
-        SELECT FirstName,Lives,Languages,Age,FunFact
+        SELECT FirstName,Lives,Languages,Age,FunFact,Session.Email
         FROM User, Session
         WHERE User.Email=Session.Email
             AND Session.Token=_binary %s
         """,
         (session_token,),
     )
-    (first_name, lives, languages, age, fun_fact) = cur.fetchone()
+    (first_name, lives, languages, age, fun_fact, email) = cur.fetchone()
     if lives == None:
         lives = ""
     if languages == None:
@@ -30,6 +30,40 @@ def user_profile():
         age = ""
     if fun_fact == None:
         fun_fact = ""
+
+    cur.execute(
+        """
+        SELECT PropertyListing.PropertyListingID, PropertyListing.Address, Filename
+        FROM PropertyListing, PropertyPicture, Picture
+        WHERE PropertyListing.PropertyListingID=PropertyPicture.PropertyListingID
+            AND PropertyPicture.PictureID=Picture.PictureID
+            AND PropertyListing.Email=%s
+        """,
+        (email,),
+    )
+    pictures = cur.fetchall()
+
+    properties = {}
+    for listing_id, address, picture_filename in pictures:
+        if listing_id not in properties:
+            properties[listing_id] = [address, picture_filename]
+
+    print(f"{properties=}")
+    listings = ""
+    for property, o in properties.items():
+        address, filename = o
+        listings += f"""
+            <a href="/view-rental/{property}" class="ad_picture">
+                <p>{address}</p>
+                <img src="/static/uploads/{filename}" alt="Property listing">
+            </a>\n"""
+
+    host_since = ""
+    is_host = ""
+    if len(properties) != 0:
+        host_since = """<p><u>Host since XXXX</u></p>"""
+        is_host = """<p>Host<p>"""
+
     return html(
         "User Profile",
         with_navbar(
@@ -44,11 +78,11 @@ def user_profile():
                         <div class="profile_box_info">
                             <p><u>Rating 2.4</u></p>
                             <br>
-                            <p><u>Host since XXXX</u></p>
+                            {host_since}
                         </div>
                         <div class="name">
                             <p><b>{first_name}</b><p>
-                            <p>Host<p>
+                            {is_host}
                         </div>
                     </div>
                     <div class="about">
@@ -58,7 +92,6 @@ def user_profile():
                                 <p><b>Lives in:</b> {lives}</p>
                                 <p><b>Languages:</b> {languages}</p>
                                 <p><b>Age:</b> {age}</p>
-
                             </fieldset>
                         </div>
                         <div class="fieldset">
@@ -72,8 +105,7 @@ def user_profile():
                 </div>
                 <div class="ad_preview">
                     <h3>Listings:</h3>
-                    <img src="https://a0.muscache.com/im/pictures/miso/Hosting-756540177431085322/original/a89fcae1-05d1-469a-9b86-a8065abc22c2.jpeg?im_w=720" class="ad_picture" alt="Property listing">
-                    <img src="https://a0.muscache.com/im/pictures/074f8383-2194-4a3d-8f3d-ca8dce154cdb.jpg?im_w=720" class="ad_picture" alt="Property listing">
+                    {listings}
                 </div>
             </main>
        """,
