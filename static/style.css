@@ -836,6 +836,7 @@ main#search-page {
     padding: 15px;
     text-align: center;
     height: 100%;
+    max-width: 350px;
   }
 
   .property-card:hover {
