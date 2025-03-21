@@ -49,10 +49,10 @@ INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Descr
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
 (30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!', 2, 3, 4, 2, 200, 1, 1),
 (31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!', 2, 6, 9, 6, 1337, 9, 6),
-(40,'alice@example.com', 'Mjogdalsvegen 5', '2662', 'A lovely cabin in Dovre, with a beautiful view.', 2, 2, 5, 2, 100, 3, 1),
-(41,'grace@example.com', 'Husabøvegen 10', '6863', 'Central apartment in Leikanger, renovated in 2016.', 2, 1, 2, 1, 80, 1, 1),
-(42,'henry@example.com', 'Smørbukkstien 6', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 2, 1, 2, 1, 65, 1, 1),
-(43,'frank@example.com', 'Kjerranveien 15', '8530', 'A Neat house in a neat place, perfect for people to relax and enjoy life.', 2, 2, 4, 1, 90, 2, 1);
+(40,'alice@example.com', 'Mjogdalsvegen, Dovre', '2662', 'A lovely cabin in Dovre, with a beautiful view.', 2, 2, 5, 2, 100, 3, 1),
+(41,'grace@example.com', 'Husabøvegen 10, Leikanger', '6863', 'Central apartment in Leikanger, renovated in 2016.', 2, 1, 2, 1, 80, 1, 1),
+(42,'henry@example.com', 'Smørbukkstien 6, Stavanger', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 2, 1, 2, 1, 65, 1, 1),
+(43,'frank@example.com', 'Kjerranveien 15, Bjørvik', '8530', 'A Neat house in a neat place, perfect for people to relax and enjoy life.', 2, 2, 4, 1, 90, 2, 1);
 
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
