@@ -18,12 +18,11 @@ def get_search_results(location, check_in, check_out, guests):
         params += [location]
         condition = """PropertyListing.Address LIKE %s"""
 
-    time_check = ""
-
+    # TODO: Handle the case where only one of check_in and check_out are specified.
     if check_in != "" and check_out != "":
         if condition != "":
-            time_check += " AND "
-        time_check += """
+            condition += " AND "
+        condition += """
         PropertyListing.PropertyListingID NOT IN (
             SELECT Booking.PropertyListingID
             FROM Booking
@@ -94,82 +93,23 @@ def search_results():
     location = request.query.get("location", "").strip()
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
-    guests = request.query.get("guests", "").strip() or 1
+    children = request.query.get("children", "").strip()
+    adults = request.query.get("adults", "").strip()
 
-    return get_search_results(location, check_in, check_out, guests)
-
-
-def get_data(query):
-    conn = db.db_cnx()
-    cursor = conn.cursor()
-    cursor.execute(query)
-    data = [row[0] for row in cursor.fetchall()]
-    cursor.close()
-    conn.close()
-    return data
-
-
-def get_location():
-    response.content_type = "text/html"
-    locations = get_data("SELECT DISTINCT Address FROM PropertyListing")
-    location_list_html = "\n".join(
-        '<li onclick=\'selectOption(this, "location-input", "{}")\'>'.format(loc)
-        + str(loc)
-        + "</li>"
-        for loc in locations
+    return get_search_results(
+        location, check_in, check_out, (int(children) + int(adults)) or 1
     )
-
-    return f"""
-    <ul>
-        {location_list_html}
-    </ul>
-    """
-
-
-def get_dates(select_id):
-    response.content_type = "text/html"
-    check_in_dates = get_data("SELECT DISTINCT StartTime FROM Booking")
-    check_out_dates = get_data("SELECT DISTINCT EndTime FROM Booking")
-
-    checkin_list_html = "".join(
-        f'<li onclick=\'selectOption(this, "{select_id}", "{{}}")\'>'.format(date)
-        + str(date)
-        + "</li>"
-        for date in check_in_dates
-    )
-
-    checkout_list_html = "".join(
-        f'<li onclick=\'selectOption(this, "{select_id}", "{{}}")\'>'.format(date)
-        + str(date)
-        + "</li>"
-        for date in check_out_dates
-    )
-
-    return "<ul>" + checkin_list_html + checkout_list_html + "</ul>"
-
-
-def get_guests():
-    response.content_type = "text/html"
-
-    return """
-    <div>
-        Adults (13+ years):
-        <button type="button" id="decrease-adults">-</button>
-        <span id="adult-count" value="0">0</span>
-        <button type="button" id="increase-adults">+</button>
-    </div>
-    <div>
-        Children (0-12 years):
-        <button type="button" id="decrease-children">-</button>
-        <span id="children-count" value="0">0</span>
-        <button type="button" id="increase-children">+</button>
-    </div>
-    """
 
 
 @route("/search")
 def search_bar():
     result = search_results()
+
+    location = request.query.get("location", "").strip()
+    check_in = request.query.get("checkin", "").strip()
+    check_out = request.query.get("checkout", "").strip()
+    children = request.query.get("children", "").strip()
+    adults = request.query.get("adults", "").strip()
 
     return html(
         "Search",
@@ -178,33 +118,24 @@ def search_bar():
                 <div class="spacer"></div>
                 <div id="search-bar">
                     <form class="search-container">
-                        <div hx-get="/get_locations" hx-target="find div.dropdown" hx-swap="innerHTML" class="input-box" onclick="toggleDropdown('location-box')">
+                        <div class="input-box">
                             <label>Where</label>
-                            <input id="location-input" name="location" type="text" placeholder="search destination" readonly>
-                            <div id="location-box" class="dropdown"></div>
+                            <input id="location-input" name="location" type="text" placeholder="search destination" {location != "" and f"value=\"{location}\""}>
                         </div>
-                        <div hx-get="/get_dates/checkin-input" hx-trigger="click" hx-target="#checkin-box" hx-swap="innerHTML"
-                            class="input-box" onclick="toggleDropdown('checkin-box')">
+                        <div class="input-box">
                             <label>Check in</label>
-                            <input id="checkin-input" name="checkin" type="text" placeholder="Add dates" readonly>
-                            <div id="checkin-box" class="dropdown"></div>
+                            <input id="checkin-input" name="checkin" type="date" placeholder="Add dates" {check_in != "" and f"value=\"{check_in}\""}>
                         </div>
-                        <div hx-get="/get_dates/checkout-input" hx-trigger="click" hx-target="#checkout-box" hx-swap="innerHTML"
-                            class="input-box" onclick="toggleDropdown('checkout-box')">
+                        <div class="input-box">
                             <label>Check out</label>
-                            <input id="checkout-input" name="checkout" type="text" placeholder="Add dates" readonly>
-                            <div id="checkout-box" class="dropdown"></div>
+                            <input id="checkout-input" name="checkout" type="date" placeholder="Add dates" {check_out != "" and f"value=\"{check_out}\""}>
                         </div>
-                        <div
-                            hx-get="/get_guests"
-                            hx-trigger="click"
-                            hx-target="#guests-box"
-                            hx-swap="innerHTML"
-                            hx-on::after-swap="setGuestEventListeners()"
-                            class="input-box" onclick="toggleDropdown('guests-box')">
+                        <div id="who-box" class="input-box">
                             <label>Who</label>
-                            <input type="text" placeholder="Add guest" readonly>
-                            <div id="guests-box" class="dropdown" hx-trigger="click consume"></div>
+                            <label for="children">Children:</label>
+                            <input id="children" name="children" type="number" min="0" {children != "" and f"value=\"{children}\""}>
+                            <label for="children">Adults:</label>
+                            <input id="adults" name="adults" type="number" min="0" {adults != "" and f"value=\"{adults}\""}>
                         </div>
                         <button
                             type="submit"
