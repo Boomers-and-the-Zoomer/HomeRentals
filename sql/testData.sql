@@ -40,15 +40,15 @@ INSERT INTO ResetLink (Token, Email, ExpiryTime) VALUES
 ('abcd1234', 'alice@example.com', '2025-12-31 23:59:59'),
 ('efgh5678', 'bob@example.com', '2025-12-31 23:59:59');
 
-INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-('alice@example.com', '123 Main St, City', '10001', 'A nice little place to stay the night.', 3, 4, 2, 120, 1, 1),
-('bob@example.com', '456 Elm St, City', '10002', 'It may look a little shabby, but it''s a perfectly quaint apartment.', 2, 2, 1, 80, 0, 1),
-('charlie@example.com', '789 Oak St, City', '10003', 'A spacious house with a beautiful garden.', 4, 5, 3, 200, 2, 1),
-('diana@example.com', '101 Pine St, City', '10004', 'Modern apartment in the heart of downtown.', 2, 3, 1, 90, 0, 1),
-('emma@example.com', '202 Maple St, City', '10005', 'A cozy cabin perfect for a weekend getaway.', 3, 4, 2, 110, 1, 1),
-('frank@example.com', '303 Birch St, City', '10006', 'A luxury villa with ocean views.', 5, 6, 4, 300, 3, 2),
-('grace@example.com', '404 Cedar St, City', '10007', 'A charming cottage in a quiet neighborhood.', 3, 3, 2, 100, 1, 1),
-('henry@example.com', '505 Walnut St, City', '10008', 'A sleek modern loft with open-concept living.', 1, 1, 1, 70, 0, 1);
+INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
+('alice@example.com', '123 Main St, City', '10001', 'A nice little place to stay the night.', 10, 3, 4, 2, 120, 1, 1),
+('bob@example.com', '456 Elm St, City', '10002', 'It may look a little shabby, but it''s a perfectly quaint apartment.', 10, 2, 2, 1, 80, 0, 1),
+('charlie@example.com', '789 Oak St, City', '10003', 'A spacious house with a beautiful garden.', 10, 4, 5, 3, 200, 2, 1),
+('diana@example.com', '101 Pine St, City', '10004', 'Modern apartment in the heart of downtown.', 10, 2, 3, 1, 90, 0, 1),
+('emma@example.com', '202 Maple St, City', '10005', 'A cozy cabin perfect for a weekend getaway.', 10, 3, 4, 2, 110, 1, 1),
+('frank@example.com', '303 Birch St, City', '10006', 'A luxury villa with ocean views.', 10, 5, 6, 4, 300, 3, 2),
+('grace@example.com', '404 Cedar St, City', '10007', 'A charming cottage in a quiet neighborhood.', 10, 3, 3, 2, 100, 1, 1),
+('henry@example.com', '505 Walnut St, City', '10008', 'A sleek modern loft with open-concept living.', 10, 1, 1, 1, 70, 0, 1);
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
 (300, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!', 5, 3, 4, 2, 200, 1, 1),
