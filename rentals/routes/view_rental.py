@@ -18,6 +18,7 @@ def view_rental(listing: int):
     )
 
     address, description, bedrooms, beds, bathrooms = cur.fetchone()
+    cur.close()
 
     var = f"""
     <h1>{address}</h1>

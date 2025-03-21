@@ -42,6 +42,7 @@ def user_profile():
         (email,),
     )
     pictures = cur.fetchall()
+    cur.close()
 
     properties = {}
     for listing_id, address, picture_filename in pictures:

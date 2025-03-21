@@ -90,8 +90,11 @@ def log_in_submit():
             """,
             (email, new_hash),
         )
+        cnx.commmit()
 
     initialize_session(email)
+
+    cur.close()
 
     response.status = 303
     try:

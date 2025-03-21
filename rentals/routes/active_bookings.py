@@ -42,6 +42,8 @@ def view_active_bookings():
     )
     activeBookings = cursor.fetchall()
 
+    cursor.close()
+
     return active_booking_template(activeBookings, email)
 
 
@@ -110,5 +112,6 @@ def cancel_temp_booking():
     )
 
     cnx.commit()
+    cursor.close()
 
     redirect(f"/bookings/active")

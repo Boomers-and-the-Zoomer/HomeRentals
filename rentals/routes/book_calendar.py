@@ -40,6 +40,8 @@ def view_rental(listing: int):
     while len(imgs) < 5:
         imgs += [""]
 
+    cursor.close()
+
     var = f"""
     <h1>{address}</h1>
     <div class="left">
@@ -133,6 +135,7 @@ def book_rental():
     )
 
     cnx.commit()
+    cursor.close()
 
     from_date_str = (
         from_date.isoformat() if hasattr(from_date, "isoformat") else from_date
@@ -185,6 +188,7 @@ def booking_confirmation(PropertyListingID, from_date):
         (property_id,),
     )
     rental = cursor.fetchone()
+    cursor.close()
     if not rental:
         raise HTTPError(404, "Property listing not found")
 
@@ -247,12 +251,12 @@ def cancel_temp_booking():
         """
         DELETE FROM BookingSession
         WHERE Token=_binary  %s AND PropertyListingID= %s AND StartTime= %s
-
-    """,
+        """,
         (token, property_id, from_date_dt),
     )
 
     cnx.commit()
+    cursor.close()
 
     redirect(f"/view-rental/{property_id}")
 
@@ -280,8 +284,7 @@ def finalize_booking():
         SELECT * FROM BookingSession
         WHERE Token=_binary %s AND PropertyListingID= %s AND StartTime= %s
         AND ExpiryTime> NOW()
-    
-    """,
+        """,
         (token, property_id, from_date_dt),
     )
     sessionRecord = cursor.fetchone()
@@ -296,7 +299,7 @@ def finalize_booking():
         WHERE BookingSession.Token=Session.Token
             AND Session.Email=User.Email
             AND BookingSession.Token=_binary %s
-    """,
+        """,
         (token,),
     )
     CompleteBooking = cursor.fetchone()
@@ -314,10 +317,10 @@ def finalize_booking():
         """
         INSERT INTO Booking (PropertyListingID, StartTime, EndTime, Email)
         VALUES (%s, %s, %s, %s)
-
-    """,
+        """,
         (property_listing_id, start_time, end_time, email),
     )
     cnx.commit()
+    cursor.close()
 
     redirect(f"/bookings/active")

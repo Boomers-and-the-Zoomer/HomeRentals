@@ -335,4 +335,5 @@ def new_listing_summary():
     response.status = 303
     response.add_header("Location", "/user-profile")
 
+    cnx.commmit()
     cur.close()
