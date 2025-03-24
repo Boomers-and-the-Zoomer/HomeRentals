@@ -41,33 +41,33 @@ INSERT INTO ResetLink (Token, Email, ExpiryTime) VALUES
 ('efgh5678', 'bob@example.com', '2025-12-31 23:59:59');
 
 INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(20,'henry@example.com','Fjordgløtten 1, Drammen', '3041','Beautiful house with glamorous view of Drammen',2,2,2,2,175,2,1),
+(20,'henry@example.com','Fjordgløtten 1, Drammen', '3041','Beautiful house with glamorous views of Drammen',2,2,2,2,175,2,1),
 (21,'grace@example.com','Tangeodden 7, Steinberg','3053','Modern house close to the river in gorgeous Steinberg',2,2,2,2,185,3,1),
 (22,'frank@example.com','Villaveien 3, Steinberg','3053','Comfy basement in lovely Steinberg',4,4,2,1,100,2,1),
 (23,'alice@example.com','Halvorsveien 7, Steinberg','3053','Cute house in Steinberg',1,1,1,1,50,1,1);
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Faen for et flott og gudsbegavet sted detta er!', 2, 3, 4, 2, 200, 1, 1),
-(31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Et sabla fint sted for satandyrking, detta!', 2, 6, 9, 6, 1337, 9, 6),
-(40,'alice@example.com', 'Mjogdalsvegen, Dovre', '2662', 'A lovely cabin in Dovre, with a beautiful view.', 2, 2, 5, 2, 100, 3, 1),
-(41,'grace@example.com', 'Husabøvegen 10, Leikanger', '6863', 'Central apartment in Leikanger, renovated in 2016.', 2, 1, 2, 1, 80, 1, 1),
-(42,'henry@example.com', 'Smørbukkstien 6, Stavanger', '4019', 'Welcome to the ideal base in witch to explore Stavanger from.', 2, 1, 2, 1, 65, 1, 1),
-(43,'frank@example.com', 'Kjerranveien 15, Bjørvik', '8530', 'A Neat house in a neat place, perfect for people to relax and enjoy life.', 2, 2, 4, 1, 90, 2, 1);
+(30, 'emma@example.com', 'Gudsgate 7, Vennesla', '10002', 'Comfy old cabin', 2, 3, 4, 2, 200, 1, 1),
+(31, 'emma@example.com', 'Helvetesgate 69, Hell', '60009', 'Modern cabin by the lake', 2, 6, 9, 6, 1337, 9, 6),
+(40,'alice@example.com', 'Mjogdalsvegen, Dovre', '2662', 'A lovely cabin in Dovre with a beautiful view', 2, 2, 5, 2, 100, 3, 1),
+(41,'grace@example.com', 'Husabøvegen 10, Leikanger', '6863', 'Central apartment in Leikanger, renovated in 2016', 2, 1, 2, 1, 80, 1, 1),
+(42,'henry@example.com', 'Smørbukkstien 6, Stavanger', '4019', 'Welcome to the ideal base in which to explore Stavanger from', 2, 1, 2, 1, 65, 1, 1),
+(43,'frank@example.com', 'Kjerranveien 15, Bjørvik', '8530', 'A neat house in a neat place, perfect for people to relax and enjoy life', 2, 2, 4, 1, 90, 2, 1);
 
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(100, 'alice@example.com', 'Strandvikvegen 553, Strandvik', '5643', 'Fin hytte i  Bjørnafjorden med god utsikt over fjorden.', '2', '3', '7', '3', '220', '4', '1'),
-(101, 'alice@example.com', 'Berknesvegen 222, Volda', '6105', 'Flott ferie for hele familien. Koselig feriehus med egen sjøtomt og vakker hage.', '2', '3', '7', '1', '65', '1', '1'),
-(102, 'alice@example.com', 'Sklibreivegen 10, Knowhere', '6975', 'Nyt det avslappende, komfortable og lukkede stedet Birdbox. Sov rett ved siden av naturen og dens fantastiske omgivelser.', '2', '1', '2', '1', '30', '1', '1'),
-(103, 'alice@example.com', 'Soknaveien 60, Bru', '4158', 'Naustet er helt nytt og en del av sjøhusmiljøet mot Soknasundet. Det er brygge med firskemulighet. Bygg og møbler er laget av den anerkjente arkitekten Espen Surnevik.', '2', '2', '3', '1', '130', '1', '1'),
-(104, 'alice@example.com', 'Furnesvegen 178B, Hamar', '2319', 'Koselig og familievennlig sted hvor gode barndomsminner lages. Området er landlig med et godt lokalt ølbryggeri som er åpent hver dag.', '2', '4', '8', '2', '200', '2', '1'),
-(105, 'alice@example.com', 'Karsetgutua 5, Hamar', '2312', 'Huset ligger på en gård med aktivitet og aktiv gårdsdrift. Vi har gode turmuligheter i området. Perfekt for en helg alene, eller med familien. Huset leies ikke ut for en fest.', '2', '1', '2', '1', '30', '1', '1');
+(100, 'alice@example.com', 'Strandvikvegen 553, Strandvik', '5643', 'Nice cabin in Bjørnafjord with good views of the fjord.', '2', '3', '7', '3', '220', '4', '1'),
+(101, 'alice@example.com', 'Berknesvegen 222, Volda', '6105', 'Lovely vacation spot for the whole family. The property is by the sea and has a beautiful garden', '2', '3', '7', '1', '65', '1', '1'),
+(102, 'alice@example.com', 'Sklibreivegen 10, Knowhere', '6975', 'Enjoy the relaxing, comforting and closed-off space Birdbox! Sleep right next to nature and its fantastic surroundings', '2', '1', '2', '1', '30', '1', '1'),
+(103, 'alice@example.com', 'Soknaveien 60, Bru', '4158', 'Lovely space right by the ocean. Pier with fishing opportunities. Building and furniture made by the renowned architect Espen Surnevik', '2', '2', '3', '1', '130', '1', '1'),
+(104, 'alice@example.com', 'Furnesvegen 178B, Hamar', '2319', 'Lovely and family-friendly spot ready to make memories. The area is close to a local brewery that\'s open every day', '2', '4', '8', '2', '200', '2', '1'),
+(105, 'alice@example.com', 'Karsetgutua 5, Hamar', '2312', 'House on a farm that\'s in daily use. Great hiking routes. Perfect for a weekend alone or with family. Not for parties or similar events', '2', '1', '2', '1', '30', '1', '1');
 
 
 INSERT INTO PropertyListing (PropertyListingID, Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-(50, 'henry@example.com', 'Enebakkveien 242', '1187', 'Small house in nice landscape', 100, 2, 3, 1, 70, 1, 1),
-(51, 'henry@example.com', 'Nedre Rømmesbakkan 2', '7300', 'Beautyfull house close to sea', 80, 3, 3, 2, 200, 2, 1),
-(52, 'henry@example.com', 'Stugguvollbekkvegen 100', '7590', 'Cosy cabin in the woods', 100, 155, 2, 3, 120, 20, 1),
+(50, 'henry@example.com', 'Enebakkveien 242', '1187', 'Small house surrounded by nice landscape', 100, 2, 3, 1, 70, 1, 1),
+(51, 'henry@example.com', 'Nedre Rømmesbakkan 2', '7300', 'Beautyful house close to sea', 80, 3, 3, 2, 200, 2, 1),
+(52, 'henry@example.com', 'Stugguvollbekkvegen 100', '7590', 'Cozy cabin in the woods', 100, 155, 2, 3, 120, 20, 1),
 (53, 'henry@example.com', 'Bjerkerudveien 25', '1450', 'Cabin with a view', 900, 1, 2, 1, 80, 2, 1);
 
 INSERT INTO Picture (PictureID, Filename) VALUES
