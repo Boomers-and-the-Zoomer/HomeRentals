@@ -99,21 +99,13 @@ def search_results():
     location = request.query.get("location", "").strip()
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
-    children = request.query.get("children", "").strip()
-    adults = request.query.get("adults", "").strip()
-
-    guests = 0
-    try:
-        guests += int(children)
-    except ValueError:
-        pass
+    guests = request.query.get("guests", "").strip()
 
     try:
-        guests += int(adults)
+        guests = int(guests)
     except ValueError:
-        pass
+        guests = 0
 
-    print(children)
     return get_search_results(location, check_in, check_out, guests)
 
 
@@ -124,8 +116,7 @@ def search_bar():
     location = request.query.get("location", "").strip()
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
-    children = request.query.get("children", "").strip()
-    adults = request.query.get("adults", "").strip()
+    guests = request.query.get("guests", "").strip()
 
     return html(
         "Search",
@@ -147,15 +138,12 @@ def search_bar():
                             <input id="checkout-input" name="checkout" type="date" placeholder="Add dates" {check_out != "" and f"value=\"{check_out}\""}>
                         </div>
                         <div id="who-box" class="input-box">
-                            <label>Who</label>
-                            <label for="children">Children:</label>
-                            <input id="children" name="children" type="number" min="0" {children != "" and f"value=\"{children}\""}>
-                            <label for="children">Adults:</label>
-                            <input id="adults" name="adults" type="number" min="0" {adults != "" and f"value=\"{adults}\""}>
+                            <label for="guests">Guests</label>
+                            <input id="guests" name="guests" type="number" placeholder="Type in guests" min="0" {guests != "" and f"value=\"{guests}\""}>
                         </div>
                         <button
                             type="submit"
-                            class="search-btn">🔍 Søk</button>
+                            class="search-btn">🔍 Search</button>
                     </form>
                 </div>
                 <div class="spacer"></div>
@@ -165,18 +153,3 @@ def search_bar():
             </main>
        """),
     )
-
-
-@route("/get_locations")
-def locations():
-    return get_location()
-
-
-@route("/get_dates/<select_id>")
-def dates(select_id):
-    return get_dates(select_id)
-
-
-@route("/get_guests")
-def guests():
-    return get_guests()
