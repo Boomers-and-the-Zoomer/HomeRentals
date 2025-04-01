@@ -99,5 +99,16 @@ CREATE TABLE PropertyPicture (
     PRIMARY KEY (PropertyListingID, PictureID)
 );
 
+CREATE TABLE Tag (
+    TagID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL
+);
 
+CREATE TABLE PropertyTag (
+    PropertyListingID INT NOT NULL,
+    TagID INT NOT NULL,
+    FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID),
+    FOREIGN KEY (TagID) REFERENCES Tag(TagID),
+    PRIMARY KEY (PropertyListingID, TagID)
+);
 

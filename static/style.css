@@ -797,6 +797,21 @@ main#search-page {
     #guests-box button:hover {
       background: var(--slate-700);
     }
+    div#search-popover {
+      grid-template-columns: max-content auto max-content;
+      grid-template-rows: auto;
+      align-items: center;
+      column-gap: 10px;
+      padding: 0px;
+      top: calc(var(--navbar-height) + 5px);
+      right: var(--page-margin);
+      border-radius: var(--corner);
+      box-shadow: 0px 0px 1px 1px black;
+
+      &:popover-open {
+        display: grid;
+      }
+    }
   }
 
   #search-results {

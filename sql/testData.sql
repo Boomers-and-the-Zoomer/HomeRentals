@@ -296,3 +296,37 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 (53, 67),
 (53, 68),
 (53, 69);
+
+INSERT INTO Tag (TagID, Name) VALUES
+(1, 'apartment'),
+(2, 'cabin'),
+(3, 'house'),
+(4, 'basement'),
+(5, 'Wi-Fi'),
+(6, 'Hot-tub'),
+(7, 'Pet-friendly'),
+(8, 'parking'),
+(9, 'By the sea'),
+(10, 'Mountain view');
+
+INSERT INTO PropertyTag (PropertyListingID, TagID) VALUES
+(20, 3, 8),
+(21, 3, 8),
+(22, 4, 8),
+(23, 3, 8),
+(30, 2, 8),
+(31, 2, 8),
+(40, 2, 8),
+(41, 1, 8),
+(42, 1, 8),
+(43, 3, 8),
+(50, 3, 8),
+(51, 3, 8),
+(52, 2, 8),
+(53, 2, 8),
+(100, 2, 8),
+(101, 1, 8),
+(102, 2, 8),
+(103, 2, 8),
+(104, 2, 8),
+(105, 3, 8);

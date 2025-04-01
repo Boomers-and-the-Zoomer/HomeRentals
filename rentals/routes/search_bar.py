@@ -175,6 +175,12 @@ def search_bar():
                             <label for="guests">Guests</label>
                             <input id="guests" name="guests" type="number" placeholder="Type in guests" min="0" {guests != "" and f"value=\"{guests}\""}>
                         </div>
+                        <button popovertarget="search-popover" type="button">Filter</button>
+                        <div popover id="search-popover">
+                            <h1>Filter</h1>
+                            <button type="button" onclick="alert('Filtered by:Near ocean')">Near ocean</button><br>
+                            <button type="button" onclick="alert('Filtered by:Mountains')">Mountains</button><br>
+                        </div>
                         <button
                             type="submit"
                             class="search-btn">🔍 Search</button>
