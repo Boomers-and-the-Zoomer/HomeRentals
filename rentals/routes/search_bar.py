@@ -4,6 +4,7 @@ from ..components import html, with_navbar
 import json
 import os
 from .. import db
+from datetime import datetime
 
 
 def get_search_results(location, check_in, check_out, guests):
@@ -18,8 +19,7 @@ def get_search_results(location, check_in, check_out, guests):
         params += [location]
         condition = """PropertyListing.Address LIKE %s"""
 
-    # TODO: Handle the case where only one of check_in and check_out are specified.
-    if check_in != "" and check_out != "":
+    if check_in and check_out:
         if condition != "":
             condition += " AND "
         condition += """
@@ -33,14 +33,33 @@ def get_search_results(location, check_in, check_out, guests):
             )
         )
         """
-        params += [
-            check_in,
-            check_out,
-            check_in,
-            check_out,
-            check_in,
-            check_out,
-        ]
+        params += [check_in, check_out, check_in, check_out, check_in, check_out]
+
+    elif check_in:
+        if condition != "":
+            condition += " AND "
+        condition += """
+        PropertyListing.PropertyListingID NOT IN (
+            SELECT Booking.PropertyListingID
+            FROM Booking
+            WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
+                OR Booking.StartTime > %s
+        )
+        """
+        params += [check_in, check_in]
+
+    elif check_out:
+        if condition != "":
+            condition += " AND "
+        condition += """
+        PropertyListing.PropertyListingID NOT IN (
+            SELECT Booking.PropertyListingID
+            FROM Booking
+            WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
+                OR Booking.EndTime < %s
+        )
+        """
+        params += [check_out, check_out]
 
     if guests != 0:
         if condition != "":
@@ -106,6 +125,21 @@ def search_results():
     except ValueError:
         guests = 0
 
+    if check_in and check_out:
+        try:
+            check_in_date = datetime.strptime(check_in, "%Y-%m-%d")
+            check_out_date = datetime.strptime(check_out, "%Y-%m-%d")
+            if check_in_date >= check_out_date:
+                return html(
+                    "Search error",
+                    with_navbar(
+                        "<main><p>Ugyldig dato: Utsjekksdato må være etter innsjekksdato.</p></main>"
+                    ),
+                )
+        except ValueError:
+            return html(
+                "Search error", with_navbar("<main><p>Ugyldig dataformat.</p></main>")
+            )
     return get_search_results(location, check_in, check_out, guests)
 
 
