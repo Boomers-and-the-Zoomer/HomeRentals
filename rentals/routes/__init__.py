@@ -28,4 +28,4 @@ def index():
 
 @route("/static/<path:path>")
 def static(path):
-    return static_file(path, "./static")
+    return static_file(path, "./static", headers={"Cache-Control": "no-cache"})
