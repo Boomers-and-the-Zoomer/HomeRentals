@@ -156,7 +156,7 @@ div#navigated {
     column-gap: 10px;
     padding: 0px;
     top: calc(var(--navbar-height) + 5px);
-    right: 10px;
+    right: var(--page-margin);
     border-radius: var(--corner);
     box-shadow: 0px 0px 1px 1px black;
 
