@@ -5,5 +5,6 @@
     "**/__pycache__": true,
     "**/.venv": true
   },
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "files.autoSaveWhenNoErrors": true
 }
