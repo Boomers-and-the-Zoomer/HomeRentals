@@ -7,7 +7,18 @@ from .. import db
 from datetime import datetime
 
 
-def get_search_results(location, check_in, check_out, guests, type_="", tags=None):
+def hent_alle_tags():
+    conn = db.cnx()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name FROM Tag ORDER BY Name")
+    tags = [rad[0] for rad in cursor.fetchall()]
+    conn.close()
+    return tags
+
+
+def get_search_results(
+    location, check_in, check_out, guests, type_="", tags=None, sort_by=""
+):
     if tags is None:
         tags = []
 
@@ -91,7 +102,7 @@ def get_search_results(location, check_in, check_out, guests, type_="", tags=Non
             FROM PropertyTag
             JOIN Tag ON Tag.TagID = PropertyTag.TagID
             WHERE Tag.Name IN ({placeholders})
-            GRUOP BY PropertyTag.PropertyListingID
+            GROUP BY PropertyTag.PropertyListingID
             HAVING COUNT(*) = {len(tags)}
         )
         """
@@ -107,6 +118,13 @@ def get_search_results(location, check_in, check_out, guests, type_="", tags=Non
         """
     if condition:
         query += f" WHERE {condition}"
+
+    if sort_by == "price_asc":
+        query += " ORDER BY PropertyListing.Price ASC"
+    elif sort_by == "price_desc":
+        query += " ORDER BY PropertyListing.Price DESC"
+    elif sort_by == "beds_desc":
+        query += " ORDER BY PropertyListing.Beds DESC"
 
     print(query)
     cursor.execute(
@@ -147,6 +165,7 @@ def get_search_results(location, check_in, check_out, guests, type_="", tags=Non
 @route("/search_results")
 def search_results():
     location = request.query.get("location", "").strip()
+    sort_by = request.query.get("sort_by", "")
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
@@ -173,7 +192,9 @@ def search_results():
             return html(
                 "Search error", with_navbar("<main><p>Ugyldig dataformat.</p></main>")
             )
-    return get_search_results(location, check_in, check_out, guests, type_, tags)
+    return get_search_results(
+        location, check_in, check_out, guests, type_, tags, sort_by
+    )
 
 
 @route("/search")
@@ -184,6 +205,18 @@ def search_bar():
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
+    tags = hent_alle_tags()
+    type_tags = ["apartment", "cabin", "house", "basement"]
+    types = [tag for tag in tags if tag in type_tags]
+    features = [tag for tag in tags if tag not in type_tags]
+    type_dropdown = '<div class="input-box"><label for="type">Property Type</label><select name="type" id="type" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="closest form">'
+    type_dropdown += '<option value="">All</option>'
+
+    for t in types:
+        selected = "selected" if request.query.get("type") == t else ""
+        type_dropdown += f'<option value="{t}" {selected}>{t.capitalize()}</option>'
+
+    type_dropdown += "</select></div>"
 
     return html(
         "Search",
@@ -212,25 +245,23 @@ def search_bar():
                         <div popover id="search-popover">
                             <h1>Filter</h1>
                             <button type="button" popovertarget="search-popover" popovertargetaction="hide" style="float: right;">❌ Close</button>
-                            <div class="input-box">
-                                <label for="type">Property Type</label>
-                                <select name="type" id="type">
-                                    <option value="">All</option>
-                                    <option value="appartment">Appartment</option>
-                                    <option vlaue="cabin">Cabin</option>
-                                    <option value="house">House</option>
-                                    <option value="basement">Basement</option>
-                                </select>
-                            </div>
+                            {type_dropdown}
                             <fieldset>
                                 <legend>Features</legend>
-                                <label><input type="checkbox" name="tag" value="Wi-Fi"> Wi-Fi</label><br>
-                                <label><input type="checkbox" name="tag" value="Hot tub"> Hot tub</label><br>
-                                <label><input type="checkbox" name="tag" value="Pet-friendly"> Pet-friendly</label><br>
-                                <label><input type="checkbox" name="tag" value="Parking"> Parking</label><br>
-                                <label><input type="checkbox" name="tag" value="By the sea"> By the sea</label><br>
-                                <label><input type="checkbox" name="tag" value="Mountain view"> Mountain view</label>
+                                {"".join([
+                                    f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="closest form"> {tag}</label><br>'
+                                    for tag in features
+                                ])}
                             </fieldset>
+                            <div class="input-box">
+                                <label for="sort_by">Sort by</label>
+                                <select name="sort_by" id="sort_by">
+                                    <option value="">--</option>
+                                    <option value="price_asc" {{ "selected" if request.query.get("sort_by") == "price_asc" else "" }}>Price: Low to High</option>
+                                    <option value="price_desc" {{ "selected" if request.query.get("sort_by") == "price_desc" else "" }}>Price: High to Low</option>
+                                    <option value="beds_desc" {{ "selected" if request.query.get("sort_by") == "beds_desc" else "" }}>Beds: Most First</option>
+                                </select>
+                            </div>
                         </div>
                         <button
                             type="submit"
