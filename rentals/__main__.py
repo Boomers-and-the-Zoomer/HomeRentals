@@ -28,6 +28,7 @@ def run_db_update():
         def run_schema():
             cur.execute(schema)
             cur.execute(testdata)
+            cnx.commit()
 
         try:
             cur.execute("USE HomeRentals;")
