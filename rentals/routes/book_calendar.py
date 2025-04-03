@@ -182,40 +182,60 @@ def booking_confirmation(PropertyListingID, from_date):
 
     cursor.execute(
         """
-        SELECT * FROM PropertyListing
+        SELECT Address, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens
+        FROM PropertyListing 
         WHERE PropertyListingID = %s
     """,
         (property_id,),
     )
-    rental = cursor.fetchone()
-    cursor.close()
-    if not rental:
-        raise HTTPError(404, "Property listing not found")
+    address, bedrooms, beds, bathrooms, squareMeters, parkingSpots, kitchens = (
+        cursor.fetchone()
+    )
 
-    return booking_confirmation_template(bConfirmation, rental)
+    return booking_confirmation_template(
+        bConfirmation,
+        property_id,
+        address,
+        bedrooms,
+        beds,
+        bathrooms,
+        squareMeters,
+        parkingSpots,
+        kitchens,
+    )
 
 
-def booking_confirmation_template(bConfirmation, rental):
+def booking_confirmation_template(
+    bConfirmation,
+    property_id,
+    address,
+    bedrooms,
+    beds,
+    bathrooms,
+    squareMeters,
+    parkingSpots,
+    kitchens,
+):
     expiryTime = bConfirmation[3]
     return html(
-        f"Booking confirmation for: {rental[2]}",
+        f"Booking confirmation for: {address}",
         with_navbar(f"""
             <main id="book-confirm">
                 <h1>Confirm order</h1>
                 <input type="hidden" id="expiry_time" name="expiry_time" value="{expiryTime}">
-                <h2>Your booking summary for: {rental[2]}</h2>
+                <h1>Your booking summary for: {address}</h1>
                 <ul>
-                    <li>Bedrooms: {rental[5]}</li>
-                    <li>Beds: {rental[6]}</li>
-                    <li>Bathrooms: {rental[7]}</li>
-                    <li>Area: {rental[8]} m²</li>
-                    <li>Parking spots allocated: {rental[9]}</li>
-                    <li>Kitchens: {rental[10]}</li><br>
+                    <li>Bedrooms: {bedrooms}</li>
+                    <li>Beds: {beds}</li>
+                    <li>Bathrooms: {bathrooms}</li>
+                    <li>Area: {squareMeters} m²</li>
+                    <li>Parking spots allocated: {parkingSpots}</li>
+                    <li>Kitchens: {kitchens}</li><br>
                     <li>Start: {bConfirmation[1]}</li>
                     <li>End: {bConfirmation[2]}</li>
                 </ul>
                 <form id="finalizeForm" action="/finalize-booking" method="post">
-                    <input type="hidden" name="PropertyListingID" value="{rental[0]}">
+                    <input type="hidden" name="PropertyListingID" value="{property_id}">
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                     <label for="TOS">
                         <input type="checkbox" id="TOS" name="TOS" required>
@@ -223,7 +243,7 @@ def booking_confirmation_template(bConfirmation, rental):
                     </label>
                 </form>
                 <form id="cancelBooking" action="/cancel-temp-booking" method="post">
-                    <input type="hidden" name="PropertyListingID" value="{rental[0]}">
+                    <input type="hidden" name="PropertyListingID" value="{property_id}">
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                 </form>
                 <div>
