@@ -69,7 +69,7 @@ def get_search_results(location, check_in, check_out, guests, type_="", tags=Non
             condition += " AND "
         condition += "PropertyListing.Beds >= %s"
         params += [guests]
-    
+
     if type_:
         if condition:
             condition += " AND "
@@ -84,7 +84,7 @@ def get_search_results(location, check_in, check_out, guests, type_="", tags=Non
         params.append(type_)
 
     if tags is not None and len(tags) > 0:
-        placeholders =", ".join(["%s"] * len(tags))
+        placeholders = ", ".join(["%s"] * len(tags))
         condition += f"""
         AND PropertyListing.PropertyListingID IN (
             SELECT PropertyTag.PropertyListingID
@@ -219,6 +219,7 @@ def search_bar():
                                     <option value="appartment">Appartment</option>
                                     <option vlaue="cabin">Cabin</option>
                                     <option value="house">House</option>
+                                    <option value="basement">Basement</option>
                                 </select>
                             </div>
                             <fieldset>
