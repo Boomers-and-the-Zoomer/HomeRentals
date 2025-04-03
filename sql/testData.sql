@@ -1,3 +1,5 @@
+USE HomeRentals;
+
 INSERT INTO UserAccount (Email, PasswordHash) VALUES
 -- password: alice123
 ('alice@example.com', '$argon2id$v=19$m=65536,t=3,p=4$iF3lCPZBIFJHT4tVn5Yz3g$rJb1rl/suzDVeG0lpHw+tojmRiJHzLDdtBE/GM2L7Us'),
@@ -125,16 +127,6 @@ INSERT INTO Picture (PictureID, Filename) VALUES
 (69, 'Listing53pic5.jpg');
 
 -- INSERT INTO Booking (PropertyListingID, Email, StartTime, EndTime) VALUES
-
-INSERT INTO Picture (Filename) VALUES
-('hus1.jpg'),
-('hus2.jpg'),
-('hus3.jpg'),
-('hus4.jpg'),
-('hus5.jpg'),
-('hus6.jpg'),
-('hus7.jpg'),
-('hus8.jpg');
 
 INSERT INTO Picture(PictureID,Filename) VALUES
 (200,'listing20pic1.jpeg'),
@@ -310,23 +302,23 @@ INSERT INTO Tag (TagID, Name) VALUES
 (10, 'Mountain view');
 
 INSERT INTO PropertyTag (PropertyListingID, TagID) VALUES
-(20, 3, 8),
-(21, 3, 8),
-(22, 4, 8),
-(23, 3, 8),
-(30, 2, 8),
-(31, 2, 8),
-(40, 2, 8),
-(41, 1, 8),
-(42, 1, 8),
-(43, 3, 8),
-(50, 3, 8),
-(51, 3, 8),
-(52, 2, 8),
-(53, 2, 8),
-(100, 2, 8),
-(101, 1, 8),
-(102, 2, 8),
-(103, 2, 8),
-(104, 2, 8),
-(105, 3, 8);
+(20, 3),
+(21, 3),
+(22, 4),
+(23, 3),
+(30, 2),
+(31, 2),
+(40, 2),
+(41, 1),
+(42, 1),
+(43, 3),
+(50, 3),
+(51, 3),
+(52, 2),
+(53, 2),
+(100, 2),
+(101, 1),
+(102, 2),
+(103, 2),
+(104, 2),
+(105, 3);
