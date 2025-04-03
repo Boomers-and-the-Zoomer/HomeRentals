@@ -7,7 +7,7 @@ from .. import db
 @route("/user-profile")
 @requires_user_session()
 def user_profile():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     session_token = get_session_token()

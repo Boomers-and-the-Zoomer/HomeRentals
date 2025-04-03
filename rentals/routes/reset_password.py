@@ -47,7 +47,7 @@ def reset_password_side_submit():
 
     email = request.forms["email"]
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     cur.execute("SELECT EXISTS (SELECT * FROM UserAccount WHERE Email=%s)", (email,))
@@ -112,7 +112,7 @@ def reset_token_is_valid(cur, reset_token: str) -> str | None:
 
 @get("/reset-password/<reset_token>")
 def reset_password_with_token(reset_token):
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     if not reset_token_is_valid(cur, reset_token):
@@ -125,7 +125,7 @@ def reset_password_with_token(reset_token):
             """
             <h1>Reset Password</h1>
             <br>
-            <p>Type in your new password twice</p>        
+            <p>Type in your new password twice</p>
             <label>New password:</label>
             <input type="password" name="password1" id="password1" placeholder="Password">
             <label>Confirm new password:</label>
@@ -155,7 +155,7 @@ def reset_password_with_token_submit(reset_token):
     # 2. Hvis gylidg, lagre nytt passord
     # 3. Hvis ikke gylidg, 404
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     email = reset_token_is_valid(cur, reset_token)

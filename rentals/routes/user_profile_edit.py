@@ -8,7 +8,7 @@ from .. import db
 @get("/user-profile/edit")
 @requires_user_session()
 def user_profile_edit():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     session_token = get_session_token()
@@ -64,7 +64,7 @@ def user_profile_edit():
                                     <textarea id="languages_form" name="languages_form" rows="3" cols="40"style="resize: none;">{languages}</textarea>
                                     <br><br>
                                     <label for="age_form"><b>Age:</b></label>
-                                    <textarea id="age_form" name="age_form" rows="3" cols="40"style="resize: none;">{age}</textarea>         
+                                    <textarea id="age_form" name="age_form" rows="3" cols="40"style="resize: none;">{age}</textarea>
                                 </fieldset>
                                 <fieldset>
                                     <legend><b>Fun fact:</b></legend>
@@ -84,7 +84,7 @@ def user_profile_edit():
 @post("/user-profile/edit")
 @requires_user_session()
 def user_profile_edit():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     session_token = get_session_token()

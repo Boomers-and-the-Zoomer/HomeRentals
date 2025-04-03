@@ -14,7 +14,7 @@ def _create_and_insert_session_token(email: str) -> bytes:
     """
     Create a session token and insert it into the DB
     """
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     with cnx.cursor() as cur:
         expiry_time = datetime.now(timezone.utc) + timedelta(hours=1)
         failures = 0
@@ -72,7 +72,7 @@ def get_session_and_refresh() -> bytes | None:
     if session_token == None:
         return None
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     with cnx.cursor() as cur:
         cur.execute(
             """

@@ -86,7 +86,7 @@ def new_listing_page1_content_framed():
         """
         <div class="maintext">
             <h1>
-                We are so happy that you've decided to<br> 
+                We are so happy that you've decided to<br>
                 rent out your home!
             </h1>
             <br>
@@ -224,7 +224,7 @@ def new_listing_page5_content():
             <br>
             <br>
             <form oninput="outputNumber.value = price.value ? (parseFloat(price.value * 0.95).toFixed(2)) : ''">
-                <p>        
+                <p>
                     <label class="left" for="price">Enter price:</label>
                     <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\d{1,7}" inputmode="numeric" required>
                     <span class="right">NOK per night</span>
@@ -318,7 +318,7 @@ def new_listing_summary_content():
 
 @post("/new-listing/summary")
 def new_listing_summary():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     cur.execute(

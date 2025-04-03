@@ -11,7 +11,7 @@ from rentals import db, util, routes, auth, icons
 def main():
     run_db_update()
     bottle.run(host="localhost", port=8080, reloader=True)
-    db.db_cnx_close()
+    db.cnx_close()
 
 
 def run_db_update():
@@ -22,7 +22,7 @@ def run_db_update():
     schema_hash = sha256(schema.encode()).hexdigest()
     testdata_hash = sha256(testdata.encode()).hexdigest()
 
-    cnx = db.db_cnx(no_db=True)
+    cnx = db.cnx(no_db=True)
     with cnx.cursor() as cur:
 
         def run_schema():
@@ -42,8 +42,8 @@ def run_db_update():
             print("-> Schema created")
 
     # Re-open the database connection to unfuck the connection state
-    db.db_cnx_close()
-    cnx = db.db_cnx()
+    db.cnx_close()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     metadata_existed = False
@@ -83,8 +83,8 @@ def run_db_update():
                 run_schema()
                 # Re-open the database connection to unfuck the connection state
                 cur.close()
-                db.db_cnx_close()
-                cnx = db.db_cnx()
+                db.cnx_close()
+                cnx = db.cnx()
                 cur = cnx.cursor()
                 create_and_fill_metadata_table(cur)
                 print("-> DB is updated")
@@ -93,7 +93,7 @@ def run_db_update():
 
     print()
     cur.close()
-    db.db_cnx_close()
+    db.cnx_close()
 
 
 def raise_if_err_not_ends_with(err, string):

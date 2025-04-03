@@ -8,7 +8,7 @@ from .. import db
 def log_out():
     session_token = get_session_token()
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     cur.execute(

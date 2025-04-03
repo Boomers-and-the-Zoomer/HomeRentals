@@ -61,7 +61,7 @@ def sign_up_submit():
     ph = PasswordHasher()
     pwhash = ph.hash(password)
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
 
     cur = cnx.cursor()
     try:

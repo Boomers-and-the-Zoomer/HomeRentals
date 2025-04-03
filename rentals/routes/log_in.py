@@ -52,7 +52,7 @@ def log_in_submit():
     email = request.forms["email"]
     password = request.forms["password"]
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     cur.execute(

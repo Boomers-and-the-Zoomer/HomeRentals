@@ -13,15 +13,15 @@ def db_cnx_init(no_db: bool = False):
     if not no_db:
         config["database"] = "HomeRentals"
 
-    cnx = mysql.connector.connect(**config)
+    my_cnx = mysql.connector.connect(**config)
 
     def _db_cnx():
-        return cnx
+        return my_cnx
 
     def _db_cnx_close():
         db_cnx = db_cnx_init
         db_cnx_close = lambda: None
-        cnx.close()
+        my_cnx.close()
 
     db_cnx = _db_cnx
     db_cnx_close = _db_cnx_close
@@ -29,5 +29,5 @@ def db_cnx_init(no_db: bool = False):
     return _db_cnx()
 
 
-db_cnx = db_cnx_init
-db_cnx_close = lambda: None
+cnx = db_cnx_init
+cnx_close = lambda: None

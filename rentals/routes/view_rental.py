@@ -5,7 +5,7 @@ from .. import db
 
 @route("/temp-view-rental/<listing>")
 def view_rental(listing: int):
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cur = cnx.cursor()
 
     cur.execute(
@@ -25,7 +25,7 @@ def view_rental(listing: int):
     <div class="left">
         <div class="main-gallery">
             <img width=485 height=270>
-            
+
             <div class="sub-gallery">
                 <img width=230 height=130>
                 <img width=230 height=130>
@@ -33,12 +33,12 @@ def view_rental(listing: int):
                 <img width=230 height=130>
             </div>
         </div>
-        
+
         <p>{bedrooms} bedrooms · {beds} beds · {bathrooms} bathrooms</p>
         <p class="description">{description}</p>
     </div>
     <div class="calendar">
-    
+
     </div>
     """
 

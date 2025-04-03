@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 def get_search_results(location, check_in, check_out, guests):
-    conn = db.db_cnx()
+    conn = db.cnx()
     cursor = conn.cursor()
 
     params = []
@@ -68,7 +68,7 @@ def get_search_results(location, check_in, check_out, guests):
         params += [guests]
 
     query = f"""
-        SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address, 
+        SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address,
             PropertyListing.Description, PropertyListing.Beds, COALESCE(Picture.Filename, 'default.jpg') AS Filename
         FROM PropertyListing
         LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID

@@ -10,7 +10,7 @@ from .. import db
 
 @route("/view-rental/<listing>")
 def view_rental(listing: int):
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
 
     cursor.execute(
@@ -47,7 +47,7 @@ def view_rental(listing: int):
     <div class="left">
         <div class="main-gallery">
             <img {imgs[0]}width=485 height=270>
-            
+
             <div class="sub-gallery">
                 <img {imgs[1]}width=230 height=130>
                 <img {imgs[2]}width=230 height=130>
@@ -55,7 +55,7 @@ def view_rental(listing: int):
                 <img {imgs[4]}width=230 height=130>
             </div>
         </div>
-        
+
         <p>{bedrooms} bedrooms · {beds} beds · {bathrooms} bathrooms · {parking} parking spots</p>
         <p class="description">{description}</p>
     </div>
@@ -68,7 +68,7 @@ def view_rental(listing: int):
         <input type="hidden" name="PropertyListingID" value="{PropertyListingID}">
         <button type="submit">Book Now</button>
     </form>
-    
+
     </div>
     """
 
@@ -102,7 +102,7 @@ def book_rental():
     if from_date >= to_date:
         raise HTTPError(400, "Invalid booking: Start date must be before end date")
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
     # Burde nok legge en sjekk for BookingSession her også
     overlappingSjekk = """
@@ -151,7 +151,7 @@ def book_rental():
 @route("/booking-confirmation/<PropertyListingID>/<from_date>", method="GET")
 @requires_user_session()
 def booking_confirmation(PropertyListingID, from_date):
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
 
     token = get_session_token()
@@ -182,7 +182,7 @@ def booking_confirmation(PropertyListingID, from_date):
 
     cursor.execute(
         """
-        SELECT * FROM PropertyListing 
+        SELECT * FROM PropertyListing
         WHERE PropertyListingID = %s
     """,
         (property_id,),
@@ -238,7 +238,7 @@ def booking_confirmation_template(bConfirmation, rental):
 @route("/cancel-temp-booking", method="POST")
 @requires_user_session(referer=True)  # Legger til denne ved POST
 def cancel_temp_booking():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
 
     token = get_session_token()
@@ -266,7 +266,7 @@ def cancel_temp_booking():
 @route("/finalize-booking", method="POST")
 @requires_user_session()
 def finalize_booking():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor(buffered=True)
 
     token = get_session_token()

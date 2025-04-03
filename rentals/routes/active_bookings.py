@@ -13,7 +13,7 @@ from .. import db
 def view_active_bookings():
     token = get_session_token()
 
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
 
     cursor.execute(
@@ -96,7 +96,7 @@ def active_booking_template(activeBookings, email):
 @route("/cancel-booking", method="POST")
 @requires_user_session(referer=True)
 def cancel_temp_booking():
-    cnx = db.db_cnx()
+    cnx = db.cnx()
     cursor = cnx.cursor()
 
     property_listing_id = request.forms.get("PropertyListingID")
