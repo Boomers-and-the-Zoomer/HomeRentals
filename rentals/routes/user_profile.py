@@ -1,4 +1,4 @@
-from bottle import route
+from bottle import route, response
 from ..auth import requires_user_session, get_session_token
 from ..components import html, with_navbar
 from .. import db
@@ -9,8 +9,26 @@ from .. import db
 def user_profile():
     cnx = db.cnx()
     cur = cnx.cursor()
-
     session_token = get_session_token()
+    cur.execute(
+        """
+        SELECT UserAccount.Email
+        FROM UserAccount, Session
+        WHERE UserAccount.Email=Session.Email
+            AND Session.Token=_binary %s
+            AND UserAccount.Email IN (
+                SELECT Email
+                FROM User
+                )
+        """,
+        (session_token,),
+    )
+    row = cur.fetchone()
+    if row == None:
+        response.status = 303
+        response.add_header("Location", "/user-information")
+        cur.close()
+        return
 
     cur.execute(
         """

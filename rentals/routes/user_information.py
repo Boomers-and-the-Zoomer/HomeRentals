@@ -12,6 +12,25 @@ from .. import db
 
 @get("/user-information")
 def user_information():
+    cnx = db.cnx()
+    cur = cnx.cursor()
+    session_token = get_session_token()
+    cur.execute(
+        """
+        SELECT User.Email
+        FROM User, Session
+        WHERE User.Email=Session.Email
+            AND Session.Token=_binary %s
+        """,
+        (session_token,),
+    )
+    row = cur.fetchone()
+    if row != None:
+        response.status = 303
+        response.add_header("Location", "/")
+        cur.close()
+        return
+
     form = simple_account_form_position(
         simple_account_form(
             "user-information",
@@ -20,7 +39,7 @@ def user_information():
             <label for="firstname">First name:</label>
             <input id="firstname" name="firstname" type="text" required>
             <label for="lastname">Last name:</label>
-            <input id="lastname"name="lasttname" type="text" required>
+            <input id="lastname"name="lastname" type="text" required>
             <label for="phonenumber">Phone number:</label>
             <input id="phonenumber" name="phonenumber" type="tel" required>
             <label for="address">Home adress:</label>
@@ -28,6 +47,7 @@ def user_information():
             <label for="postcode">Post code:</label>
             <input id="postcode" name="postcode" type="text" required>
             <button>Confirm</button>
+            <p class="centered"><a href="/">Do it later</a></p>
             """,
         )
     )
@@ -76,19 +96,14 @@ def user_profile_edit():
 
     cur.execute(
         """
-        INSERT INTO User
-        SET Email = %s, FirstName = %s, LastName = %s, PhoneNumber = %s, HomeAddress = %s, PostalCode = %s
-        WHERE User.Email=(
-            SELECT Email
-            FROM Session
-            WHERE Session.Token=_binary %s
-            )
+        INSERT INTO User (Email, FirstName, LastName, Phonenumber, HomeAddress, PostalCode)
+        VALUES (%s,%s,%s,%s,%s,%s)
         """,
-        (email, firstName, lastName, phoneNumber, address, postCode, session_token),
+        (email, firstName, lastName, phoneNumber, address, postCode),
     )
 
     cnx.commit()
     cur.close()
 
     response.status = 303
-    response.add_header("Location", "/user-information")
+    response.add_header("Location", "/")
