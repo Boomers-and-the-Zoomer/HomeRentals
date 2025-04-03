@@ -2,6 +2,7 @@ from hashlib import sha256
 
 import bottle
 import mysql.connector
+from mysql.connector import MySQLConnection
 
 from dotenv import load_dotenv
 
@@ -15,41 +16,39 @@ def main():
 
 
 def run_db_update():
-    with open("./sql/schema.sql") as f:
+    with open("./sql/schema.sql", encoding="utf-8") as f:
         schema = f.read()
-    with open("./sql/testData.sql") as f:
+    with open("./sql/testData.sql", encoding="utf-8") as f:
         testdata = f.read()
     schema_hash = sha256(schema.encode()).hexdigest()
     testdata_hash = sha256(testdata.encode()).hexdigest()
 
     cnx = db.cnx(no_db=True)
-    with cnx.cursor() as cur:
 
-        def run_schema():
+    def run_schema(cnx: MySQLConnection):
+        with cnx.cursor() as cur:
             cur.execute(schema)
+        cnx.commit()
+
+        with cnx.cursor() as cur:
             cur.execute(testdata)
-            cnx.commit()
+        cnx.commit()
 
-        try:
-            cur.execute("USE HomeRentals;")
-        except mysql.connector.errors.ProgrammingError as e:
-            raise_if_err_not_ends_with(e, "Unknown database 'homerentals'")
+    try:
+        with cnx.cursor() as cur:
+            cur.execute("USE HomeRentals")
+    except mysql.connector.errors.ProgrammingError as e:
+        raise_if_err_not_ends_with(e, "Unknown database 'homerentals'")
 
-            print("No schema found in the mysql instance")
-
-            run_schema()
-            cur.execute("USE HomeRentals;")
-
-            print("-> Schema created")
+        print("No schema found in the mysql instance")
+        run_schema(cnx)
+        print("-> Schema created")
 
     # Re-open the database connection to unfuck the connection state
     db.cnx_close()
     cnx = db.cnx()
-    cur = cnx.cursor()
 
-    metadata_existed = False
-
-    def create_and_fill_metadata_table(cur):
+    def create_and_fill_metadata_table(cnx, cur):
         cur.execute(
             """
             CREATE TABLE _metadata (
@@ -65,8 +64,11 @@ def run_db_update():
         )
         cnx.commit()
 
+    metadata_existed = False
+
+    cur = cnx.cursor()
     try:
-        create_and_fill_metadata_table(cur)
+        create_and_fill_metadata_table(cnx, cur)
         print("-> Initial hashes inserted")
     except mysql.connector.errors.ProgrammingError as e:
         raise_if_err_not_ends_with(e, "Table '_metadata' already exists")
@@ -81,13 +83,13 @@ def run_db_update():
             )
             if choice.lower().startswith("y") or choice == "":
                 print("-> Re-running scripts")
-                run_schema()
+                run_schema(cnx)
                 # Re-open the database connection to unfuck the connection state
                 cur.close()
                 db.cnx_close()
                 cnx = db.cnx()
                 cur = cnx.cursor()
-                create_and_fill_metadata_table(cur)
+                create_and_fill_metadata_table(cnx, cur)
                 print("-> DB is updated")
             else:
                 print("-> No changes applied")
