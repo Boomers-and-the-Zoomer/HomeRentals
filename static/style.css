@@ -798,15 +798,13 @@ main#search-page {
       background: var(--slate-700);
     }
     div#search-popover {
-      grid-template-columns: max-content auto max-content;
-      grid-template-rows: auto;
-      align-items: center;
-      column-gap: 10px;
-      padding: 0px;
-      top: calc(var(--navbar-height) + 5px);
-      right: var(--page-margin);
-      border-radius: var(--corner);
-      box-shadow: 0px 0px 1px 1px black;
+      display: grid;
+      grid-template-columns: 1fr;
+      row-gap: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: var(--slate-100);
 
       &:popover-open {
         display: grid;

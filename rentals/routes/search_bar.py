@@ -7,7 +7,10 @@ from .. import db
 from datetime import datetime
 
 
-def get_search_results(location, check_in, check_out, guests):
+def get_search_results(location, check_in, check_out, guests, type_="", tags=None):
+    if tags is None:
+        tags = []
+
     conn = db.cnx()
     cursor = conn.cursor()
 
@@ -66,6 +69,34 @@ def get_search_results(location, check_in, check_out, guests):
             condition += " AND "
         condition += "PropertyListing.Beds >= %s"
         params += [guests]
+    
+    if type_:
+        if condition:
+            condition += " AND "
+        condition += """
+        PropertyListing.PropertyListingID IN (
+            SELECT PropertyTag.PropertyListingID
+            FROM PropertyTag
+            JOIN Tag ON Tag.TagID = PropertyTag.TagID
+            WHERE Tag.Name = %s
+        )
+        """
+        params.append(type_)
+
+    if tags is not None and len(tags) > 0:
+        placeholders =", ".join(["%s"] * len(tags))
+        condition += f"""
+        AND PropertyListing.PropertyListingID IN (
+            SELECT PropertyTag.PropertyListingID
+            FROM PropertyTag
+            JOIN Tag ON Tag.TagID = PropertyTag.TagID
+            WHERE Tag.Name IN ({placeholders})
+            GRUOP BY PropertyTag.PropertyListingID
+            HAVING COUNT(*) = {len(tags)}
+        )
+        """
+        for tag in tags:
+            params.append(tag)
 
     query = f"""
         SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address,
@@ -119,6 +150,8 @@ def search_results():
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
+    type_ = request.query.get("type", "").strip()
+    tags = request.query.get("tag")
 
     try:
         guests = int(guests)
@@ -140,7 +173,7 @@ def search_results():
             return html(
                 "Search error", with_navbar("<main><p>Ugyldig dataformat.</p></main>")
             )
-    return get_search_results(location, check_in, check_out, guests)
+    return get_search_results(location, check_in, check_out, guests, type_, tags)
 
 
 @route("/search")
@@ -178,8 +211,25 @@ def search_bar():
                         <button popovertarget="search-popover" type="button">Filter</button>
                         <div popover id="search-popover">
                             <h1>Filter</h1>
-                            <button type="button" onclick="alert('Filtered by:Near ocean')">Near ocean</button><br>
-                            <button type="button" onclick="alert('Filtered by:Mountains')">Mountains</button><br>
+                            <button type="button" popovertarget="search-popover" popovertargetaction="hide" style="float: right;">❌ Close</button>
+                            <div class="input-box">
+                                <label for="type">Property Type</label>
+                                <select name="type" id="type">
+                                    <option value="">All</option>
+                                    <option value="appartment">Appartment</option>
+                                    <option vlaue="cabin">Cabin</option>
+                                    <option value="house">House</option>
+                                </select>
+                            </div>
+                            <fieldset>
+                                <legend>Features</legend>
+                                <label><input type="checkbox" name="tag" value="Wi-Fi"> Wi-Fi</label><br>
+                                <label><input type="checkbox" name="tag" value="Hot tub"> Hot tub</label><br>
+                                <label><input type="checkbox" name="tag" value="Pet-friendly"> Pet-friendly</label><br>
+                                <label><input type="checkbox" name="tag" value="Parking"> Parking</label><br>
+                                <label><input type="checkbox" name="tag" value="By the sea"> By the sea</label><br>
+                                <label><input type="checkbox" name="tag" value="Mountain view"> Mountain view</label>
+                            </fieldset>
                         </div>
                         <button
                             type="submit"
