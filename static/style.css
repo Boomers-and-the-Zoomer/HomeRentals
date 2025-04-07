@@ -891,6 +891,11 @@ main#search-page {
   .property-link:hover {
     cursor: pointer;
   }
+
+  .property-card .price {
+    font-weight: bold;
+    color: var(--slate-800);
+  }
 }
 
 main#book-calendar {
