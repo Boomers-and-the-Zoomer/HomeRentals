@@ -165,6 +165,7 @@ def get_search_results(
                     <h3>{address}</h3>
                     <p>{description}</p>
                     <p class="beds">{beds} Beds</p>
+                    <p class="price">{price} kr / Night
                 </div>
             </a>
         """
