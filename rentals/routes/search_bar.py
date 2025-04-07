@@ -12,7 +12,7 @@ def hent_alle_tags():
     cursor = conn.cursor()
     cursor.execute("SELECT Name FROM Tag ORDER BY Name")
     tags = [rad[0] for rad in cursor.fetchall()]
-    conn.close()
+    cursor.close()
     return tags
 
 
@@ -96,8 +96,11 @@ def get_search_results(
 
     if tags is not None and len(tags) > 0:
         placeholders = ", ".join(["%s"] * len(tags))
+        if condition:
+            condition += " AND "
+
         condition += f"""
-        AND PropertyListing.PropertyListingID IN (
+        PropertyListing.PropertyListingID IN (
             SELECT PropertyTag.PropertyListingID
             FROM PropertyTag
             JOIN Tag ON Tag.TagID = PropertyTag.TagID
@@ -110,19 +113,27 @@ def get_search_results(
             params.append(tag)
 
     query = f"""
-        SELECT DISTINCT PropertyListing.PropertyListingID, PropertyListing.Address,
-            PropertyListing.Description, PropertyListing.Beds, COALESCE(Picture.Filename, 'default.jpg') AS Filename
-        FROM PropertyListing
-        LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID
-        LEFT JOIN Picture ON PropertyPicture.PictureID = Picture.PictureID
-        """
+    SELECT PropertyListing.PropertyListingID,
+        PropertyListing.Address,
+        PropertyListing.Description,
+        PropertyListing.Price,
+        PropertyListing.Beds,
+        COALESCE(MIN(Picture.Filename), 'default.jpg') AS Filename
+    FROM PropertyListing
+    LEFT JOIN PropertyPicture ON PropertyListing.PropertyListingID = PropertyPicture.PropertyListingID
+    LEFT JOIN Picture ON PropertyPicture.PictureID = Picture.PictureID
+    """
     if condition:
         query += f" WHERE {condition}"
+
+    query += " GROUP BY PropertyListing.PropertyListingID"
 
     if sort_by == "price_asc":
         query += " ORDER BY PropertyListing.Price ASC"
     elif sort_by == "price_desc":
         query += " ORDER BY PropertyListing.Price DESC"
+    elif sort_by == "beds_asc":
+        query += " ORDER BY PropertyListing.Beds ASC"
     elif sort_by == "beds_desc":
         query += " ORDER BY PropertyListing.Beds DESC"
 
@@ -134,12 +145,11 @@ def get_search_results(
     results = cursor.fetchall()
 
     cursor.close()
-    conn.close()
 
     # Hack around the SQL query returning one row per picture per property listing
     properties_seen = []
     result_html = ""
-    for property_id, address, description, beds, filename in results:
+    for property_id, address, description, price, beds, filename in results:
         if property_id in properties_seen:
             continue
         properties_seen += [property_id]
@@ -170,7 +180,7 @@ def search_results():
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
     type_ = request.query.get("type", "").strip()
-    tags = request.query.get("tag")
+    tags = request.query.getall("tag")
 
     try:
         guests = int(guests)
@@ -235,7 +245,7 @@ def search_bar():
                         </div>
                         <div class="input-box">
                             <label>Check out</label>
-                            <input id="checkout-input" name="checkout" type="date" placeholder="Add dates" {check_out != "" and f"value=\"{check_out}\""}>
+                            <input id="checkout-input" name="checkout" type="date" placeholder="Add dates" {check_out != "" and f"value=\"{check_out}\""}> 
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
@@ -259,7 +269,8 @@ def search_bar():
                                     <option value="">--</option>
                                     <option value="price_asc" {{ "selected" if request.query.get("sort_by") == "price_asc" else "" }}>Price: Low to High</option>
                                     <option value="price_desc" {{ "selected" if request.query.get("sort_by") == "price_desc" else "" }}>Price: High to Low</option>
-                                    <option value="beds_desc" {{ "selected" if request.query.get("sort_by") == "beds_desc" else "" }}>Beds: Most First</option>
+                                    <option value="beds_asc" {{ "selected" if request.query.get("sort_by") == "beds_asc" else "" }}>Beds: Low to High</option>
+                                    <option value="beds_desc" {{ "selected" if request.query.get("sort_by") == "beds_desc" else "" }}>Beds: High to Low</option>
                                 </select>
                             </div>
                         </div>
