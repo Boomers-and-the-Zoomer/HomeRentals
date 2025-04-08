@@ -165,7 +165,7 @@ def get_search_results(
                     <h3>{address}</h3>
                     <p>{description}</p>
                     <p class="beds">{beds} Beds</p>
-                    <p class="price">{price} kr / Night
+                    <p class="price">{price} kr / Night</p>
                 </div>
             </a>
         """
@@ -259,7 +259,8 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="keyup changed delay:500ms"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML">
+                                hx-swap="outerHTML"
+                                hx-push-url="true">
                         </div>
                         <div class="input-box">
                             <label>Check in</label>
@@ -269,7 +270,8 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="change"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML">
+                                hx-swap="outerHTML"
+                                hx-push-url="true">
                         </div>
                         <div class="input-box">
                             <label>Check out</label>
@@ -279,7 +281,8 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="change"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML">
+                                hx-swap="outerHTML"
+                                hx-push-url="true">
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
@@ -289,7 +292,8 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="keyup changed delay:500ms"
                                 hx-include="#search-form"
-                                hx-swap=outerHTML">
+                                hx-swap="outerHTML"
+                                hx-push-url="true">
                         </div>
                         <button popovertarget="search-popover" type="button">Filter</button>
                         <button type="submit" class="search-btn"🔍> Search</button>
@@ -304,13 +308,13 @@ def search_bar():
                     <fieldset>
                         <legend>Features</legend>
                         {"".join([
-                             f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> {tag}</label><br>'
+                             f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-push-url="true"> {tag}</label><br>'
                             for tag in features
                         ])}
                     </fieldset>
                     <div class="input-box">
                         <label for="sort_by">Sort by</label>
-                        <select name="sort_by" id="sort_by" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-swap="outerHTML">
+                        <select name="sort_by" id="sort_by" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-swap="outerHTML" hx-push-url="true">
                             <option value="">--</option>
                             <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
                             <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
