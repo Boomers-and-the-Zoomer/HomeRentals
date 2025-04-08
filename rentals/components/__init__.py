@@ -54,6 +54,11 @@ def with_navbar(content: str) -> str:
             <span>Active bookings</span>
             {icons.chevron_right()}
         </a>
+        <a href="/bookings/historical">
+            {icons.calendar_clock()}
+            <span>Previous rentals</span>
+            {icons.chevron_right()}
+        </a>
         <button form="log-out-form" type="submit">
             {icons.log_out()}<span>Log out</span>{icons.chevron_right()}
         </button>
