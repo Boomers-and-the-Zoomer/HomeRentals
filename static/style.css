@@ -800,26 +800,12 @@ main#search-page {
   }
 
   #search-results {
+    /* FIXME: Properly line up with the left edge of the user account button in the header */
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, 320px);
     gap: 20px;
-    /* FIXME: Line up properly with the left edge of the user account button in the header */
-    padding: 1rem;
-    max-width: 1400px;
-    justify-items: center;
-
-    /* Not a great solution, but it works for now */
-    &:has(> a:nth-child(2)) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    &:has(> a:nth-child(3)) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    &:has(> a:nth-child(4)) {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    width: 100%;
+    justify-content: center;
   }
 
   div#search-popover {
@@ -841,7 +827,6 @@ main#search-page {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    max-width: 320px;
     height: 100%;
     background: var(--slate-200);
     border-radius: 12px;
