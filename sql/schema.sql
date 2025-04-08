@@ -22,6 +22,7 @@ CREATE TABLE User
     Languages CHAR(50),
     Age CHAR(6),
     FunFact CHAR(50),
+    ProfilePicture VARCHAR(50),
     CONSTRAINT UserUserAccountFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 

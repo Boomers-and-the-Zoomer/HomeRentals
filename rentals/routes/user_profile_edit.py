@@ -48,24 +48,30 @@ def user_profile_edit():
                         <div class="circle_edit">
                             <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
                         </div>
-                        <a href="http://localhost:8080/user-profile" class="button_picture">Update picture</a>
+                        <label for="picture" class="button_picture">Update Picture</label>
+                        <input form="update_info", id="picture_form", name="picture"" style=" display: none;" type="file">
                         <p class="item"><b>Name:</b><p>
                          <textarea>{first_name}</textarea>
                     </div>
                     <div class="info">
                         <div class="fieldset">
                             <form id="update_info" action="" method="POST">
+                                <h2>About</h2>
                                 <fieldset>
-                                    <legend><b>About:</b></legend>
-                                    <label for="lives_form"><b>Lives in:</b></label>
+                                    <legend><b>Lives:</b></legend>
                                     <textarea id="lives_form" name="lives_form" rows="3" cols="40"style="resize: none;">{lives}</textarea>
-                                    <br><br>
-                                    <label for="languages_form"><b>Languages:</b></label>
+                                </fieldset>
+                                <br>
+                                <fieldset>
+                                    <legend><b>Languages:</b></legend>
                                     <textarea id="languages_form" name="languages_form" rows="3" cols="40"style="resize: none;">{languages}</textarea>
-                                    <br><br>
-                                    <label for="age_form"><b>Age:</b></label>
+                                </fieldset>
+                                <br>
+                                <fieldset>
+                                    <legend><b>Age:</b></legend>
                                     <textarea id="age_form" name="age_form" rows="3" cols="40"style="resize: none;">{age}</textarea>
                                 </fieldset>
+                                <br>
                                 <fieldset>
                                     <legend><b>Fun fact:</b></legend>
                                     <label for="fun_fact_form"></label>

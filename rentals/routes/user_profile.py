@@ -51,19 +51,23 @@ def user_profile():
 
     cur.execute(
         """
-        SELECT PropertyListing.PropertyListingID, PropertyListing.Address, Filename
+        SELECT PropertyListing.PropertyListingID, PropertyListing.Address, Filename, RegistrationDate
         FROM PropertyListing, PropertyPicture, Picture
         WHERE PropertyListing.PropertyListingID=PropertyPicture.PropertyListingID
             AND PropertyPicture.PictureID=Picture.PictureID
             AND PropertyListing.Email=%s
+        ORDER BY RegistrationDate ASC
         """,
         (email,),
     )
+
     pictures = cur.fetchall()
+    regDate = pictures[0][3] 
+    #noe rart kommer til å skje hvis man fjerner den tidligste listingen. variablet vil få ny verdi, slev om tidligere dato fortsatt er riktig
     cur.close()
 
     properties = {}
-    for listing_id, address, picture_filename in pictures:
+    for listing_id, address, picture_filename, RegistrationDate in pictures:
         if listing_id not in properties:
             properties[listing_id] = [address, picture_filename]
 
@@ -80,7 +84,7 @@ def user_profile():
     host_since = ""
     is_host = "Guest"
     if len(properties) != 0:
-        host_since = """<p><u>Host since XXXX</u></p>"""
+        host_since = f"""<p><u>Host since {regDate.year}</u></p>""" 
         is_host = """<p>Host<p>"""
 
     return html(
@@ -95,7 +99,7 @@ def user_profile():
                             <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
                         </div>
                         <div class="profile_box_info">
-                            <p><u>Rating 2.4</u></p>
+                            <p><u></u></p>
                             <br>
                             {host_since}
                         </div>
