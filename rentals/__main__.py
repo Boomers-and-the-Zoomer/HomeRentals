@@ -10,7 +10,7 @@ from rentals import db, util, routes, auth, icons
 
 
 def main():
-    run_db_update()
+    # run_db_update()
     bottle.run(host="localhost", port=8080, reloader=True)
     db.cnx_close()
 
