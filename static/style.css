@@ -814,38 +814,30 @@ main#search-page {
 
   #search-results {
     display: grid;
-    grid-template-columns: 1fr;
-    max-width: 100%;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-
-    /* Not a great solution, but it works for now */
-    &:has(> a:nth-child(2)) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    &:has(> a:nth-child(3)) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    &:has(> a:nth-child(4)) {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    justify-items: center;
   }
 
   .property-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+    width: 100%;
+    max-width: 320px;
+    min-height: 420px;
     background: var(--slate-200);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 10px 6px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
     padding: 15px;
     text-align: center;
-    height: 100%;
-    max-width: 350px;
   }
 
   .property-card:hover {
@@ -865,7 +857,7 @@ main#search-page {
     margin: 10px 0;
     text-align: center;
     color: var(--slate-900);
-    min-height: 50px;
+    min-height: 48px;
   }
 
   .property-card p {
@@ -873,7 +865,7 @@ main#search-page {
     text-align: center;
     padding: 5px 15px;
     color: var(--slate-600);
-    min-height: 60px;
+    min-height: 48px;
   }
 
   .property-card .beds {
@@ -895,6 +887,13 @@ main#search-page {
   .property-card .price {
     font-weight: bold;
     color: var(--slate-800);
+  }
+  .no-results {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--slate-600);
+    margin-top: 2rem;
   }
 }
 

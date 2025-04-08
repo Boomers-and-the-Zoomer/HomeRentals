@@ -105,3 +105,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   InitImageUpload();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.body.addEventListener("htmx:afterSwap", (event) => {
+    if (event.target.id === "search-results") {
+      console.log("HTMX oppdaterte search-results");
+
+      const container = document.querySelector("#search-results");
+      if (container) {
+        container.style.display = "none";
+        requestAnimationFrame(() => {
+          container.style.display = "grid";
+        });
+      }
+    }
+  });
+});
