@@ -142,7 +142,6 @@ def book_rental():
     redirect(confirmation_url)
 
 
-# TODO: Remove from_date?
 @route("/booking-confirmation/<PropertyListingID>", method="GET")
 @requires_user_session()
 def booking_confirmation(PropertyListingID):
