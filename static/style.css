@@ -814,13 +814,25 @@ main#search-page {
 
   #search-results {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
     gap: 20px;
+    /* FIXME: Line up properly with the left edge of the user account button in the header */
     padding: 1rem;
     max-width: 1400px;
-    margin: 0 auto;
-    box-sizing: border-box;
     justify-items: center;
+
+    /* Not a great solution, but it works for now */
+    &:has(> a:nth-child(2)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &:has(> a:nth-child(3)) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &:has(> a:nth-child(4)) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   .property-card {
@@ -828,9 +840,8 @@ main#search-page {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    width: 100%;
     max-width: 320px;
-    min-height: 420px;
+    height: 100%;
     background: var(--slate-200);
     border-radius: 12px;
     overflow: hidden;
