@@ -123,6 +123,7 @@ def book_rental():
         )
     )
 
+    cursor.execute("""DELETE FROM BookingSession WHERE ExpiryTime <= NOW()""")
     expiryTime = datetime.now() + timedelta(
         minutes=15
     )  # TODO: Legg denne inn med JS, slik at brukeren kan se en timer på booking
@@ -137,42 +138,28 @@ def book_rental():
     cnx.commit()
     cursor.close()
 
-    from_date_str = (
-        from_date.isoformat() if hasattr(from_date, "isoformat") else from_date
-    )
-    encoded_from_date = urllib.parse.quote(from_date_str)
-
-    confirmation_url = "/booking-confirmation/{}/{}".format(
-        PropertyListingID, encoded_from_date
-    )
+    confirmation_url = f"/booking-confirmation/{PropertyListingID}"
     redirect(confirmation_url)
 
 
-@route("/booking-confirmation/<PropertyListingID>/<from_date>", method="GET")
+# TODO: Remove from_date?
+@route("/booking-confirmation/<PropertyListingID>", method="GET")
 @requires_user_session()
-def booking_confirmation(PropertyListingID, from_date):
+def booking_confirmation(PropertyListingID):
     cnx = db.cnx()
     cursor = cnx.cursor()
 
     token = get_session_token()
 
-    decoded_from_date = unquote(from_date)
     property_id = int(PropertyListingID)
-    from_date_dt = datetime.fromisoformat(decoded_from_date)
-
-    cursor.execute(  # Dette er midlertidig som cleanup av BookingSessions, vurderer å gjøre den om til en def.
-        """DELETE FROM BookingSession WHERE ExpiryTime <= NOW()
-    """
-    )
-    cnx.commit()
 
     cursor.execute(
         """
         SELECT PropertyListingID, StartTime, EndTime, ExpiryTime
         FROM BookingSession
-        WHERE Token = _binary %s AND PropertyListingID = %s AND StartTime = %s AND ExpiryTime > NOW()
-    """,
-        (token, property_id, from_date_dt),
+        WHERE Token = _binary %s AND PropertyListingID = %s AND ExpiryTime > NOW()
+        """,
+        (token, property_id),
     )
 
     bConfirmation = cursor.fetchone()
@@ -185,7 +172,7 @@ def booking_confirmation(PropertyListingID, from_date):
         SELECT Address, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens
         FROM PropertyListing
         WHERE PropertyListingID = %s
-    """,
+        """,
         (property_id,),
     )
     address, bedrooms, beds, bathrooms, squareMeters, parkingSpots, kitchens = (
@@ -265,18 +252,13 @@ def cancel_temp_booking():
 
     token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
-    from_date_str = request.forms.get("from_date")
-    if not from_date_str:
-        raise HTTPError(400, "Missing start date for booking.")
-
-    from_date_dt = datetime.fromisoformat(from_date_str)
 
     cursor.execute(
         """
         DELETE FROM BookingSession
-        WHERE Token=_binary  %s AND PropertyListingID= %s AND StartTime= %s
+        WHERE Token=_binary  %s AND PropertyListingID= %s
         """,
-        (token, property_id, from_date_dt),
+        (token, property_id),
     )
 
     cnx.commit()
@@ -294,11 +276,6 @@ def finalize_booking():
     token = get_session_token()
     property_id = request.forms.get("PropertyListingID")
     tos = request.forms.get("TOS")
-    from_date_str = request.forms.get("from_date")
-    if not from_date_str:
-        raise HTTPError(400, "Missing start date for booking.")
-
-    from_date_dt = datetime.fromisoformat(from_date_str)
 
     if not token or not tos:
         raise HTTPError(403, "User not authenticated or TOS validation missing")
@@ -306,10 +283,10 @@ def finalize_booking():
     cursor.execute(
         """
         SELECT * FROM BookingSession
-        WHERE Token=_binary %s AND PropertyListingID= %s AND StartTime= %s
+        WHERE Token=_binary %s AND PropertyListingID=%s
         AND ExpiryTime> NOW()
         """,
-        (token, property_id, from_date_dt),
+        (token, property_id),
     )
     sessionRecord = cursor.fetchone()
 
@@ -331,11 +308,18 @@ def finalize_booking():
     if CompleteBooking is None:
         raise HTTPError(404, "Failed to retrive complete booking details")
 
-    if CompleteBooking is not None:
-        property_listing_id = CompleteBooking[0]
-        start_time = CompleteBooking[1]
-        end_time = CompleteBooking[2]
-        email = CompleteBooking[3]
+    cursor.execute(
+        """
+        DELETE FROM BookingSession
+        WHERE Token=_binary  %s AND PropertyListingID= %s
+        """,
+        (token, property_id),
+    )
+
+    property_listing_id = CompleteBooking[0]
+    start_time = CompleteBooking[1]
+    end_time = CompleteBooking[2]
+    email = CompleteBooking[3]
 
     cursor.execute(
         """
