@@ -1,3 +1,30 @@
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.getElementById("search-page")) {
+    return;
+  }
+  const toggle_btn = document.querySelector("button[popovertarget=\"search-popover\"]");
+  const popover = document.getElementById("search-popover");
+  const updatePopoverPosition = () => {
+    const btn_rect = toggle_btn.getBoundingClientRect();
+    popover.style.top = `${btn_rect.bottom + 10}px`;
+    popover.style.right = `${window.innerWidth - btn_rect.right}px`;
+  };
+  popover.addEventListener("beforetoggle", (event) => {
+    if (event.newState === "open") {
+      updatePopoverPosition();
+    }
+  });
+  document.addEventListener("scroll", () => {
+    /* Throttle scroll event handling */
+    window.requestAnimationFrame(() => {
+      updatePopoverPosition();
+    });
+  });
+  window.addEventListener("resize", () => {
+    updatePopoverPosition();
+  });
+});
+
 // =============== Image upload ===============
 
 document.addEventListener("DOMContentLoaded", () => {

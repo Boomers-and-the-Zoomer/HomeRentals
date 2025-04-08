@@ -253,7 +253,7 @@ def search_bar():
                     <form class="search-container" id="search-form">
                         <div class="input-box">
                             <label>Where</label>
-                            <input id="location-input" name="location" type="text" placeholder="search destination" 
+                            <input id="location-input" name="location" type="text" placeholder="search destination"
                                 value="{location}"
                                 hx-get="/search_results"
                                 hx-target="#search-results"
@@ -263,7 +263,7 @@ def search_bar():
                         </div>
                         <div class="input-box">
                             <label>Check in</label>
-                            <input id="checkin-input" name="checkin" type="date" placeholder="Add dates" 
+                            <input id="checkin-input" name="checkin" type="date" placeholder="Add dates"
                                 value="{check_in}"
                                 hx-get="/search_results"
                                 hx-target="#search-results"
@@ -283,7 +283,7 @@ def search_bar():
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
-                            <input id="guests" name="guests" type="number" placeholder="Type in guests" min="0" 
+                            <input id="guests" name="guests" type="number" placeholder="Type in guests" min="0"
                                 value="{guests}"
                                 hx-get="/search_results"
                                 hx-target="#search-results"
@@ -300,7 +300,6 @@ def search_bar():
                     {result}
                 </div>
                 <div popover id="search-popover">
-                    <h1>Filter</h1>
                     {type_dropdown}
                     <fieldset>
                         <legend>Features</legend>
