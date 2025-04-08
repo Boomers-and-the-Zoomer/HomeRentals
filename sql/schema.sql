@@ -55,6 +55,7 @@ CREATE TABLE PropertyListing
     SquareMeters INT NOT NULL,
     ParkingSpots INT NOT NULL,
     Kitchens INT NOT NULL,
+    RegistrationDate DATE NOT NULL,
     CONSTRAINT PropertyListingUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
 );
 

@@ -78,7 +78,7 @@ def user_profile():
             </a>\n"""
 
     host_since = ""
-    is_host = ""
+    is_host = "Guest"
     if len(properties) != 0:
         host_since = """<p><u>Host since XXXX</u></p>"""
         is_host = """<p>Host<p>"""
@@ -106,19 +106,25 @@ def user_profile():
                     </div>
                     <div class="about">
                         <div class="fieldset">
+                            <h2><b>About:</b></h2>
                             <fieldset>
-                                <legend><b>About:</b></legend>
-                                <p><b>Lives in:</b> {lives}</p>
-                                <p><b>Languages:</b> {languages}</p>
-                                <p><b>Age:</b> {age}</p>
+                                <legend><b>Lives in</b></legend>
+                                <p>{lives}</p>
                             </fieldset>
-                        </div>
-                        <div class="fieldset">
+                            <br>
+                            <fieldset>
+                                <legend><b>Languages</b></legend>
+                                <p>{languages}</p>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend><b>Age:</b></legend>
+                                <p>{age}</p>
+                            </fieldset>
                             <fieldset>
                                 <legend><b>Fun fact:</b></legend>
-                                <p> {fun_fact}</p>
+                                <p>{fun_fact}</p>
                             </fieldset>
-
                         </div>
                     </div>
                 </div>
