@@ -51,7 +51,7 @@ INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Descr
 (6, 'grace@example.com', 'Jens Zetlitz gate 33, Stavanger', '4008', 'A stylish and cool apartment with great ameneties, and with easy access to the city.', 859, 1, 2, 1, 70, 1, 1,'2022-03-17'),
 (7, 'henry@example.com', 'Høgeveien 15, Stavanger', '4026', 'A Spacious and relaxing apartment with a great outside area.', 1800, 3, 5, 2, 120, 2, 1,'2018-11-22'),
 (8, 'henry@example.com', 'Indre Løkkavei 2, Hønefoss', '3515', 'A nice place for the family to enjoy some time together.', 900, 1, 3, 1, 100, 2, 1,'2020-08-26'),
-(9, 'emma@example.com', 'A 1 person apartment in a peacefull bart of town.', 400, 1, 1, 1, 50, 1, 1,'2024-06-18'),
+(9, 'emma@example.com', 'Moriangata 10','1767','A 1 person apartment in a peacefull bart of town.', 400, 1, 1, 1, 50, 1, 1,'2024-06-18'),
 (10, 'alice@example.com', 'Strandvikvegen 553, Strandvik', '5643', 'Nice cabin in Bjørnafjord with good views of the fjord.', 560, 3, 7, 3, 220, 4, 1,'2020-08-29'),
 (11, 'bob@example.com', 'Berknesvegen 222, Volda', '6105', 'Lovely vacation spot for the whole family. The property is by the sea and has a beautiful garden', 450, 3, 7, 1, 65, 1, 1,'2023-07-13'),
 (12, 'alice@example.com', 'Sklibreivegen 10, Knowhere', '6975', 'Enjoy the relaxing, comforting and closed-off space Birdbox! Sleep right next to nature and its fantastic surroundings', 780, 1, 2, 1, 30, 1, 1,'2018-08-21'),
@@ -383,7 +383,7 @@ INSERT INTO Tag (TagID, Name) VALUES
 
 INSERT INTO PropertyTag (PropertyListingID, TagID) VALUES
 (1, 2), (1, 9), (1, 5),
-(2, 1), (2, 7), (2, 5),(2, 8)
+(2, 1), (2, 7), (2, 5),(2, 8),
 (3, 1), (3, 8), (3, 5),
 (4, 1), (4, 8), (4, 5),
 (5, 3), (5, 8), (5, 5),
@@ -391,7 +391,6 @@ INSERT INTO PropertyTag (PropertyListingID, TagID) VALUES
 (7, 1), (7, 8), (7, 5),
 (8, 3), (8, 8), (8, 5),
 (9, 3), (9, 8), (9, 5),
-
 (20, 3), (20, 8), (20, 5),
 (21, 3), (21, 8), (21, 7),
 (22, 4), (22, 8), (22, 5),
