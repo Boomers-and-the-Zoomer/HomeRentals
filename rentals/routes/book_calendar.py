@@ -183,7 +183,7 @@ def booking_confirmation(PropertyListingID, from_date):
     cursor.execute(
         """
         SELECT Address, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens
-        FROM PropertyListing 
+        FROM PropertyListing
         WHERE PropertyListingID = %s
     """,
         (property_id,),
@@ -191,6 +191,8 @@ def booking_confirmation(PropertyListingID, from_date):
     address, bedrooms, beds, bathrooms, squareMeters, parkingSpots, kitchens = (
         cursor.fetchone()
     )
+
+    cursor.close()
 
     return booking_confirmation_template(
         bConfirmation,
