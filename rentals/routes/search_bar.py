@@ -212,10 +212,8 @@ def search_results():
         location, check_in, check_out, guests, type_, tags, sort_by
     )
 
-    urlparts = request.urlparts
-    url = urllib.parse.urlunparse(
-        (urlparts.scheme, urlparts.netloc, "/", urlparts.query)
-    )
+    url = urllib.parse.urlparse(request.url)
+    url = url._replace(path="/").geturl()
     response.add_header("HX-Push-Url", url)
     return f'<div id="search-results">{result_html}</div>'
 
