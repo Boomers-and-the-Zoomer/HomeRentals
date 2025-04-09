@@ -308,13 +308,13 @@ def search_bar():
                     <fieldset>
                         <legend>Features</legend>
                         {"".join([
-                             f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> {tag}</label><br>'
+                             f"""<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} form="search-form" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form,#sort_by,input[name='tag']"> {tag}</label><br>"""
                             for tag in features
                         ])}
                     </fieldset>
                     <div class="input-box">
                         <label for="sort_by">Sort by</label>
-                        <select name="sort_by" id="sort_by" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-swap="outerHTML">
+                        <select name="sort_by" id="sort_by" form="search-form" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form,input[name='tag']" hx-swap="outerHTML">
                             <option value="">--</option>
                             <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
                             <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
