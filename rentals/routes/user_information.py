@@ -8,6 +8,7 @@ from ..components import (
     with_navbar,
 )
 from .. import db
+from ..util import pop_return, chain_return_url, get_return_url_or
 
 
 @get("/user-information")
@@ -34,7 +35,7 @@ def user_information():
     form = simple_account_form_position(
         simple_account_form(
             "user-information",
-            """
+            f"""
             <h1>User information</h1>
             <label for="firstname">First name:</label>
             <input id="firstname" name="firstname" type="text" required>
@@ -47,7 +48,7 @@ def user_information():
             <label for="postcode">Post code:</label>
             <input id="postcode" name="postcode" type="text" required>
             <button>Confirm</button>
-            <p class="centered"><a href="/">Do it later</a></p>
+            <p class="centered"><a href={get_return_url_or("/")}>Do it later</a></p>
             """,
         )
     )
@@ -105,5 +106,4 @@ def user_profile_edit():
     cnx.commit()
     cur.close()
 
-    response.status = 303
-    response.add_header("Location", "/")
+    pop_return("/")

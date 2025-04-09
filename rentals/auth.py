@@ -7,6 +7,7 @@ import mysql.connector
 
 from bottle import request, response, HTTPResponse
 
+from .util import push_return
 from . import db
 
 
@@ -124,17 +125,10 @@ def requires_user_session(referer: bool = False):
             if validate_session_or_refresh():
                 return func(*args, **kwargs)
             else:
-                if not referer:
-                    url = request.urlparts
-                else:
-                    url = urlparse(request.get_header("Referer"))
-                query = url.path
-                if url.query != "":
-                    query += "?" + url.query
-                raise HTTPResponse(
-                    status=303,
-                    location=f"/log-in?return-to={quote(query)}",
-                )
+                referer_url = None
+                if referer:
+                    referer_url = request.get_header("Referer")
+                push_return("/log-in", referer_url)
 
         return inner
 

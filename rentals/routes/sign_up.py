@@ -3,6 +3,8 @@ import mysql.connector
 from argon2 import PasswordHasher
 from bottle import get, post, request, response
 
+from ..util import chain_return_url
+
 
 from ..components import (
     html,
@@ -18,7 +20,7 @@ def sign_up():
     form = simple_account_form_position(
         simple_account_form(
             "sign-up",
-            """
+            f"""
             <h1>Sign up</h1>
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" placeholder="ola.nordmann@gmail.com" required>
@@ -28,7 +30,7 @@ def sign_up():
             <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
             <button>Sign up</button>
             <p class="centered">Already have an account?</p>
-            <p class="centered"><a href="log-in">Log in instead</a></p>
+            <p class="centered"><a href="{chain_return_url("/log-in")}">Log in instead</a></p>
             """,
         )
     )
@@ -79,4 +81,4 @@ def sign_up_submit():
 
     # TODO: Send actual confirmation email.
     response.status = 303
-    response.add_header("Location", "/log-in")
+    response.add_header("Location", chain_return_url("/log-in"))

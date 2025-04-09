@@ -12,6 +12,7 @@ from ..components import (
     with_navbar,
 )
 from .. import db
+from ..util import chain_return_url, pop_return
 
 
 @get("/log-in")
@@ -19,7 +20,7 @@ def log_in():
     form = simple_account_form_position(
         simple_account_form(
             "log-in",
-            """
+            f"""
             <h1>Log in</h1>
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" placeholder="ola.nordmann@gmail.com" required>
@@ -28,7 +29,7 @@ def log_in():
             <button>Log in</button>
             <p class="centered"><a href="reset-password">Forgot your password?</a></p>
             <p class="centered">Don't have an account?</p>
-            <p class="centered"><a href="sign-up">Sign up instead</a></p>
+            <p class="centered"><a href="{chain_return_url("/sign-up")}">Sign up instead</a></p>
             """,
         )
     )
@@ -94,11 +95,22 @@ def log_in_submit():
 
     initialize_session(email)
 
+    cur.execute(
+        """
+        SELECT EXISTS (
+            SELECT *
+            FROM User
+            WHERE Email=%s
+        )
+        """,
+        (email,),
+    )
+    first_time = cur.fetchone()[0] == 0
+
     cur.close()
 
-    response.status = 303
-    try:
-        return_to = unquote(request.query["return-to"])
-        response.add_header("Location", return_to)
-    except KeyError:
-        response.add_header("Location", "/")
+    if first_time:
+        response.status = 303
+        response.add_header("Location", chain_return_url("/user-information"))
+    else:
+        pop_return()

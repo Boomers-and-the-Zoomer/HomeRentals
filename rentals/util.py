@@ -1,3 +1,8 @@
+from bottle import request, response
+
+from urllib.parse import quote, unquote, urlsplit
+
+
 def escape(s, **kwargs):
     from html import escape
 
@@ -13,6 +18,57 @@ def dict_to_attr_string(dict: dict) -> str:
             string += " "
         string += f'{escape(str(name))}="{escape(str(value))}"'
     return string
+
+
+def get_return_url_or(default="/"):
+    return_to = request.query.get("return-to")
+    if return_to == None:
+        return default
+    return return_to
+
+
+def chain_return_url(url_str):
+    return_to = request.query.get("return-to")
+    if return_to == None:
+        return url_str
+    return construct_return_url(url_str, return_to).geturl()
+
+
+def push_return(url_to, url_from=None):
+    if url_from != None:
+        p = urlsplit(url_from)
+    else:
+        p = request.urlparts
+    return_to = p.path
+    if p.query != "":
+        return_to += "?" + p.query
+    return_to = quote(return_to)
+
+    to = construct_return_url(url_to, return_to)
+
+    response.status = 303
+    response.add_header("Location", to.geturl())
+
+
+def construct_return_url(url_to, return_to):
+    to = urlsplit(url_to)
+    query = to.query
+    if query != "":
+        query += "&"
+    query += f"return-to={return_to}"
+    to = to._replace(query=query)
+    return to
+
+
+def pop_return(default="/"):
+    return_to = request.query.get("return-to", "")
+    if return_to != "":
+        return_to = unquote(return_to)
+    else:
+        return_to = default
+
+    response.status = 303
+    response.add_header("Location", dbg(return_to))
 
 
 def dbg(value):
