@@ -85,7 +85,7 @@ def historical_booking_template(historicalBookings, email):
 
     full_page = with_navbar(f"""
         <main id="historical-booking">
-            <h2>Previous Bookingss for: {email}</h2>
+            <h2>Previous Bookings for: {email}</h2>
             {booking_html}
         </main>
     """)

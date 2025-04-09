@@ -42,9 +42,6 @@ def view_rental(listing: int):
 
     cursor.close()
 
-    raw_from_date = request.forms.get("from_date") or ""
-    raw_to_date = request.forms.get("to_date") or ""
-
     var = f"""
     <h1>{address}</h1>
     <div class="left">
@@ -65,9 +62,9 @@ def view_rental(listing: int):
     <div class="calendar">
     <form action="/book-rental" method="post">
         <label for="from_date">From Date:</label>
-        <input type="datetime-local" id="from_date" name="from_date" required value="{raw_from_date if raw_from_date else ''}" ><br>
+        <input type="datetime-local" id="from_date" name="from_date" required><br>
         <label for="to_date">To Date:</label>
-        <input type="datetime-local" id="to_date" name="to_date" required value="{raw_to_date if raw_to_date else ''}"><br>
+        <input type="datetime-local" id="to_date" name="to_date" required><br>
         <input type="hidden" name="PropertyListingID" value="{PropertyListingID}">
         <button type="submit">Book Now</button>
     </form>
@@ -90,8 +87,8 @@ def view_rental(listing: int):
 @route("/book-rental", method="POST")
 @requires_user_session(referer=True)
 def book_rental():
-    raw_from_date = request.forms.get("from_date") or ""
-    raw_to_date = request.forms.get("to_date") or ""
+    raw_from_date = request.forms.get("from_date")
+    raw_to_date = request.forms.get("to_date")
     PropertyListingID = request.forms.get("PropertyListingID")
     token = get_session_token()
 
