@@ -1,3 +1,4 @@
+import urllib.parse
 import mysql.connector
 from bottle import route, response, request
 from ..components import html, with_navbar
@@ -211,6 +212,11 @@ def search_results():
         location, check_in, check_out, guests, type_, tags, sort_by
     )
 
+    urlparts = request.urlparts
+    url = urllib.parse.urlunparse(
+        (urlparts.scheme, urlparts.netloc, "/", urlparts.query)
+    )
+    response.add_header("HX-Push-Url", url)
     return f'<div id="search-results">{result_html}</div>'
 
 
@@ -259,8 +265,7 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="keyup changed delay:500ms"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML"
-                                hx-push-url="true">
+                                hx-swap="outerHTML">
                         </div>
                         <div class="input-box">
                             <label>Check in</label>
@@ -270,8 +275,7 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="change"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML"
-                                hx-push-url="true">
+                                hx-swap="outerHTML">
                         </div>
                         <div class="input-box">
                             <label>Check out</label>
@@ -281,8 +285,7 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="change"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML"
-                                hx-push-url="true">
+                                hx-swap="outerHTML">
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
@@ -292,8 +295,7 @@ def search_bar():
                                 hx-target="#search-results"
                                 hx-trigger="keyup changed delay:500ms"
                                 hx-include="#search-form"
-                                hx-swap="outerHTML"
-                                hx-push-url="true">
+                                hx-swap="outerHTML">
                         </div>
                         <button popovertarget="search-popover" type="button">Filter</button>
                         <button type="submit" class="search-btn"🔍> Search</button>
@@ -308,13 +310,13 @@ def search_bar():
                     <fieldset>
                         <legend>Features</legend>
                         {"".join([
-                             f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-push-url="true"> {tag}</label><br>'
+                             f'<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> {tag}</label><br>'
                             for tag in features
                         ])}
                     </fieldset>
                     <div class="input-box">
                         <label for="sort_by">Sort by</label>
-                        <select name="sort_by" id="sort_by" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-swap="outerHTML" hx-push-url="true">
+                        <select name="sort_by" id="sort_by" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form" hx-swap="outerHTML">
                             <option value="">--</option>
                             <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
                             <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
