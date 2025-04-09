@@ -85,12 +85,12 @@ def historical_booking_template(historicalBookings, email):
 
     full_page = with_navbar(f"""
         <main id="historical-booking">
-            <h2>Previous Rentals for: {email}</h2>
+            <h2>Previous Bookingss for: {email}</h2>
             {booking_html}
         </main>
     """)
 
-    return html(f"Previous Rentals for: {email}", full_page)
+    return html(f"Previous Bookings for: {email}", full_page)
 
 
 @route("/leave-review", method="POST")
