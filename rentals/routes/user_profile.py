@@ -32,14 +32,14 @@ def user_profile():
 
     cur.execute(
         """
-        SELECT FirstName,Lives,Languages,Age,FunFact,Session.Email
+        SELECT FirstName,Lives,Languages,Age,FunFact,ProfilePicture,Session.Email
         FROM User, Session
         WHERE User.Email=Session.Email
             AND Session.Token=_binary %s
         """,
         (session_token,),
     )
-    (first_name, lives, languages, age, fun_fact, email) = cur.fetchone()
+    (first_name, lives, languages, age, fun_fact, profile_picture, email) = cur.fetchone()
     if lives == None:
         lives = ""
     if languages == None:
@@ -48,6 +48,8 @@ def user_profile():
         age = ""
     if fun_fact == None:
         fun_fact = ""
+    if profile_picture == None:
+        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.execute(
         """
@@ -96,7 +98,7 @@ def user_profile():
                     <a href="http://localhost:8080/user-profile/edit" class="button">Edit profile</a>
                     <div class="profile_box">
                         <div class="circle">
-                            <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
+                            <img src="/static/profilepicture/{profile_picture}" class="profile_picture" alt="Profile picture">
                         </div>
                         <div class="profile_box_info">
                             <p><u></u></p>

@@ -15,14 +15,14 @@ def user_profile_edit():
 
     cur.execute(
         """
-        SELECT FirstName,Lives,Languages,Age,FunFact
+        SELECT FirstName,Lives,Languages,Age,FunFact,ProfilePicture
         FROM User, Session
         WHERE User.Email=Session.Email
             AND Session.Token=_binary %s
         """,
         (session_token,),
     )
-    (first_name, lives, languages, age, fun_fact) = cur.fetchone()
+    (first_name, lives, languages, age, fun_fact, profile_picture) = cur.fetchone()
     if lives == None:
         lives = ""
     if languages == None:
@@ -31,6 +31,8 @@ def user_profile_edit():
         age = ""
     if fun_fact == None:
         fun_fact = ""
+    if profile_picture == None: 
+        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.close()
 
@@ -46,10 +48,10 @@ def user_profile_edit():
                     </div>
                     <div class="profile_pic">
                         <div class="circle_edit">
-                            <img src="https://cdn.europosters.eu/image/750/83398.jpg" class="profile_picture" alt="Profile picture">
+                            <img src="/static/profilepicture/{profile_picture}" class="profile_picture" alt="Profile picture">
                         </div>
-                        <label for="picture" class="button_picture">Update Picture</label>
-                        <input form="update_info", id="picture_form", name="picture"" style=" display: none;" type="file">
+                        <label for="picture_form" class="button_picture">Update Picture</label>
+                        <input form="update_info", id="picture_form", name="picture_form"" style=" display: none;" type="file">
                         <p class="item"><b>Name:</b><p>
                          <textarea>{first_name}</textarea>
                     </div>
@@ -99,6 +101,7 @@ def user_profile_edit():
     languages = request.forms["languages_form"]
     age = request.forms["age_form"]
     fun_fact = request.forms["fun_fact_form"]
+    profile_picture = request.forms["picture_form"]
 
     cur.execute(
         """
