@@ -2,27 +2,30 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("search-page")) {
     return;
   }
-  const toggle_btn = document.querySelector("button[popovertarget=\"search-popover\"]");
-  const popover = document.getElementById("search-popover");
-  const updatePopoverPosition = () => {
-    const btn_rect = toggle_btn.getBoundingClientRect();
-    popover.style.top = `${btn_rect.bottom + 10}px`;
-    popover.style.right = `${window.innerWidth - btn_rect.right}px`;
-  };
-  popover.addEventListener("beforetoggle", (event) => {
-    if (event.newState === "open") {
-      updatePopoverPosition();
-    }
-  });
-  document.addEventListener("scroll", () => {
-    /* Throttle scroll event handling */
-    window.requestAnimationFrame(() => {
+  function setupPopover(btn_selector, popover_selector) {
+    const toggle_btn = document.querySelector(btn_selector);
+    const popover = document.querySelector(popover_selector);
+    const updatePopoverPosition = () => {
+      const btn_rect = toggle_btn.getBoundingClientRect();
+      popover.style.top = `${btn_rect.bottom + 10}px`;
+      popover.style.right = `${window.innerWidth - btn_rect.right}px`;
+    };
+    popover.addEventListener("beforetoggle", (event) => {
+      if (event.newState === "open") {
+        updatePopoverPosition();
+      }
+    });
+    document.addEventListener("scroll", () => {
+      /* Throttle scroll event handling */
+      window.requestAnimationFrame(() => {
+        updatePopoverPosition();
+      });
+    });
+    window.addEventListener("resize", () => {
       updatePopoverPosition();
     });
-  });
-  window.addEventListener("resize", () => {
-    updatePopoverPosition();
-  });
+  }
+  setupPopover("button[popovertarget=\"search-popover\"]", "#search-popover");
 });
 
 // =============== Image upload ===============
