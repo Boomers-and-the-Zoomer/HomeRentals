@@ -370,14 +370,17 @@ INSERT INTO PropertyPicture (PropertyListingID, PictureID) VALUES
 
 
 INSERT INTO Tag (TagID, Name) VALUES
-(1, 'apartment'),
-(2, 'cabin'),
-(3, 'house'),
-(4, 'basement'),
+-- Property type tags
+(1, 'Apartment'),
+(2, 'Cabin'),
+(3, 'House'),
+(4, 'Basement'),
+-- "Normal" tags
 (5, 'Wi-Fi'),
 (6, 'Hot-tub'),
 (7, 'Pet-friendly'),
-(8, 'parking'),
+-- TODO: Add trigger that automatically maintains what listings have this tag based on the number of parking spots.
+(8, 'Parking'),
 (9, 'By the sea'),
 (10, 'Mountain view');
 
