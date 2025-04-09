@@ -178,6 +178,13 @@ def get_search_results(
     )
 
 
+def title(location=None):
+    title = "Search"
+    if location != None and location != "":
+        title += f' "{location}"'
+    return title
+
+
 @route("/search_results")
 def search_results():
     location = request.query.get("location", "").strip()
@@ -214,8 +221,14 @@ def search_results():
 
     url = urllib.parse.urlparse(request.url)
     url = url._replace(path="/").geturl()
-    response.add_header("HX-Push-Url", url)
-    return f'<div id="search-results">{result_html}</div>'
+    response.add_header("HX-Replace-Url", url)
+
+    return f"""
+            <div id="search-results">
+                <title>{title(location)}</title>
+                {result_html}
+            </div>
+            """
 
 
 @route("/search")
@@ -255,7 +268,7 @@ def search_bar():
     type_dropdown += "</select></div>"
 
     return html(
-        "Search",
+        title(location),
         with_navbar(f"""
             <main id="search-page">
                 <div class="spacer"></div>
@@ -267,7 +280,7 @@ def search_bar():
                                 value="{location}"
                                 hx-get="/search_results"
                                 hx-target="#search-results"
-                                hx-trigger="keyup changed delay:500ms"
+                                hx-trigger="input changed"
                                 hx-include="#search-form"
                                 hx-swap="outerHTML">
                         </div>
@@ -297,7 +310,7 @@ def search_bar():
                                 value="{guests}"
                                 hx-get="/search_results"
                                 hx-target="#search-results"
-                                hx-trigger="keyup changed delay:500ms"
+                                hx-trigger="input changed"
                                 hx-include="#search-form"
                                 hx-swap="outerHTML">
                         </div>
