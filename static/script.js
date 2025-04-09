@@ -135,3 +135,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   InitImageUpload();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const select = document.getElementById("sort_by");
+
+  function updateSortIcon(value) {
+    if (!icon) return;
+    if (value.endsWith("_asc")) {
+      icon.textContent = "↑";
+    } else if (value.endsWith("_desc")) {
+      icon.textContent = "↓";
+    } else {
+      icon.textContent = "↕";
+    }
+  }
+
+  if (select) {
+    updateSortIcon(select.value);
+
+    select.addEventListener("change", function() {
+      updateSortIcon(this.value);
+    });
+  }
+});

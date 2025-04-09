@@ -892,6 +892,48 @@ main#search-page {
     color: var(--slate-600);
     margin-top: 2rem;
   }
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4em;
+    display: flex;
+    align-items: center;
+  }
+  .icon-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sort-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 1em;
+    gap: 0.3em;
+    font-size: 1em;
+    user-select: none;
+  }
+  .sort-label svg {
+    width: 16px;
+    height: 16px;
+  }
+  .custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .custom-select-wrapper select {
+    width: 100%;
+    padding-right: 30px; /* space for icon */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    z-index: 2;
+    position: relative;
+  }
 }
 
 main#book-calendar {

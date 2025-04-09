@@ -4,7 +4,7 @@ from bottle import route, response, request
 from ..components import html, with_navbar
 import json
 import os
-from .. import db
+from .. import db, icons
 from datetime import datetime
 
 
@@ -224,6 +224,12 @@ def search_bar():
     check_in = request.query.get("checkin", "").strip()
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
+    sort_by = request.query.get("sort_by", "")
+
+    if sort_by.endswith("asc"):
+        sort_icon = icons.sort_asc()
+    else:
+        sort_icon = icons.sort_desc()
 
     result = get_search_results(
         location,
@@ -295,7 +301,9 @@ def search_bar():
                                 hx-include="#search-form"
                                 hx-swap="outerHTML">
                         </div>
-                        <button popovertarget="search-popover" type="button">Filter</button>
+                        <button popovertarget="search-popover" type="button" class="icon-button" aria-label="Filter">
+                            {sort_icon}
+                        </button>
                         <button type="submit" class="search-btn"🔍> Search</button>
                     </form>
                 </div>
@@ -312,15 +320,26 @@ def search_bar():
                             for tag in features
                         ])}
                     </fieldset>
-                    <div class="input-box">
+                    <div class="input-box sort-by-container">
                         <label for="sort_by">Sort by</label>
-                        <select name="sort_by" id="sort_by" form="search-form" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form,input[name='tag']" hx-swap="outerHTML">
-                            <option value="">--</option>
-                            <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
-                            <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
-                            <option value="beds_asc" {"selected" if request.query.get("sort_by") == "beds_asc" else ""}>Beds: Low to High</option>
-                            <option value="beds_desc" {"selected" if request.query.get("sort_by") == "beds_desc" else ""}>Beds: High to Low</option>
-                        </select>
+                        <div class="custom-select-wrapper">
+                            <select name="sort_by" id="sort_by from="search-form"
+                                hx-get="/search_results"
+                                hx-target="#search-results"
+                                hx-trigger="change"
+                                hx-include="#search-form,input[name='tag']">
+                                <option value="">Default</option>
+                                <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
+                                <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
+                                <option value="beds_asc" {"selected" if request.query.get("sort_by") == "beds_asc" else ""}>Beds: Fewest First</option>
+                                <option value="beds_desc" {"selected" if request.query.get("sort_by") == "beds_desc" else ""}>Beds: Most First</option>
+                            </select>
+                            <input type="hidden" name="dummy_trigger"
+                                hx-get="/search"
+                                hx-target="#search-bar"
+                                hx-trigger="change from:#sort_by"
+                                hx-include="#search-form,#sort_by">
+                        </div>
                     </div>
                 </div>
             </main>
