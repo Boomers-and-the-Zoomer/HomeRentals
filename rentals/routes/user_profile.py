@@ -50,6 +50,8 @@ def user_profile():
         fun_fact = ""
     if profile_picture == None:
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
+    if profile_picture == '': 
+        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.execute(
         """

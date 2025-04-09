@@ -31,7 +31,9 @@ def user_profile_edit():
         age = ""
     if fun_fact == None:
         fun_fact = ""
-    if profile_picture == None: 
+    if profile_picture == None:
+        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
+    if profile_picture == "":
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.close()
@@ -51,13 +53,13 @@ def user_profile_edit():
                             <img src="/static/profilepicture/{profile_picture}" class="profile_picture" alt="Profile picture">
                         </div>
                         <label for="picture_form" class="button_picture">Update Picture</label>
-                        <input form="update_info", id="picture_form", name="picture_form"" style=" display: none;" type="file">
+                        <input form="update_info" id="picture_form" name="picture_form" style=" display: none;" type="file">
                         <p class="item"><b>Name:</b><p>
                          <textarea>{first_name}</textarea>
                     </div>
                     <div class="info">
                         <div class="fieldset">
-                            <form id="update_info" action="" method="POST">
+                            <form id="update_info" enctype="multipart/form-data" action="" method="POST">
                                 <h2>About</h2>
                                 <fieldset>
                                     <legend><b>Lives:</b></legend>
@@ -101,20 +103,31 @@ def user_profile_edit():
     languages = request.forms["languages_form"]
     age = request.forms["age_form"]
     fun_fact = request.forms["fun_fact_form"]
-    profile_picture = request.forms["picture_form"]
+    file = request.files.get("picture_form")
+    profile_picture = file.filename
+    # profile_picture = request.files["picture_form"]
 
     cur.execute(
         """
         UPDATE User
-        SET Lives = %s, Languages = %s, Age = %s, FunFact = %s
+        SET Lives = %s, Languages = %s, Age = %s, FunFact = %s, ProfilePicture = %s
         WHERE User.Email=(
             SELECT Email
             FROM Session
             WHERE Session.Token=_binary %s
             )
         """,
-        (lives, languages, age, fun_fact, session_token),
+        (lives, languages, age, fun_fact, profile_picture, session_token),
     )
+
+    print("DEBUGGER")
+    for x in request.files.items():
+        print(repr(x))
+        print(x)
+    print(repr(file))
+    print(repr(profile_picture))
+    file.save("static/profilepicture")
+
     cnx.commit()
     cur.close()
 
