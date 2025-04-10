@@ -66,7 +66,7 @@ def user_profile():
     )
 
     pictures = cur.fetchall()
-    regDate = pictures[0][3]
+        
     # noe rart kommer til å skje hvis man fjerner den tidligste listingen. variablet vil få ny verdi, slev om tidligere dato fortsatt er riktig
     cur.close()
 
@@ -88,6 +88,7 @@ def user_profile():
     host_since = ""
     is_host = "Guest"
     if len(properties) != 0:
+        regDate = pictures[0][3]
         host_since = f"""<p><u>Host since {regDate.year}</u></p>"""
         is_host = """<p>Host<p>"""
 

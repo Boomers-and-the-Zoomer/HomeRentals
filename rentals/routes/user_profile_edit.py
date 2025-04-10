@@ -53,8 +53,7 @@ def user_profile_edit():
                         </div>
                         <label for="picture_form" class="button_picture">Update Picture</label>
                         <input form="update_info" id="picture_form" name="picture_form" style=" display: none;" type="file">
-                        <p class="item"><b>Name:</b><p>
-                         <textarea>{first_name}</textarea>
+                        <p class="item"><b>Name:</b> {first_name}<p>
                     </div>
                     <div class="info">
                         <div class="fieldset">
@@ -121,12 +120,8 @@ def user_profile_edit():
     fun_fact = request.forms["fun_fact_form"]
     file = request.files.get("picture_form")
 
-    profile_picture_name = "profile-Picture-" + str(externalID)
+    profile_picture_name = "profile-pic-" + str(externalID)
     if file != None:
-        if old_profile_picture != None and old_profile_picture != '':    
-            picture_path = os.path.join("static", "profilepicture", old_profile_picture)
-            if os.path.exists(picture_path):
-                os.remove(picture_path)
         file_extension = os.path.splitext(file.filename)[1]
         new_filename = profile_picture_name + file_extension
         save_path = os.path.join("static", "profilepicture", new_filename)

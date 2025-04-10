@@ -23,8 +23,8 @@ INSERT INTO UserAccount (Email, PasswordHash) VALUES
 ('henry@example.com', '$argon2id$v=19$m=65536,t=3,p=4$PQBDWupWMYX3y9bDrid1dg$BHGZwsMq+sSI+liN3A3U8LmWGKONnVfSU9Vj3/rY7X4');
 
 INSERT INTO User (Email, ExternalID, FirstName, LastName, PhoneNumber, HomeAddress, PostalCode, Lives, Languages, Age, FunFact, ProfilePicture) VALUES
-('alice@example.com', 1, 'Alice', 'Smith', '1234567890', '123 Main St, City', '10001','Oslo, Norway', 'Norwegian, English, Spanish', '40s', 'Loves Smash', 'Profile-Alice.jpg'),
-('bob@example.com', 2, 'Bob', 'Johnson', '0987654321', '456 Elm St, City', '10002','Hønefoss, Norway', 'Norwegian, English', '25', 'Plays music', 'bob-profile.jpg'),
+('alice@example.com', 1, 'Alice', 'Smith', '1234567890', '123 Main St, City', '10001','Oslo, Norway', 'Norwegian, English, Spanish', '40s', 'Loves Smash', 'profile-pic-1.jpg'),
+('bob@example.com', 2, 'Bob', 'Johnson', '0987654321', '456 Elm St, City', '10002','Hønefoss, Norway', 'Norwegian, English', '25', 'Plays music', 'profile-pic-2.jpg'),
 ('carol@example.com', 3, 'Carol', 'Williams', '1112223333', '789 Oak St, City', '10003', NULL, NULL, NULL, NULL, NULL),
 ('test.testerson@example.com', 4, 'Test', 'Testerson', '1231231234', '456 Maple St, City', '10004', NULL, NULL, NULL, NULL, NULL),
 ('charlie@example.com', 5, 'Charlie', 'Brown', '222334455', '789 Oak St, City', '10003', NULL, NULL, NULL, NULL, NULL),
