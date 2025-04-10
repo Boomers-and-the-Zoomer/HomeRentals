@@ -20,6 +20,12 @@ def hent_alle_tags():
 def get_search_results(
     location, check_in, check_out, guests, type_="", tags=None, sort_by=""
 ):
+    # FIXME: Find the root cause, or just run the server on Linux where this shouldn't be an issue
+    def unfuck_encoding(fucked_string):
+        return bytes(fucked_string, encoding="iso8859-1").decode(encoding="utf8")
+
+    location = unfuck_encoding(location)
+
     if tags is None:
         tags = []
 
