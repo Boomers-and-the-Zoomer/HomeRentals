@@ -28,6 +28,7 @@ def get_search_results(
 
     params = []
     condition = ""
+
     def add_condition(new_condition, new_params):
         nonlocal condition
         nonlocal params
@@ -250,7 +251,7 @@ def search_bar():
     )
 
     tags = hent_alle_tags()
-    type_tags = ["apartment", "cabin", "house", "basement"]
+    type_tags = ["Apartment", "Cabin", "House", "Basement"]
     types = [tag for tag in tags if tag in type_tags]
     features = [tag for tag in tags if tag not in type_tags]
 
@@ -262,10 +263,12 @@ def search_bar():
             <label class="radio-option">
                 <input type="radio" name="type" value="{t}"
                     {"checked" if request.query.get("type") == t else ""}
+                    class="search-input"
+                    form="search-form"
                     hx-get="/search_results"
                     hx-target="#search-results"
                     hx-trigger="change"
-                    hx-include="#search-form">
+                    hx-include="#search-form,input.search-input">
                 {t.capitalize()}
             </label>
             ''' for t in types
@@ -281,10 +284,12 @@ def search_bar():
             <label class="checkbox-option">
                 <input type="checkbox" name="tag" value="{tag}"
                     {"checked" if tag in request.query.getall("tag") else ""}
+                    class="search-input"
+                    form="search-form"
                     hx-get="/search_results"
                     hx-target="#search-results"
                     hx-trigger="change"
-                    hx-include="#search-form,#sort_by">
+                    hx-include="#search-form,input.search-input">
                 {tag}
             </label>
             ''' for tag in features
@@ -306,7 +311,7 @@ def search_bar():
                                     hx-get="/search_results"
                                     hx-target="#search-results"
                                     hx-trigger="input changed"
-                                    hx-include="#search-form">
+                                    hx-include="#search-form,input.search-input">
                             </div>
                             <div class="input-box">
                                 <label>Check in</label>
@@ -315,7 +320,7 @@ def search_bar():
                                     hx-get="/search_results"
                                     hx-target="#search-results"
                                     hx-trigger="change"
-                                    hx-include="#search-form">
+                                    hx-include="#search-form,input.search-input">
                             </div>
                             <div class="input-box">
                                 <label>Check out</label>
@@ -324,7 +329,7 @@ def search_bar():
                                     hx-get="/search_results"
                                     hx-target="#search-results"
                                     hx-trigger="change"
-                                    hx-include="#search-form">
+                                    hx-include="#search-form,input.search-input">
                             </div>
                             <div id="who-box" class="input-box">
                                 <label for="guests">Guests</label>
@@ -333,7 +338,7 @@ def search_bar():
                                     hx-get="/search_results"
                                     hx-target="#search-results"
                                     hx-trigger="input changed"
-                                    hx-include="#search-form">
+                                    hx-include="#search-form,input.search-input">
                             </div>
                             <button popovertarget="sort-popover" type="button" class="icon-button" aria-label="Sort">
                                 {sort_icon}
@@ -348,13 +353,13 @@ def search_bar():
                     </div>
                     <div id="popover-container">
                         <div popover id="sort-popover" class="filter-box">
-                            <fieldset class="sort-by-group">
+                            <fieldset class="sort-by-group" hx-target="#search-results" hx-include="#search-form,input.search-input">
                                 <legend>Sort by</legend>
-                                <label class="radio-option"><input type="radio" name="sort_by" value="" {"checked" if sort_by == "" else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> Default</label>
-                                <label class="radio-option"><input type="radio" name="sort_by" value="price_asc" {"checked" if sort_by == "price_asc" else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> Price: Low to High</label>
-                                <label class="radio-option"><input type="radio" name="sort_by" value="price_desc" {"checked" if sort_by == "price_desc" else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> Price: High to Low</label>
-                                <label class="radio-option"><input type="radio" name="sort_by" value="beds_asc" {"checked" if sort_by == "beds_asc" else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> Beds: Fewest First</label>
-                                <label class="radio-option"><input type="radio" name="sort_by" value="beds_desc" {"checked" if sort_by == "beds_desc" else ""} hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form"> Beds: Most First</label>
+                                <label class="radio-option"><input type="radio" name="sort_by" form="search-form" class="search-input" value="" {"checked" if sort_by == "" else ""} hx-get="/search_results" hx-trigger="change"> Default</label>
+                                <label class="radio-option"><input type="radio" name="sort_by" form="search-form" class="search-input" value="price_asc" {"checked" if sort_by == "price_asc" else ""} hx-get="/search_results" hx-trigger="change"> Price: Low to High</label>
+                                <label class="radio-option"><input type="radio" name="sort_by" form="search-form" class="search-input" value="price_desc" {"checked" if sort_by == "price_desc" else ""} hx-get="/search_results" hx-trigger="change"> Price: High to Low</label>
+                                <label class="radio-option"><input type="radio" name="sort_by" form="search-form" class="search-input" value="beds_asc" {"checked" if sort_by == "beds_asc" else ""} hx-get="/search_results" hx-trigger="change"> Beds: Fewest First</label>
+                                <label class="radio-option"><input type="radio" name="sort_by" form="search-form" class="search-input" value="beds_desc" {"checked" if sort_by == "beds_desc" else ""} hx-get="/search_results" hx-trigger="change"> Beds: Most First</label>
                             </fieldset>
                         </div>
                         <div popover id="filter-popover" class="filter-box">
