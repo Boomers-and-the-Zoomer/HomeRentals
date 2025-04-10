@@ -311,7 +311,7 @@ def new_listing_page6_content():
             <form oninput="outputNumber.value = price.value ? (parseFloat(price.value * 0.95).toFixed(2)) : ''">
                 <p>
                     <label class="left" for="price">Enter price:</label>
-                    <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\d{1,7}" inputmode="numeric" required>
+                    <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\\d{1,7}" inputmode="numeric" required>
                     <span class="right"><b>NOK</b> per night</span>
                 </p>
                 <p>
@@ -345,7 +345,7 @@ def new_listing_summary_content():
         <div id="summary">
             <div class="maintext">
                 <h1>Your summary!</h1>
-               
+
 
                 <h2><b>Pictures:</b></h2>
                 <p>Show us what your beautiful home looks like!</p>
@@ -386,9 +386,9 @@ def new_listing_summary_content():
                 <h2><b>Price:</b></h2>
                 <p><i>Per</i> night</p>
                  <form oninput="outputNumber.value = price.value ? (parseFloat(price.value * 0.95).toFixed(2)) : ''">
-                <p>        
+                <p>
                     <label class="left" for="price">Enter price:</label>
-                    <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\d{1,7}" inputmode="numeric" required>
+                    <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\\d{1,7}" inputmode="numeric" required>
                     <span class="right">NOK per night</span>
                 </p>
                 <p>
@@ -403,7 +403,7 @@ def new_listing_summary_content():
 
 
 
-               
+
 
                 <button
                     hx-post=""
