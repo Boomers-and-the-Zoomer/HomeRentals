@@ -251,30 +251,51 @@ def search_bar():
         guests,
         request.query.get("type", ""),
         request.query.getall("tag"),
-        request.query.get("sort_by", ""),
+        sort_by,
     )
 
     tags = hent_alle_tags()
     type_tags = ["apartment", "cabin", "house", "basement"]
     types = [tag for tag in tags if tag in type_tags]
     features = [tag for tag in tags if tag not in type_tags]
+
     type_dropdown = '<div class="input-box"><label for="type">Property Type</label><select name="type" id="type" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form">'
     type_dropdown += '<option value="">All</option>'
-
     for t in types:
         selected = "selected" if request.query.get("type") == t else ""
         type_dropdown += f'<option value="{t}" {selected}>{t.capitalize()}</option>'
-
     type_dropdown += "</select></div>"
+
+    tag_filter = f'''
+    <div id="tag-filter" class="input-box">
+        <fieldset>
+            <legend>Features</legend>
+            {"".join([
+                f"""
+                <label class=\"tag-option\">
+                    <input type=\"checkbox\" name=\"tag\" value=\"{tag}\"
+                        {"checked" if tag in request.query.getall("tag") else ""}
+                        form=\"search-form\"
+                        hx-get=\"/search_results\"
+                        hx-target=\"#search-results\"
+                        hx-trigger=\"change\"
+                        hx-include=\"#search-form,#sort_by,input[name='tag']\">
+                    {tag}
+                </label>
+                """ for tag in features
+            ])}
+        </fieldset>
+    </div>
+    '''
 
     return html(
         title(location),
         with_navbar(f"""
-            <main id="search-page">
-                <div class="spacer"></div>
-                <div id="search-bar">
-                    <form class="search-container" id="search-form">
-                        <div class="input-box">
+            <main id=\"search-page\">
+                <div class=\"spacer\"></div>
+                <div id=\"search-bar\">
+                    <form class=\"search-container\" id=\"search-form\">
+                        <div class=\"input-box\">
                             <label>Where</label>
                             <input id="location-input" name="location" type="text" placeholder="search destination"
                                 value="{location}"
@@ -284,25 +305,25 @@ def search_bar():
                                 hx-include="#search-form"
                                 hx-swap="outerHTML">
                         </div>
-                        <div class="input-box">
+                        <div class=\"input-box\">
                             <label>Check in</label>
-                            <input id="checkin-input" name="checkin" type="date" placeholder="Add dates"
-                                value="{check_in}"
-                                hx-get="/search_results"
-                                hx-target="#search-results"
-                                hx-trigger="change"
-                                hx-include="#search-form"
-                                hx-swap="outerHTML">
+                            <input id=\"checkin-input\" name=\"checkin\" type=\"date\" placeholder=\"Add dates\"
+                                value=\"{check_in}\"
+                                hx-get=\"/search_results\"
+                                hx-target=\"#search-results\"
+                                hx-trigger=\"change\"
+                                hx-include=\"#search-form\"
+                                hx-swap=\"outerHTML\">
                         </div>
-                        <div class="input-box">
+                        <div class=\"input-box\">
                             <label>Check out</label>
-                            <input id="checkout-input" name="checkout" type="date" placeholder="Add dates"
-                                value="{check_out}"
-                                hx-get="/search_results"
-                                hx-target="#search-results"
-                                hx-trigger="change"
-                                hx-include="#search-form"
-                                hx-swap="outerHTML">
+                            <input id=\"checkout-input\" name=\"checkout\" type=\"date\" placeholder=\"Add dates\"
+                                value=\"{check_out}\"
+                                hx-get=\"/search_results\"
+                                hx-target=\"#search-results\"
+                                hx-trigger=\"change\"
+                                hx-include=\"#search-form\"
+                                hx-swap=\"outerHTML\">
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
@@ -314,47 +335,54 @@ def search_bar():
                                 hx-include="#search-form"
                                 hx-swap="outerHTML">
                         </div>
-                        <button popovertarget="search-popover" type="button" class="icon-button" aria-label="Filter">
-                            {sort_icon}
+                        <button popovertarget=\"search-popover\" type=\"button\" class=\"icon-button\" aria-label=\"Filter\">
+                            <span id=\"sort-icon\">{sort_icon}</span>
                         </button>
-                        <button type="submit" class="search-btn"🔍> Search</button>
+                        <button type=\"submit\" class=\"search-btn\">🔍 Search</button>
                     </form>
                 </div>
-                <div class="spacer"></div>
-                <div id="search-results">
+                {tag_filter}
+                <div class=\"spacer\"></div>
+                <div id=\"search-results\">
                     {result}
                 </div>
-                <div popover id="search-popover">
+                <div popover id=\"search-popover\">
                     {type_dropdown}
-                    <fieldset>
-                        <legend>Features</legend>
-                        {"".join([
-                             f"""<label><input type="checkbox" name="tag" value="{tag}" {"checked" if tag in request.query.getall("tag") else ""} form="search-form" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form,#sort_by,input[name='tag']"> {tag}</label><br>"""
-                            for tag in features
-                        ])}
-                    </fieldset>
-                    <div class="input-box sort-by-container">
-                        <label for="sort_by">Sort by</label>
-                        <div class="custom-select-wrapper">
-                            <select name="sort_by" id="sort_by from="search-form"
-                                hx-get="/search_results"
-                                hx-target="#search-results"
-                                hx-trigger="change"
-                                hx-include="#search-form,input[name='tag']">
-                                <option value="">Default</option>
-                                <option value="price_asc" {"selected" if request.query.get("sort_by") == "price_asc" else ""}>Price: Low to High</option>
-                                <option value="price_desc" {"selected" if request.query.get("sort_by") == "price_desc" else ""}>Price: High to Low</option>
-                                <option value="beds_asc" {"selected" if request.query.get("sort_by") == "beds_asc" else ""}>Beds: Fewest First</option>
-                                <option value="beds_desc" {"selected" if request.query.get("sort_by") == "beds_desc" else ""}>Beds: Most First</option>
+                    <div class=\"input-box sort-by-container\">
+                        <label for=\"sort_by\">Sort by</label>
+                        <div class=\"custom-select-wrapper\">
+                            <select name=\"sort_by\" id=\"sort_by\"
+                                hx-get=\"/search_results\"
+                                hx-target=\"#search-results\"
+                                hx-trigger=\"change\"
+                                hx-include=\"#search-form,input[name='tag']\">
+                                <option value=\"\">Default</option>
+                                <option value=\"price_asc\" {"selected" if sort_by == "price_asc" else ""}>Price: Low to High</option>
+                                <option value=\"price_desc\" {"selected" if sort_by == "price_desc" else ""}>Price: High to Low</option>
+                                <option value=\"beds_asc\" {"selected" if sort_by == "beds_asc" else ""}>Beds: Fewest First</option>
+                                <option value=\"beds_desc\" {"selected" if sort_by == "beds_desc" else ""}>Beds: Most First</option>
                             </select>
-                            <input type="hidden" name="dummy_trigger"
-                                hx-get="/search"
-                                hx-target="#search-bar"
-                                hx-trigger="change from:#sort_by"
-                                hx-include="#search-form,#sort_by">
+                            <input type=\"hidden\"
+                                hx-get=\"/sort_icon\"
+                                hx-target=\"#sort-icon\"
+                                hx-trigger=\"change from:#sort_by\"
+                                hx-swap=\"outerHTML\"
+                                hx-include=\"#sort_by\">
                         </div>
                     </div>
                 </div>
             </main>
-       """),
+        """),
     )
+
+
+@route("/sort_icon")
+def sort_icon_route():
+    sort_by = request.query.get("sort_by", "")
+    if sort_by.endswith("asc"):
+        return f'<span id="sort-icon">{icons.sort_asc()}</span>'
+    else:
+        return f'<span id="sort-icon">{icons.sort_desc()}</span>'
+
+
+# TODO only sort in filter, move tags somewhere else

@@ -173,3 +173,30 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+document.body.addEventListener("htmx:afterSwap", (e) => {
+  if (e.target.id === "search-bar") {
+    const popoverButton = document.querySelector("[popovertarget=\"search-popover\"]");
+    const popover = document.querySelector("#search-popover");
+
+    if (popoverButton && popover && popover.matches(":popover-open")) {
+      popover.hidePopover(); // Lukker midlertidig
+      popover.showPopover(); // Åpner igjen for å få riktig CSS
+    }
+  }
+});
+document.querySelector("#sort_by")?.addEventListener("change", () => {
+  const selected = document.querySelector("#sort_by").value;
+  const iconButton = document.querySelector(".icon-button svg");
+
+  if (!iconButton) return;
+
+  // Bytt ut SVG basert på sortering
+  if (selected.endsWith("asc")) {
+    iconButton.innerHTML = `<path d="M4 6h16M4 12h8m-8 6h4" stroke="currentColor" stroke-width="2" fill="none"/>`; // eksempel
+  } else if (selected.endsWith("desc")) {
+    iconButton.innerHTML = `<path d="M4 6h4m-4 6h8m-8 6h16" stroke="currentColor" stroke-width="2" fill="none"/>`; // eksempel
+  } else {
+    iconButton.innerHTML = `<path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" fill="none"/>`; // fallback
+  }
+});
