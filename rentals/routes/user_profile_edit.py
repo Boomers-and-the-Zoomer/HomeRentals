@@ -31,9 +31,7 @@ def user_profile_edit():
         age = ""
     if fun_fact == None:
         fun_fact = ""
-    if profile_picture == None:
-        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
-    if profile_picture == "":
+    if profile_picture == None or profile_picture == "":
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.close()
@@ -104,29 +102,28 @@ def user_profile_edit():
     age = request.forms["age_form"]
     fun_fact = request.forms["fun_fact_form"]
     file = request.files.get("picture_form")
-    profile_picture = file.filename
-    # profile_picture = request.files["picture_form"]
 
+    query_params = [lives, languages, age, fun_fact]
+    update_picture = ""
+    if file != None:
+        update_picture = ", ProfilePicture = %s"
+        query_params.append(file.filename)
+    query_params.append(session_token)
     cur.execute(
-        """
+        f"""
         UPDATE User
-        SET Lives = %s, Languages = %s, Age = %s, FunFact = %s, ProfilePicture = %s
+        SET Lives = %s, Languages = %s, Age = %s, FunFact = %s{update_picture}
         WHERE User.Email=(
             SELECT Email
             FROM Session
             WHERE Session.Token=_binary %s
             )
         """,
-        (lives, languages, age, fun_fact, profile_picture, session_token),
+        tuple(query_params),
     )
 
-    print("DEBUGGER")
-    for x in request.files.items():
-        print(repr(x))
-        print(x)
-    print(repr(file))
-    print(repr(profile_picture))
-    file.save("static/profilepicture")
+    if file != None:
+        file.save("static/profilepicture")
 
     cnx.commit()
     cur.close()

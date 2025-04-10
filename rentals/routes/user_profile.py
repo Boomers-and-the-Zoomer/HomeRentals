@@ -50,9 +50,7 @@ def user_profile():
         age = ""
     if fun_fact == None:
         fun_fact = ""
-    if profile_picture == None:
-        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
-    if profile_picture == "":
+    if profile_picture == None or profile_picture == '':
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.execute(
@@ -131,6 +129,7 @@ def user_profile():
                                 <legend><b>Age:</b></legend>
                                 <p>{age}</p>
                             </fieldset>
+                            <br>
                             <fieldset>
                                 <legend><b>Fun fact:</b></legend>
                                 <p>{fun_fact}</p>
