@@ -58,7 +58,6 @@ def db_cnx_init(no_db: bool = False):
         my_cnx.cursor = my_cursor
 
     def _db_cnx():
-        print("_db_cnx")
         return my_cnx
 
     def _db_cnx_close():
