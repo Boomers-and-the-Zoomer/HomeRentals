@@ -239,10 +239,7 @@ def search_bar():
     guests = request.query.get("guests", "").strip()
     sort_by = request.query.get("sort_by", "")
 
-    if sort_by.endswith("asc"):
-        sort_icon = icons.sort_asc()
-    else:
-        sort_icon = icons.sort_desc()
+    sort_icon = icons.sort_asc() if sort_by.endswith("asc") else icons.sort_desc()
 
     result = get_search_results(
         location,
@@ -261,9 +258,12 @@ def search_bar():
 
     type_dropdown = '<div class="input-box"><label for="type">Property Type</label><select name="type" id="type" hx-get="/search_results" hx-target="#search-results" hx-trigger="change" hx-include="#search-form">'
     type_dropdown += '<option value="">All</option>'
-    for t in types:
-        selected = "selected" if request.query.get("type") == t else ""
-        type_dropdown += f'<option value="{t}" {selected}>{t.capitalize()}</option>'
+    type_dropdown += "".join(
+        [
+            f'<option value="{t}" {"selected" if request.query.get("type") == t else ""}>{t.capitalize()}</option>'
+            for t in types
+        ]
+    )
     type_dropdown += "</select></div>"
 
     tag_filter = f'''
@@ -275,11 +275,10 @@ def search_bar():
                 <label class=\"tag-option\">
                     <input type=\"checkbox\" name=\"tag\" value=\"{tag}\"
                         {"checked" if tag in request.query.getall("tag") else ""}
-                        form=\"search-form\"
                         hx-get=\"/search_results\"
                         hx-target=\"#search-results\"
                         hx-trigger=\"change\"
-                        hx-include=\"#search-form,#sort_by,input[name='tag']\">
+                        hx-include=\"#search-form,#sort_by\">
                     {tag}
                 </label>
                 """ for tag in features
@@ -292,7 +291,6 @@ def search_bar():
         title(location),
         with_navbar(f"""
             <main id=\"search-page\">
-                <div class=\"spacer\"></div>
                 <div id=\"search-bar\">
                     <form class=\"search-container\" id=\"search-form\">
                         <div class=\"input-box\">
@@ -307,23 +305,21 @@ def search_bar():
                         </div>
                         <div class=\"input-box\">
                             <label>Check in</label>
-                            <input id=\"checkin-input\" name=\"checkin\" type=\"date\" placeholder=\"Add dates\"
+                            <input id=\"checkin-input\" name=\"checkin\" type=\"date\"
                                 value=\"{check_in}\"
                                 hx-get=\"/search_results\"
                                 hx-target=\"#search-results\"
                                 hx-trigger=\"change\"
-                                hx-include=\"#search-form\"
-                                hx-swap=\"outerHTML\">
+                                hx-include=\"#search-form\">
                         </div>
                         <div class=\"input-box\">
                             <label>Check out</label>
-                            <input id=\"checkout-input\" name=\"checkout\" type=\"date\" placeholder=\"Add dates\"
+                            <input id=\"checkout-input\" name=\"checkout\" type=\"date\"
                                 value=\"{check_out}\"
                                 hx-get=\"/search_results\"
                                 hx-target=\"#search-results\"
                                 hx-trigger=\"change\"
-                                hx-include=\"#search-form\"
-                                hx-swap=\"outerHTML\">
+                                hx-include=\"#search-form\">
                         </div>
                         <div id="who-box" class="input-box">
                             <label for="guests">Guests</label>
@@ -342,7 +338,6 @@ def search_bar():
                     </form>
                 </div>
                 {tag_filter}
-                <div class=\"spacer\"></div>
                 <div id=\"search-results\">
                     {result}
                 </div>
@@ -355,7 +350,7 @@ def search_bar():
                                 hx-get=\"/search_results\"
                                 hx-target=\"#search-results\"
                                 hx-trigger=\"change\"
-                                hx-include=\"#search-form,input[name='tag']\">
+                                hx-include=\"#search-form\">
                                 <option value=\"\">Default</option>
                                 <option value=\"price_asc\" {"selected" if sort_by == "price_asc" else ""}>Price: Low to High</option>
                                 <option value=\"price_desc\" {"selected" if sort_by == "price_desc" else ""}>Price: High to Low</option>
@@ -385,4 +380,3 @@ def sort_icon_route():
         return f'<span id="sort-icon">{icons.sort_desc()}</span>'
 
 
-# TODO only sort in filter, move tags somewhere else
