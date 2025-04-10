@@ -946,11 +946,6 @@ main#book-confirm {
   justify-content: center;
 }
 
-main#book-confirm {
-  display: flex;
-  justify-content: center;
-}
-
 main#user-profile {
   display: grid;
   gap: 20px;

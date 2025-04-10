@@ -1,4 +1,4 @@
-from bottle import route, run, template, request, HTTPError, redirect
+from bottle import route, run, template, request, HTTPError, redirect, response
 from datetime import datetime, timedelta
 import urllib.parse  # trengte litt hjelp fra denne for å få riktig format på URL(Hadde problemer med å overføre @)
 from urllib.parse import unquote
@@ -10,6 +10,9 @@ from .. import db
 
 @route("/view-rental/<listing>")
 def view_rental(listing: int):
+    from_date = request.get_cookie("from_date", "") or ""
+    to_date = request.get_cookie("to_date", "") or ""
+
     cnx = db.cnx()
     cursor = cnx.cursor()
 
@@ -62,9 +65,9 @@ def view_rental(listing: int):
     <div class="calendar">
     <form action="/book-rental" method="post">
         <label for="from_date">From Date:</label>
-        <input type="datetime-local" id="from_date" name="from_date" required><br>
+        <input type="datetime-local" id="from_date" name="from_date" required value="{from_date}"><br>
         <label for="to_date">To Date:</label>
-        <input type="datetime-local" id="to_date" name="to_date" required><br>
+        <input type="datetime-local" id="to_date" name="to_date" required value="{to_date}"><br>
         <input type="hidden" name="PropertyListingID" value="{PropertyListingID}">
         <button type="submit">Book Now</button>
     </form>
@@ -85,7 +88,11 @@ def view_rental(listing: int):
 
 
 def book_rental_pre_auth_hook():
-    pass
+    from_date = request.forms.get("from_date", "")
+    to_date = request.forms.get("to_date", "")
+
+    response.set_cookie("from_date", from_date, maxage=15 * 60)
+    response.set_cookie("to_date", to_date, maxage=15 * 60)
 
 
 @route("/book-rental", method="POST")
