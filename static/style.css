@@ -409,126 +409,17 @@ main#view-rental {
 }
 
 main#register_new_listing {
-  #page1, #page2, #page3, #page4, #page5 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .maintext {
-    align-items: center;
-    text-align: center;
-    position: relative;
-  }
-
   .maintext h1 {
     font-size: 2.8em;
     margin-top: 50px;
     font-weight: bold;
-  }
-
-  .maintext p {
-    font-size: 2.2em;
-    font-weight: bold;
-  }
-
-  #page4 .maintext p {
-    display: grid;
-    grid-template-columns: max-content 1fr;
+    text-align: center;
     position: relative;
-    font-size: 2.0em;
-    text-align: left;
-
-    label {
-      grid-column: 1;
-      justify-self: end;
-    }
-    input {
-      grid-column: 2;
-    }
-  }
-
-  #page5 .maintext form {
-    display: grid;
-    justify-content: center;
-    row-gap: 0.5em;
-    grid-template-columns: max-content max-content max-content;
-
-    p:nth-child(1) {
-      margin-bottom: 2.0em;
-    }
-
-    p {
-      font-size: 1.5em;
-      text-align: left;
-
-      display: grid;
-      grid-column: 1 / 4;
-      grid-template-columns: subgrid;
-
-      > span.middle {
-        grid-column: 1 / 4;
-      }
-
-      > .left {
-        justify-self: end;
-      }
-      > .right {
-        justify-self: start;
-      }
-    }
-
-    label {
-      grid-column: 1;
-      justify-self: end;
-    }
-    input {
-      grid-column: 2;
-    }
-  }
-
-  input, output {
-    border: none;
-    border-bottom: 2px solid black;
-    outline: none;
-    font-size: 26px;
-    font-weight: normal;
-    padding: 0px;
-    text-align: center;
-    display: inline-block;
-  }
-
-  input[type="text"] {
-    width: 150px;
-  }
-
-  input[type="number"] {
-    appearance: none;
-    appearance: textfield;
-  }
-
-  output {
-    color: rgb(74, 194, 74);
-    display: inline-block;
-    min-width: 80px;
-    text-align: center;
-    vertical-align: middle;
-    height: 34px;
-    line-height: 34px;
-  }
-
-  .maintext .page5 .line-input {
-    border: none;
-    border-bottom: 2px solid black;
-    outline: none;
-    width: 15%;
-    font-size: 26px;
-    font-weight: normal;
-    padding: 0px;
   }
 
   .page-counter {
+    left: 50%;
+    transform: translateX(-50%);
     position: fixed;
     bottom: 0px;
     padding: 20px;
@@ -545,23 +436,6 @@ main#register_new_listing {
     display: inline-block;
     bottom: 0px;
     left: 0px;
-  }
-
-  .line-input {
-    border: none;
-    border-bottom: 2px solid black;
-    outline: none;
-    font-size: 26px;
-    font-weight: normal;
-    padding: 0px;
-  }
-
-  input[name="address"] {
-    width: 375px;
-  }
-
-  input[name="postalcode"] {
-    width: 200px;
   }
 
   .button {
@@ -581,16 +455,6 @@ main#register_new_listing {
     cursor: pointer;
   }
 
-  .textarea textarea {
-    width: 550px;
-    height: 250px;
-    font-size: 16px;
-    resize: none;
-    margin-top: 45px;
-    border-radius: 10px;
-    font-weight: normal;
-  }
-
   .pictures {
     margin-top: 150px;
   }
@@ -607,14 +471,192 @@ main#register_new_listing {
     flex-grow: 2;
   }
 
+  #page1 {
+    .maintext p {
+      font-size: 2.2em;
+      font-weight: normal;
+      position: fixed;
+      left: 33%;
+      transform: translateY(65%);
+    }
+  }
+
+  /*#page2 {}*/
+
+  #page3 {
+    table {
+      width: 50%;
+      margin: 80px;
+      transform: translateX(75px);
+      border-collapse: separate;
+      border-spacing: 50px 0;
+    }
+
+    input[type="number"] {
+      width: 150px;
+    }
+
+    .line-input {
+      border: none;
+      border-bottom: 1px solid black;
+      outline: none;
+      font-weight: normal;
+      text-align: center;
+      padding: 0px;
+      transform: translateY(-6px);
+      font-size: 26px;
+    }
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: right;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      width: 250px;
+      text-align: right;
+      padding-right: 10px;
+      font-size: 23px;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+  }
+
+  #page4 {
+    .maintext p {
+      grid-template-columns: max-content 1fr;
+      font-size: 2.0em;
+      text-align: center;
+
+      label {
+        grid-column: 1;
+        justify-self: end;
+      }
+      input {
+        grid-column: 2;
+      }
+    }
+
+    .textarea textarea {
+      width: 550px;
+      height: 250px;
+      font-size: 16px;
+      resize: none;
+      margin-top: 45px;
+      border-radius: 7px;
+      font-weight: normal;
+      transform: translateX(430px);
+    }
+  }
+
+  #page5 {
+    .maintext p {
+      font-size: 2.2em;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+    }
+
+    .line-input {
+      border: none;
+      border-bottom: 2px solid black;
+      outline: none;
+      font-size: 1.1em;
+      font-weight: normal;
+      padding: 0px;
+      text-align: center;
+    }
+
+    table {
+      margin-top: 10%;
+      text-align: right;
+      transform: translateX(80%);
+      border-collapse: separate;
+      border-spacing: 0 20px;
+      font-size: 1.8em;
+
+      input[name="address"] {
+        width: 375px;
+        text-align: center;
+      }
+
+      input[name="postalcode"] {
+        width: 375px;
+      }
+    }
+  }
+
+  #page6 {
+    .maintext form {
+      margin-top: 5%;
+      display: grid;
+      justify-content: center;
+      row-gap: 0.5em;
+      grid-template-columns: max-content max-content max-content;
+
+      p:nth-child(1) {
+        margin-bottom: 2.0em;
+      }
+
+      input[type="text"] {
+        width: 150px;
+      }
+
+      input, output {
+        border: none;
+        border-bottom: 2px solid black;
+        outline: none;
+        font-size: 26px;
+        font-weight: normal;
+        padding: 0px;
+        text-align: center;
+        display: inline-block;
+      }
+
+      output {
+        color: rgb(74, 194, 74);
+      }
+
+      p {
+        font-size: 1.7em;
+        text-align: left;
+
+        display: grid;
+        grid-column: 1 / 4;
+        grid-template-columns: subgrid;
+
+        > span.middle {
+          grid-column: 1 / 4;
+        }
+
+        > .left {
+          justify-self: end;
+        }
+        > .right {
+          justify-self: start;
+        }
+      }
+
+      label {
+        grid-column: 1;
+        justify-self: end;
+      }
+      input {
+        grid-column: 2;
+      }
+    }
+  }
+
   #summary {
     > .maintext {
       display: grid;
       grid-template-columns: 1fr max-content 1fr;
-      justify-content: center;
+      align-content: left;
       gap: 20px;
 
-      > h2 {
+      > h2 h3 {
         margin-top: 40px;
       }
 
@@ -626,6 +668,10 @@ main#register_new_listing {
         &.images-label {
           justify-self: center;
         }
+      }
+
+      p {
+        font-size: 1.4em;
       }
 
       > .fields {
@@ -640,15 +686,43 @@ main#register_new_listing {
           justify-self: end;
         }
         > input {
-          text-align: start;
+          border: none;
+          border-bottom: 1px solid black;
+          outline: none;
+          font-weight: normal;
+          text-align: center;
+          padding: 0px;
         }
-        > input, > textarea {
+        > textarea {
+          width: 750px;
+          height: 250px;
+          font-size: 16px;
+          resize: none;
+          margin-top: 45px;
+          border-radius: 7px;
+          font-weight: normal;
           grid-column: 2;
-          max-width: 300px;
         }
-        > input[type="number"] {
-          appearance: unset;
-          max-width: 6ch;
+        > input {
+          max-width: 12ch;
+          border: none;
+          border-bottom: 1px solid black;
+          outline: none;
+          font-weight: normal;
+          text-align: center;
+          width: 150px;
+          padding: 0px;
+        }
+
+        form input output {
+          border: none;
+          border-bottom: 2px solid black;
+          outline: none;
+          font-size: 26px;
+          font-weight: normal;
+          padding: 0px;
+          text-align: center;
+          display: inline-block;
         }
       }
 
