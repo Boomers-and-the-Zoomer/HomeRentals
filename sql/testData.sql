@@ -73,7 +73,7 @@ INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Descr
 (52, 'bob@example.com', 'Stugguvollbekkvegen 100, Tydal', '7590', 'Cozy cabin in the woods', 500, 155, 2, 3, 120, 20, 1,'2021-09-18'),
 (53, 'henry@example.com', 'Bjerkerudveien 25, Nesodden', '1450', 'Cabin with a view', 900, 1, 2, 1, 80, 2, 1,'2025-01-01');
 
-INSERT INTO Bookings (PropertyListingID,Email,StartTime,EndTime) VALUES
+INSERT INTO Booking (PropertyListingID,Email,StartTime,EndTime) VALUES
 (42, 'alice@example.com', '2023-12-31 23:59:59', '2024-12-31 23:59:59'),
 (43, 'alice@example.com', '2022-12-31 23:59:59', '2023-12-31 23:59:59');
 
