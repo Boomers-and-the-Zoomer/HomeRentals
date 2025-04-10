@@ -115,13 +115,15 @@ def validate_session_or_refresh() -> bool:
     return get_session_and_refresh() != None
 
 
-def requires_user_session(referer: bool = False):
+def requires_user_session(referer: bool = False, pre_auth_hook=None):
     """
     Decorator that ensures that a user is logged in before running the decorated function.
     """
 
     def inner_decorator(func):
         def inner(*args, **kwargs):
+            if pre_auth_hook != None:
+                pre_auth_hook(*args, **kwargs)
             if validate_session_or_refresh():
                 return func(*args, **kwargs)
             else:

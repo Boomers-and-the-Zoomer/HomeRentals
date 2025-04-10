@@ -84,8 +84,12 @@ def view_rental(listing: int):
     )
 
 
+def book_rental_pre_auth_hook():
+    pass
+
+
 @route("/book-rental", method="POST")
-@requires_user_session(referer=True)
+@requires_user_session(referer=True, pre_auth_hook=book_rental_pre_auth_hook)
 def book_rental():
     raw_from_date = request.forms.get("from_date")
     raw_to_date = request.forms.get("to_date")
