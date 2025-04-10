@@ -27,91 +27,89 @@ def get_search_results(
     cursor = conn.cursor()
 
     params = []
-
     condition = ""
+    def add_condition(new_condition, new_params):
+        nonlocal condition
+        nonlocal params
+        if condition != "":
+            condition += " AND "
+        condition += new_condition
+        params += new_params
+
     if location != "":
-        location = f"%{location}%"
-        params += [location]
-        condition = """PropertyListing.Address LIKE %s"""
+        add_condition("PropertyListing.Address LIKE %s", [f"%{location}%"])
 
     if check_in and check_out:
-        if condition != "":
-            condition += " AND "
-        condition += """
-        PropertyListing.PropertyListingID NOT IN (
-            SELECT Booking.PropertyListingID
-            FROM Booking
-            WHERE (
-                (Booking.StartTime <= %s AND %s <= Booking.EndTime)
-                OR (%s < Booking.StartTime AND Booking.StartTime < %s)
-                OR (%s < Booking.EndTime AND Booking.EndTime < %s)
+        add_condition(
+            """
+            PropertyListing.PropertyListingID NOT IN (
+                SELECT Booking.PropertyListingID
+                FROM Booking
+                WHERE (
+                    (Booking.StartTime <= %s AND %s <= Booking.EndTime)
+                    OR (%s < Booking.StartTime AND Booking.StartTime < %s)
+                    OR (%s < Booking.EndTime AND Booking.EndTime < %s)
+                )
             )
+            """,
+            [check_in, check_out, check_in, check_out, check_in, check_out],
         )
-        """
-        params += [check_in, check_out, check_in, check_out, check_in, check_out]
-
     elif check_in:
-        if condition != "":
-            condition += " AND "
-        condition += """
-        PropertyListing.PropertyListingID NOT IN (
-            SELECT Booking.PropertyListingID
-            FROM Booking
-            WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
-                OR Booking.StartTime > %s
+        add_condition(
+            """
+            PropertyListing.PropertyListingID NOT IN (
+                SELECT Booking.PropertyListingID
+                FROM Booking
+                WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
+                    OR Booking.StartTime > %s
+            )
+            """,
+            [check_in, check_in],
         )
-        """
-        params += [check_in, check_in]
-
     elif check_out:
-        if condition != "":
-            condition += " AND "
-        condition += """
-        PropertyListing.PropertyListingID NOT IN (
-            SELECT Booking.PropertyListingID
-            FROM Booking
-            WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
-                OR Booking.EndTime < %s
+        add_condition(
+            """
+            PropertyListing.PropertyListingID NOT IN (
+                SELECT Booking.PropertyListingID
+                FROM Booking
+                WHERE %s BETWEEN Booking.StartTime AND Booking.EndTime
+                    OR Booking.EndTime < %s
+            )
+            """,
+            [check_out, check_out],
         )
-        """
-        params += [check_out, check_out]
 
     if guests != 0:
-        if condition != "":
-            condition += " AND "
-        condition += "PropertyListing.Beds >= %s"
-        params += [guests]
+        add_condition("PropertyListing.Beds >= %s", [guests])
 
     if type_:
-        if condition:
-            condition += " AND "
-        condition += """
-        PropertyListing.PropertyListingID IN (
-            SELECT PropertyTag.PropertyListingID
-            FROM PropertyTag
-            JOIN Tag ON Tag.TagID = PropertyTag.TagID
-            WHERE Tag.Name = %s
+        add_condition(
+            """
+            PropertyListing.PropertyListingID IN (
+                SELECT PropertyTag.PropertyListingID
+                FROM PropertyTag
+                JOIN Tag ON Tag.TagID = PropertyTag.TagID
+                WHERE Tag.Name = %s
+            )
+            """,
+            [type_],
         )
-        """
-        params.append(type_)
 
     if tags is not None and len(tags) > 0:
         placeholders = ", ".join(["%s"] * len(tags))
-        if condition:
-            condition += " AND "
-
-        condition += f"""
-        PropertyListing.PropertyListingID IN (
-            SELECT PropertyTag.PropertyListingID
-            FROM PropertyTag
-            JOIN Tag ON Tag.TagID = PropertyTag.TagID
-            WHERE Tag.Name IN ({placeholders})
-            GROUP BY PropertyTag.PropertyListingID
-            HAVING COUNT(*) = {len(tags)}
+        add_condition(
+            f"""
+            PropertyListing.PropertyListingID IN (
+                SELECT PropertyTag.PropertyListingID
+                FROM PropertyTag
+                JOIN Tag ON Tag.TagID = PropertyTag.TagID
+                WHERE Tag.Name IN ({placeholders})
+                GROUP BY PropertyTag.PropertyListingID
+                HAVING COUNT(*) = {len(tags)}
+            )
+            """,
+            tags,
         )
-        """
-        for tag in tags:
-            params.append(tag)
 
     query = f"""
     SELECT PropertyListing.PropertyListingID,
@@ -380,6 +378,3 @@ def sort_icon_route():
         return f'<span id="sort-icon">{icons.sort_asc()}</span>'
     else:
         return f'<span id="sort-icon">{icons.sort_desc()}</span>'
-
-
-
