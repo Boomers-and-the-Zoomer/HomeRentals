@@ -28,6 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
   setupPopover("button[popovertarget=\"search-popover\"]", "#search-popover");
 });
 
+// ======== Profile page image upload =========
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.querySelector("#user-profile > .user_profile_edit")) {
+    return;
+  }
+  const img = document.querySelector("img.profile_picture");
+  const file_upload = document.querySelector("input[type=\"file\"]#picture_form");
+  file_upload.addEventListener("change", () => {
+    const file = file_upload.files[0];
+    const url = URL.createObjectURL(file);
+    img.src = url;
+  });
+});
+
 // =============== Image upload ===============
 
 document.addEventListener("DOMContentLoaded", () => {
