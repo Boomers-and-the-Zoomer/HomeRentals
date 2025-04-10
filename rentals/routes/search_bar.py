@@ -244,8 +244,6 @@ def search_bar():
     guests = request.query.get("guests", "").strip()
     sort_by = request.query.get("sort_by", "")
 
-    sort_icon = icons.sort_asc() if sort_by.endswith("asc") else icons.sort_desc()
-
     result = get_search_results(
         location,
         check_in,
@@ -347,7 +345,7 @@ def search_bar():
                                     hx-include="#search-form,input.search-input">
                             </div>
                             <button popovertarget="sort-popover" type="button" class="icon-button" aria-label="Sort">
-                                {sort_icon}
+                                {icons.sort_desc()}
                             </button>
 
                             <button popovertarget="filter-popover" type="button" class="icon-button" aria-label="Filter">
