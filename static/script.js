@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePopoverPosition();
     });
   }
-  setupPopover("button[popovertarget=\"search-popover\"]", "#search-popover");
+  setupPopover("button[popovertarget=\"sort-popover\"]", "#sort-popover");
+  setupPopover("button[popovertarget=\"filter-popover\"]", "#filter-popover");
 });
 
 // ======== Profile page image upload =========
