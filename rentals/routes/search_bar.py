@@ -251,8 +251,8 @@ def search_bar():
     )
 
     tags = hent_alle_tags()
-    type_tags = ["Apartment", "Cabin", "House", "Basement"]
-    types = [tag for tag in tags if tag in type_tags]
+    type_tags = ["Any", "Apartment", "Cabin", "House", "Basement"]
+    types = ["Any"] + [tag for tag in tags if tag in type_tags]
     features = [tag for tag in tags if tag not in type_tags]
 
     type_filter = f'''
@@ -261,8 +261,8 @@ def search_bar():
         {"".join([
             f'''
             <label class="radio-option">
-                <input type="radio" name="type" value="{t}"
-                    {"checked" if request.query.get("type") == t else ""}
+                <input type="radio" name="type" value="{t if t != "Any" else ""}"
+                    {"checked" if request.query.get("type") == t or (request.query.get("type", "") == "" and t == "Any") else ""}
                     class="search-input"
                     form="search-form"
                     hx-get="/search_results"
