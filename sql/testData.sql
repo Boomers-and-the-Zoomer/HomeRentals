@@ -75,7 +75,8 @@ INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Descr
 
 INSERT INTO Booking (PropertyListingID,Email,StartTime,EndTime) VALUES
 (42, 'alice@example.com', '2023-12-31 23:59:59', '2024-12-31 23:59:59'),
-(43, 'alice@example.com', '2022-12-31 23:59:59', '2023-12-31 23:59:59');
+(43, 'alice@example.com', '2022-12-31 23:59:59', '2023-12-31 23:59:59'),
+(53, 'alice@example.com', NOW()+INTERVAL 2 DAY);
 
 
 INSERT INTO Picture (PictureID, Filename) VALUES
