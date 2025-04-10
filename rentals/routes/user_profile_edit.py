@@ -1,4 +1,5 @@
 from bottle import get, post, request, response
+import os
 
 from ..auth import requires_user_session, get_session_token
 from ..components import html, with_navbar
@@ -32,7 +33,7 @@ def user_profile_edit():
     if fun_fact == None:
         fun_fact = ""
     if profile_picture == None or profile_picture == "":
-        profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
+        profile_picture = "default.jpg"
 
     cur.close()
 
@@ -93,9 +94,26 @@ def user_profile_edit():
 @requires_user_session()
 def user_profile_edit():
     cnx = db.cnx()
-    cur = cnx.cursor()
 
     session_token = get_session_token()
+
+    cur = cnx.cursor()
+    cur.execute(
+        """
+        SELECT ProfilePicture, ExternalID
+        FROM User, Session
+        WHERE User.Email=Session.Email
+            AND Session.Token=_binary %s
+        """,
+        (session_token,),
+    )
+    (old_profile_picture,externalID) = cur.fetchone()
+    print('DEBUGGER')
+    print(old_profile_picture)
+
+    cur.close()
+
+    cur = cnx.cursor()
 
     lives = request.forms["lives_form"]
     languages = request.forms["languages_form"]
@@ -103,11 +121,22 @@ def user_profile_edit():
     fun_fact = request.forms["fun_fact_form"]
     file = request.files.get("picture_form")
 
+    profile_picture_name = "profile-Picture-" + str(externalID)
+    if file != None:
+        if old_profile_picture != None and old_profile_picture != '':    
+            picture_path = os.path.join("static", "profilepicture", old_profile_picture)
+            if os.path.exists(picture_path):
+                os.remove(picture_path)
+        file_extension = os.path.splitext(file.filename)[1]
+        new_filename = profile_picture_name + file_extension
+        save_path = os.path.join("static", "profilepicture", new_filename)
+        file.save(save_path, overwrite=True)
+
     query_params = [lives, languages, age, fun_fact]
     update_picture = ""
     if file != None:
         update_picture = ", ProfilePicture = %s"
-        query_params.append(file.filename)
+        query_params.append(new_filename)
     query_params.append(session_token)
     cur.execute(
         f"""
@@ -121,9 +150,6 @@ def user_profile_edit():
         """,
         tuple(query_params),
     )
-
-    if file != None:
-        file.save("static/profilepicture")
 
     cnx.commit()
     cur.close()
