@@ -39,7 +39,9 @@ def user_profile():
         """,
         (session_token,),
     )
-    (first_name, lives, languages, age, fun_fact, profile_picture, email) = cur.fetchone()
+    (first_name, lives, languages, age, fun_fact, profile_picture, email) = (
+        cur.fetchone()
+    )
     if lives == None:
         lives = ""
     if languages == None:
@@ -50,7 +52,7 @@ def user_profile():
         fun_fact = ""
     if profile_picture == None:
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
-    if profile_picture == '': 
+    if profile_picture == "":
         profile_picture = "default-avatar-icon-of-social-media-user-vector.jpg"
 
     cur.execute(
@@ -66,8 +68,8 @@ def user_profile():
     )
 
     pictures = cur.fetchall()
-    regDate = pictures[0][3] 
-    #noe rart kommer til å skje hvis man fjerner den tidligste listingen. variablet vil få ny verdi, slev om tidligere dato fortsatt er riktig
+    regDate = pictures[0][3]
+    # noe rart kommer til å skje hvis man fjerner den tidligste listingen. variablet vil få ny verdi, slev om tidligere dato fortsatt er riktig
     cur.close()
 
     properties = {}
@@ -88,7 +90,7 @@ def user_profile():
     host_since = ""
     is_host = "Guest"
     if len(properties) != 0:
-        host_since = f"""<p><u>Host since {regDate.year}</u></p>""" 
+        host_since = f"""<p><u>Host since {regDate.year}</u></p>"""
         is_host = """<p>Host<p>"""
 
     return html(
@@ -138,7 +140,9 @@ def user_profile():
                 </div>
                 <div class="ad_preview">
                     <h3>Listings:</h3>
-                    {listings}
+                    <div>
+                        {listings}
+                    </div>
                 </div>
             </main>
        """,

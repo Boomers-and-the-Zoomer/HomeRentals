@@ -1037,8 +1037,6 @@ main#user-profile {
   }
   > .ad_preview {
     grid-column: 2;
-    display: flex;
-    flex-wrap: wrap;
     height: fit-content;
     background-color: var(--slate-200);
     border-radius: var(--corner);
@@ -1049,12 +1047,17 @@ main#user-profile {
       margin-left: 5px;
     }
 
-    > .ad_picture {
-      align-content: center;
-      max-width: 300px;
-      max-height: 200px;
-      overflow: hidden;
-      margin: 2em;
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      > .ad_picture {
+        max-width: 300px;
+        max-height: 200px;
+        overflow: hidden;
+        margin: 2em;
+      }
     }
   }
   > .user_profile_edit {
