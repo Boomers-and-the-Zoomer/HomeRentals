@@ -391,6 +391,20 @@ main#view-rental {
     border-radius: var(--corner);
     border: 1px solid #475569;
     height: fit-content;
+
+    .buttons {
+      > .button_confirm {
+        background-color: var(--slate-700);
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.7em;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
   }
 }
 
@@ -936,14 +950,65 @@ main#search-page {
   }
 }
 
-main#book-calendar {
-  display: flex;
+main#book-confirm {
+  display: grid;
   justify-content: center;
+
+  > .buttons {
+    > .button_cancel {
+      background-color: var(--slate-300);
+      border: none;
+      color: black;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.7em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    > .button_confirm {
+      background-color: var(--slate-700);
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.7em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 }
 
-main#book-confirm {
-  display: flex;
-  justify-content: center;
+main#bookings-pages {
+  .button_cancel {
+    background-color: var(--slate-300);
+    border: none;
+    color: black;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .button_confirm {
+    background-color: var(--slate-700);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 
 main#user-profile {
@@ -1144,8 +1209,4 @@ main#user-profile {
       }
     }
   }
-}
-
-main#book-confirm {
-  display: grid;
 }

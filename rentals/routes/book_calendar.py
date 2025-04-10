@@ -63,15 +63,16 @@ def view_rental(listing: int):
         <p class="description">{description}</p>
     </div>
     <div class="calendar">
-    <form action="/book-rental" method="post">
-        <label for="from_date">From Date:</label>
-        <input type="datetime-local" id="from_date" name="from_date" required value="{from_date}"><br>
-        <label for="to_date">To Date:</label>
-        <input type="datetime-local" id="to_date" name="to_date" required value="{to_date}"><br>
-        <input type="hidden" name="PropertyListingID" value="{PropertyListingID}">
-        <button type="submit">Book Now</button>
-    </form>
-
+        <form action="/book-rental" method="post">
+            <label for="from_date">From Date:</label>
+            <input type="datetime-local" id="from_date" name="from_date" required value="{from_date}"><br>
+            <label for="to_date">To Date:</label>
+            <input type="datetime-local" id="to_date" name="to_date" required value="{to_date}"><br>
+            <input type="hidden" name="PropertyListingID" value="{PropertyListingID}"><br>
+            <div class="buttons">
+                <button class="button_confirm" type="submit">Book Now</button>
+            </div>
+        </form>
     </div>
     """
 
@@ -244,9 +245,9 @@ def booking_confirmation_template(
                     <input type="hidden" name="PropertyListingID" value="{property_id}">
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                 </form>
-                <div>
-                <button form="finalizeForm" type="submit">Finalize booking</button>
-                <button form="cancelBooking" type="submit">Cancel booking</button>
+                <div class="buttons">
+                    <button class="button_confirm" form="finalizeForm" type="submit">Finalize booking</button>
+                    <button class="button_cancel" form="cancelBooking" type="submit">Cancel booking</button>
                 </div>
             </main>
         """),

@@ -77,14 +77,15 @@ def historical_booking_template(historicalBookings, email):
                     <input type="hidden" name="PropertyListingID" value="{property_listing_id}">
                     <input type="hidden" name="StartTime" value="{start_time}">
                     <input type="hidden" name="Email" value="{email}">
-                    <button type="submit">Leave Review</button>
+                    <button class="button_confirm" type="submit">Leave Review</button>
+                    
                 </form>
                 </ul>
             </div><br>
             """
 
     full_page = with_navbar(f"""
-        <main id="historical-booking">
+        <main id="bookings-pages">
             <h2>Previous Bookings for: {email}</h2>
             {booking_html}
         </main>

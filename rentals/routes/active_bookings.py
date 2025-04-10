@@ -77,14 +77,14 @@ def active_booking_template(activeBookings, email):
                     <input type="hidden" name="PropertyListingID" value="{property_listing_id}">
                     <input type="hidden" name="StartTime" value="{start_time}">
                     <input type="hidden" name="Email" value="{email}">
-                    <button type="submit">Cancel Booking</button>
+                    <button class="button_cancel" type="submit">Cancel Booking</button>
                 </form>
                 </ul>
             </div><br>
             """
 
     full_page = with_navbar(f"""
-        <main id="active-booking">
+        <main id="bookings-pages">
             <h2>Active Bookings for: {email}</h2>
             {booking_html}
         </main>
