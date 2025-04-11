@@ -1443,6 +1443,19 @@ main#payment {
           }
         }
       }
+
+      > .visa_info {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        row-gap: 5px;
+
+        > label {
+          grid-column: 1;
+        }
+        input[name="cvv"] {
+          width: 5ch;
+        }
+      }
     }
   }
 }

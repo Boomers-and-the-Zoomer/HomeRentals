@@ -113,10 +113,13 @@ def payment():
                     <label for="card">Payment card number here:</label>
                     <input type="tel" id="card" placeholder="xxxx xxxx xxxx xxxx" maxlength="16" required>
                     <label for="expmonth">Expiry date:</label>
-                    <input type="tel" id="expmonth" placeholder="mm" size="1" required>
-                    <input type="tel" id="expyear" placeholder="yy" size="1" required>
+                    <div class="dates">
+                        <input type="tel" id="expmonth" placeholder="mm" size="1" required>
+                        /
+                        <input type="tel" id="expyear" placeholder="yy" size="1" required>
+                    </div>
                     <label for="cvv">Security code:</label>
-                    <input id="cvv" type="password" size="2" required>
+                    <input id="cvv" name="cvv" type="password" size="2" required>
                 </fieldset>
                 <button type="submit" class="submit-btn">Confirm and Pay</button>
             </form>
