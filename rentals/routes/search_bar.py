@@ -386,12 +386,3 @@ def search_bar():
             </main>
         """),
     )
-
-
-@route("/sort_icon")
-def sort_icon_route():
-    sort_by = request.query.get("sort_by", "")
-    if sort_by.endswith("asc"):
-        return f'<span id="sort-icon">{icons.sort_asc()}</span>'
-    else:
-        return f'<span id="sort-icon">{icons.sort_desc()}</span>'
