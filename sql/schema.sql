@@ -64,8 +64,8 @@ CREATE TABLE Booking
 (
     PropertyListingID INT NOT NULL,
     Email CHAR(30) NOT NULL,
-    StartTime TIMESTAMP NOT NULL,
-    EndTime TIMESTAMP NOT NULL,
+    StartTime DATE NOT NULL,
+    EndTime DATE NOT NULL,
     -- TODO: Maybe Email isn't necessary in the primary key
     CONSTRAINT BookingPK PRIMARY KEY (PropertyListingID, Email, StartTime),
     CONSTRAINT BookingPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID),
@@ -80,8 +80,8 @@ CREATE TABLE BookingSession
 (
     Token BINARY(16) NOT NULL,
     PropertyListingID INT NOT NULL,
-    StartTime TIMESTAMP NOT NULL,
-    EndTime TIMESTAMP NOT NULL,
+    StartTime DATE NOT NULL,
+    EndTime DATE NOT NULL,
     ExpiryTime TIMESTAMP NOT NULL,
     CONSTRAINT BookingSessionPK PRIMARY KEY (Token, PropertyListingID),
     CONSTRAINT BookingSessionSessionFK FOREIGN KEY (Token) REFERENCES Session(Token) ON DELETE CASCADE,
@@ -120,7 +120,7 @@ CREATE TABLE Payment (
     PaymentTime TIMESTAMP NOT NULL,
     PropertyListingID INT NOT NULL,
     Email CHAR(30) NOT NULL,
-    StartTime TIMESTAMP NOT NULL,
+    StartTime DATE NOT NULL,
     TotalSum DECIMAL(10,2) NOT NULL,
     PaymentData JSON NOT NULL,
     

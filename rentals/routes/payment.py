@@ -2,7 +2,7 @@ from ..components import html, with_navbar
 from .. import db
 from ..auth import requires_user_session, get_session_token
 from bottle import route, request, response, post, get
-from datetime import datetime
+from datetime import date
 
 
 # Mottar nok info til å finne bookingen
@@ -48,11 +48,14 @@ def payment():
     )
     end_time = cursor.fetchone()[0]
     # Fixing start_time
-    start_time = datetime.fromisoformat(start_time)
+    start_time = date.fromisoformat(start_time)
 
     total_nights = (end_time - start_time).days
 
     total_sum = total_nights * price
+    print("DEBUGGER")
+    print(repr(start_time))
+    print(repr(end_time))
 
     # Todo:
     # Lag HTML-formen for betalingsinformasjon
@@ -68,7 +71,7 @@ def payment():
             <h2>{title}</h2>
             <div>
                 <div class="info">
-                    <p>{start_time.date()} - {end_time.date()}</p>
+                    <p>{start_time} - {end_time}</p>
                     <p class="total">Total sum for your stay: {total_sum} NOK</p>
                 </div>
                 <div class="pics">

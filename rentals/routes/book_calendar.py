@@ -65,9 +65,9 @@ def view_rental(listing: int):
     <div class="calendar">
         <form action="/book-rental" method="post">
             <label for="from_date">From Date:</label>
-            <input type="datetime-local" id="from_date" name="from_date" required value="{from_date}"><br>
+            <input type="date" id="from_date" name="from_date" required value="{from_date}"><br>
             <label for="to_date">To Date:</label>
-            <input type="datetime-local" id="to_date" name="to_date" required value="{to_date}"><br>
+            <input type="date" id="to_date" name="to_date" required value="{to_date}"><br>
             <input type="hidden" name="PropertyListingID" value="{PropertyListingID}"><br>
             <div class="buttons">
                 <button class="button_confirm" type="submit">Book Now</button>
@@ -105,8 +105,8 @@ def book_rental():
     token = get_session_token()
 
     try:
-        from_date = datetime.strptime(raw_from_date, "%Y-%m-%dT%H:%M")
-        to_date = datetime.strptime(raw_to_date, "%Y-%m-%dT%H:%M")
+        from_date = datetime.strptime(raw_from_date, "%Y-%m-%d")
+        to_date = datetime.strptime(raw_to_date, "%Y-%m-%d")
     except ValueError:
         raise HTTPError(400, "Invalid date format provided.")
 

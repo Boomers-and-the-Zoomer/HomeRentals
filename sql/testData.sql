@@ -74,9 +74,9 @@ INSERT INTO PropertyListing (PropertyListingID,Email, Address, PostalCode, Descr
 (53, 'henry@example.com', 'Bjerkerudveien 25, Nesodden', '1450', 'Cabin with a view', 900, 1, 2, 1, 80, 2, 1,'2025-01-01');
 
 INSERT INTO Booking (PropertyListingID,Email,StartTime,EndTime) VALUES
-(42, 'alice@example.com', '2023-12-31 23:59:59', '2024-12-31 23:59:59'),
-(43, 'alice@example.com', '2022-12-31 23:59:59', '2023-12-31 23:59:59'),
-(53, 'alice@example.com', NOW()+INTERVAL 2 DAY, NOW()+INTERVAL 5 DAY);
+(42, 'alice@example.com', '2023-12-31', '2024-12-31'),
+(43, 'alice@example.com', '2022-12-31', '2023-12-31'),
+(53, 'alice@example.com', DATE(NOW()+INTERVAL 2 DAY), DATE(NOW()+INTERVAL 5 DAY));
 
 
 INSERT INTO Picture (PictureID, Filename) VALUES
