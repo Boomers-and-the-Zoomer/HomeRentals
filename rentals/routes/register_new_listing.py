@@ -9,7 +9,7 @@ from ..components import html, with_navbar, image_input, image_input_carrier
 @requires_user_session()
 def new_listing():
     response.status = 307
-    response.add_header("Location", "/new-listing/summary")
+    response.add_header("Location", "/new-listing/page1")
 
 
 def page_frame(content: str, n: int = None, prev: str = None, next: str = None) -> str:
