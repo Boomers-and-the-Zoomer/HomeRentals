@@ -66,6 +66,7 @@ CREATE TABLE Booking
     Email CHAR(30) NOT NULL,
     StartTime TIMESTAMP NOT NULL,
     EndTime TIMESTAMP NOT NULL,
+    -- TODO: Maybe Email isn't necessary in the primary key
     CONSTRAINT BookingPK PRIMARY KEY (PropertyListingID, Email, StartTime),
     CONSTRAINT BookingPropertyListingFK FOREIGN KEY (PropertyListingID) REFERENCES PropertyListing(PropertyListingID),
     CONSTRAINT BookingUserFK FOREIGN KEY (Email) REFERENCES UserAccount(Email)
@@ -114,3 +115,16 @@ CREATE TABLE PropertyTag (
     PRIMARY KEY (PropertyListingID, TagID)
 );
 
+CREATE TABLE Payment (
+	PaymentMethod CHAR(20) NOT NULL,
+    PaymentTime TIMESTAMP NOT NULL,
+    PropertyListingID INT NOT NULL,
+    Email CHAR(30) NOT NULL,
+    StartTime TIMESTAMP NOT NULL,
+    TotalSum DECIMAL(10,2) NOT NULL,
+    PaymentData JSON NOT NULL,
+    
+    
+    CONSTRAINT PaymentPK PRIMARY KEY (PropertyListingID,Email,StartTime),
+    CONSTRAINT PaymentBookingFK FOREIGN KEY (PropertyListingID,Email,StartTime) REFERENCES Booking(PropertyListingID,Email,StartTime)
+);

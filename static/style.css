@@ -1330,3 +1330,35 @@ main#user-profile {
     }
   }
 }
+
+main#book-confirm {
+  display: grid;
+}
+
+main#payment {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-top: 20px;
+
+  > .show_ad {
+    margin-top: 40px;
+    margin-left: 15px;
+    > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      > div.info {
+        display: grid;
+        align-content: space-between;
+        > .total {
+          font-weight: bold;
+        }
+      }
+      > .pics {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-content: space-between;
+        gap: 10px;
+      }
+    }
+  }
+}

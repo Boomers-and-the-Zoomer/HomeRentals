@@ -341,4 +341,7 @@ def finalize_booking():
     cnx.commit()
     cursor.close()
 
-    redirect(f"/bookings/active")
+    response.set_cookie(
+        "BookingData", ",".join([str(property_listing_id), str(start_time), email])
+    )
+    redirect(f"/payment")

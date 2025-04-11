@@ -16,6 +16,7 @@ from . import active_bookings
 from . import log_out
 from . import user_information
 from . import historical_bookings
+from . import payment
 
 
 # Increase this limit to 16MiB so we can actually upload images.
