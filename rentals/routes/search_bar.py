@@ -17,15 +17,14 @@ def hent_alle_tags():
     return tags
 
 
+# FIXME: Find the root cause, or just run the server on Linux where this shouldn't be an issue
+def unfuck_encoding(fucked_string):
+    return bytes(fucked_string, encoding="iso8859-1").decode(encoding="utf8")
+
+
 def get_search_results(
     location, check_in, check_out, guests, type_="", tags=None, sort_by=""
 ):
-    # FIXME: Find the root cause, or just run the server on Linux where this shouldn't be an issue
-    def unfuck_encoding(fucked_string):
-        return bytes(fucked_string, encoding="iso8859-1").decode(encoding="utf8")
-
-    location = unfuck_encoding(location)
-
     if tags is None:
         tags = []
 
@@ -200,6 +199,8 @@ def search_results():
     type_ = request.query.get("type", "").strip()
     tags = request.query.getall("tag")
 
+    location = unfuck_encoding(location)
+
     try:
         guests = int(guests)
     except ValueError:
@@ -243,6 +244,8 @@ def search_bar():
     check_out = request.query.get("checkout", "").strip()
     guests = request.query.get("guests", "").strip()
     sort_by = request.query.get("sort_by", "")
+
+    location = unfuck_encoding(location)
 
     result = get_search_results(
         location,
