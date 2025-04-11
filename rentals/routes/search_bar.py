@@ -260,14 +260,15 @@ def search_bar():
         request.query.getall("tag"),
         sort_by,
     )
+    property_type_tags = ["Any", "apartment", "cabin", "house", "basement"]
 
     tags = hent_alle_tags()
-    type_tags = ["Any", "Apartment", "Cabin", "House", "Basement"]
-    types = ["Any"] + [tag for tag in tags if tag in type_tags]
-    features = [tag for tag in tags if tag not in type_tags]
+
+    types = ["Any"] + [tag for tag in tags if tag in property_type_tags]
+    features = [tag for tag in tags if tag not in property_type_tags]
 
     type_filter = f'''
-    <fieldset class="type-group">
+    <fieldset class="sort-by-gruop">
         <legend>Property Type</legend>
         {"".join([
             f'''

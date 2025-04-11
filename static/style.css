@@ -1016,21 +1016,25 @@ main#search-page {
       gap: 1rem;
     }
   }
-  #search-page .sort-by-container label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-size: 0.95rem;
-    color: var(--slate-800);
-    cursor: pointer;
-  }
 
-  .type-group,
-  .feature-group {
+  .sort-by-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     border: none;
     padding: 0;
+    margin: 0;
+  }
+
+  .type-group,
+  .feature-group,
+  .sort-by-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid var(--slate-300);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
     margin: 0;
   }
 
@@ -1042,6 +1046,30 @@ main#search-page {
     font-size: 0.95rem;
     color: var(--slate-800);
   }
+  .checkbox-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: white;
+    border: 2px solid var(--slate-400);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%; /* Gjør den rund */
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+
+  .checkbox-option input[type="checkbox"]:checked::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--slate-800); /* Prikkfarge */
+    border-radius: 50%;
+  }
+
   #search-bar-container {
     position: sticky;
     top: var(--navbar-height);
