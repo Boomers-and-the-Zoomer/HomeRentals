@@ -346,19 +346,18 @@ def new_listing_summary_content():
             <div class="maintext">
                 <h1>Your summary!</h1>
 
-
                 <h2><b>Pictures:</b></h2>
-                <p>Show us what your beautiful home looks like!</p>
+            <p>Show us what your beautiful home looks like!</p>
                 {image_input()}
 
                 <h2><b>Description:</b></h2>
-                <p>Is it a peaceful retreat, a great place to gather with friends or is it something truly unique?</p>
+            <p>Is it a peaceful retreat, a great place to gather with friends or is it something truly unique?</p>
                 <div class="fields">
                     <textarea id="description" hx-preserve name="description" placeholder="Enter your description here"></textarea>
                 </div>
 
                 <h2><b>Location:</b></h2>
-                <p>Where exactly is your home?</p>
+            <p>Where exactly is your home?</p>
                 <div class="fields">
                     <label>Address:</label>
                     <input id="address" hx-preserve type="text" name="address" class="line-input" required>
@@ -367,7 +366,7 @@ def new_listing_summary_content():
                 </div>
 
                 <h2><b>Number of:</b></h2>
-                <p>Beds, bathrooms, kitchens and more!</p>
+            <p>Beds, bathrooms, kitchens and more!</p>
                 <div class="fields">
                     <label>Bedrooms:</label>
                     <input id="bedrooms" hx-preserve type="number" name="bedrooms" class="line-input" required>
@@ -384,13 +383,11 @@ def new_listing_summary_content():
                 </div class="fields">
 
                 <h2><b>Price:</b></h2>
-                <p><i>Per</i> night</p>
+            <p><i>Per</i> night</p>
                  <form oninput="outputNumber.value = price.value ? (parseFloat(price.value * 0.95).toFixed(2)) : ''">
-                <p>
                     <label class="left" for="price">Enter price:</label>
-                    <input type="text" hx-preserve id="price" name="price" maxlength="7" pattern="\\d{1,7}" inputmode="numeric" required>
+                    <input type="text" hx-preserve id="price" name="price" class="line-input" maxlength="7" pattern="\\d{1,7}" inputmode="numeric" required>
                     <span class="right">NOK per night</span>
-                </p>
                 <p>
                     <span class="middle">After the price of our services (5%), you're</span>
                 </p>
@@ -400,11 +397,6 @@ def new_listing_summary_content():
                     <span class="right">NOK per night</span>
                 </p>
             </form>
-
-
-
-
-
                 <button
                     hx-post=""
                     hx-target="body"

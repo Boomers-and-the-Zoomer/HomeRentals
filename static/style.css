@@ -346,6 +346,18 @@ form.simple-account-form {
 
   > button {
     width: fit-content;
+    background-color: var(--slate-500);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    bottom: 120px;
+    font-size: 1.0em;
+    margin: 20px 20px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   > #image-upload-input {
@@ -684,17 +696,11 @@ main#register_new_listing {
         > label {
           grid-column: 1;
           justify-self: end;
+          font-size: 1.5em;
         }
-        > input {
-          border: none;
-          border-bottom: 1px solid black;
-          outline: none;
-          font-weight: normal;
-          text-align: center;
-          padding: 0px;
-        }
+
         > textarea {
-          width: 750px;
+          width: 50vw;
           height: 250px;
           font-size: 16px;
           resize: none;
@@ -704,25 +710,45 @@ main#register_new_listing {
           grid-column: 2;
         }
         > input {
-          max-width: 12ch;
           border: none;
           border-bottom: 1px solid black;
           outline: none;
+          max-width: 30ch;
+          font-size: 1.5em;
           font-weight: normal;
           text-align: center;
-          width: 150px;
+          width: 300px;
+          padding: 0px;
+        }
+      }
+
+      > form {
+        > input, > label, > span {
+          font-size: 1.4em;
+        }
+
+        > input {
+          border: none;
+          border-bottom: 1px solid black;
+          outline: none;
+          max-width: 30ch;
+          font-size: 1.5em;
+          font-weight: normal;
+          text-align: center;
+          width: 250px;
           padding: 0px;
         }
 
-        form input output {
-          border: none;
-          border-bottom: 2px solid black;
-          outline: none;
-          font-size: 26px;
-          font-weight: normal;
-          padding: 0px;
-          text-align: center;
+        > p > output {
           display: inline-block;
+          border: none;
+          border-bottom: 1px solid black;
+          outline: none;
+          max-width: 30ch;
+          font-weight: normal;
+          text-align: center;
+          width: 250px;
+          padding: 0px;
         }
       }
 
