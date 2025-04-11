@@ -421,7 +421,7 @@ def new_listing_summary():
 
     finn_token = """SELECT Email
                      FROM Session
-                     WHERE Token = %s"""
+                     WHERE Token = _binary %s"""
 
     cur.execute(finn_token, (session_token,))
 
