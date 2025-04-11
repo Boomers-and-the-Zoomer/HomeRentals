@@ -54,7 +54,7 @@ def sign_up_submit():
 
     if password != confirm_password:
         # TODO: Better error handling
-        return html("Passwords do not match")
+        return html("Error", "Passwords do not match")
     if "@" not in email or email[-1] == "@" or email[0] in ["@", "+"]:
         # More complex sanity checks are likely not worth it.
         # TODO: Better error handling
