@@ -268,7 +268,7 @@ def search_bar():
     features = [tag for tag in tags if tag not in property_type_tags]
 
     type_filter = f'''
-    <fieldset class="sort-by-gruop">
+    <fieldset class="sort-by-group">
         <legend>Property Type</legend>
         {"".join([
             f'''

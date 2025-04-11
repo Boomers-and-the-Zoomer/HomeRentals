@@ -1003,11 +1003,10 @@ main#search-page {
     display: none;
     position: fixed;
     top: var(--navbar-height);
-    background-color: var(--slate-100);
     padding: 1.25rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--slate-300);
+    border: 1px solid var(--slate-500);
     width: max-content;
     z-index: 999;
 
@@ -1032,7 +1031,7 @@ main#search-page {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    border: 1px solid var(--slate-300);
+    border: 1px solid var(--slate-500);
     border-radius: 6px;
     padding: 0.5rem 1rem;
     margin: 0;
@@ -1049,11 +1048,9 @@ main#search-page {
   .checkbox-option input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
-    background-color: white;
-    border: 2px solid var(--slate-400);
+    border: 1px solid var(--slate-500);
     width: 16px;
     height: 16px;
-    border-radius: 50%; /* Gjør den rund */
     cursor: pointer;
     position: relative;
     display: inline-block;
@@ -1066,8 +1063,11 @@ main#search-page {
     left: 3px;
     width: 8px;
     height: 8px;
-    background-color: var(--slate-800); /* Prikkfarge */
+    background-color: var(--slate-800);
     border-radius: 50%;
+  }
+  .checkbox-option input[type="checkbox"]:hover {
+    border-color: var(--slate-700);
   }
 
   #search-bar-container {
