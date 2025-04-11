@@ -1389,4 +1389,34 @@ main#payment {
       }
     }
   }
+
+  > .payment {
+    > form {
+      > .radio_buttons {
+        display: flex;
+        gap: 10px;
+
+        > label {
+          display: grid;
+          padding: 5px;
+          border: 1px solid black;
+          border-radius: var(--corner);
+
+          &:has(> input:checked) {
+            border: 1px solid red;
+            box-shadow: 1px 1px 3px;
+          }
+
+          > input {
+            display: none;
+          }
+
+          > img {
+            display: inline;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
 }

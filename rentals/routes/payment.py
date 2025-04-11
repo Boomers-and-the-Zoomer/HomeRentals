@@ -32,11 +32,11 @@ def payment():
         FROM Picture, PropertyPicture
         WHERE PropertyPicture.PictureID=Picture.PictureID
             AND PropertyListingID=%s
+        LIMIT 4
         """,
         (property_listing_id,),
     )
-    pics = cursor.fetchmany(size=4)
-    cursor.reset()
+    pics = cursor.fetchall()
 
     cursor.execute(
         """
@@ -84,15 +84,15 @@ def payment():
     payment_html = f"""
     <main id="payment">
         <div class="payment">
-            <form>
+            <form action="" method="POST">
                 <h1>Payment Method</h1>
                 <fieldset class="radio_buttons">
                     <label>
-                        <input type="radio" name="payment" value="vipps" required >
+                        <input type="radio" name="payment" value="vipps" required>
                         <img src="https://media.snl.no/media/147159/standard_vipps_logo_rgb.png" alt="Vipps" height="25">
                     </label>
                     <label>
-                        <input type="radio" name="payment" value="visa">
+                        <input type="radio" name="payment" value="visa" required>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" height="25">
                     </label>
                     <label>
@@ -123,3 +123,11 @@ def payment():
 
         """
     return html("Payment", with_navbar(payment_html))
+
+
+@post("/payment")
+@requires_user_session()
+def payment():
+    # FIXME: Insert shit into database
+    response.status = 303
+    response.add_header("Location", "/bookings/active")

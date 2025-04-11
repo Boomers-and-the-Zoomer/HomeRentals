@@ -29,6 +29,44 @@ document.addEventListener("DOMContentLoaded", () => {
   setupPopover("button[popovertarget=\"filter-popover\"]", "#filter-popover");
 });
 
+// ======== Payment options =========
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.querySelector("main#payment")) {
+    return;
+  }
+  const vipps_info = document.querySelector(".vipps_info");
+  const card_info = document.querySelector(".visa_info");
+  const parent = vipps_info.parentElement;
+  parent.removeChild(vipps_info);
+  parent.removeChild(card_info);
+  Array.from(
+    document.querySelectorAll("input[name=\"payment\"]"),
+  ).forEach((radio, _i, _a) => {
+    if (radio.checked) {
+      if (radio.getAttribute("value") == "vipps") {
+        Array.from(parent.children)[1].insertAdjacentElement("afterend", vipps_info);
+      } else {
+        Array.from(parent.children)[1].insertAdjacentElement("afterend", card_info);
+      }
+    }
+    // Only fires when the element is selected.
+    radio.addEventListener("change", () => {
+      if (radio.getAttribute("value") == "vipps") {
+        Array.from(parent.children)[1].insertAdjacentElement("afterend", vipps_info);
+        if (card_info.parentElement) {
+          parent.removeChild(card_info);
+        }
+      } else {
+        Array.from(parent.children)[1].insertAdjacentElement("afterend", card_info);
+        if (vipps_info.parentElement) {
+          parent.removeChild(vipps_info);
+        }
+      }
+    });
+  });
+});
+
 // ======== Profile page image upload =========
 
 document.addEventListener("DOMContentLoaded", () => {
