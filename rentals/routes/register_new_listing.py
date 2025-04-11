@@ -439,8 +439,8 @@ def new_listing_summary():
 
     cur.execute(
         """
-        INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens) VALUES
-        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens, RegistrationDate) VALUES
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, DATE(NOW()));
         """,
         (
             email,
