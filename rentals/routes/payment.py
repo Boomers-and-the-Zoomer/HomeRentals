@@ -53,9 +53,6 @@ def payment():
     total_nights = (end_time - start_time).days
 
     total_sum = total_nights * price
-    print("DEBUGGER")
-    print(repr(start_time))
-    print(repr(end_time))
 
     # Todo:
     # Lag HTML-formen for betalingsinformasjon
