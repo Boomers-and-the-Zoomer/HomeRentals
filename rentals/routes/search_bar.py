@@ -34,7 +34,7 @@ def get_search_results(
     params = []
     condition = ""
 
-    def add_condition(new_condition, new_params):
+    def add_condition(new_condition, new_params=[]):
         nonlocal condition
         nonlocal params
         if condition != "":
@@ -100,6 +100,10 @@ def get_search_results(
             """,
             [type_],
         )
+
+    if "Parking" in tags:
+        tags.remove("Parking")
+        add_condition("PropertyListing.ParkingSpots > 0")
 
     if tags is not None and len(tags) > 0:
         placeholders = ", ".join(["%s"] * len(tags))
