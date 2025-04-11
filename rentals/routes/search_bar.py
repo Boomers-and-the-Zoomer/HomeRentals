@@ -260,7 +260,7 @@ def search_bar():
         request.query.getall("tag"),
         sort_by,
     )
-    property_type_tags = ["Any", "apartment", "cabin", "house", "basement"]
+    property_type_tags = ["Any", "Apartment", "Cabin", "House", "Basement"]
 
     tags = hent_alle_tags()
 
