@@ -399,7 +399,6 @@ def new_listing_summary_content():
             </form>
                 <button
                     hx-post=""
-                    hx-target="body"
                     hx-include="input,textarea"
                     hx-encoding="multipart/form-data"
                     class="create-listing-button"
@@ -472,5 +471,4 @@ def new_listing_summary():
     cnx.commit()
     cur.close()
 
-    response.status = 303
-    response.add_header("Location", f"/view-rental/{new_id}")
+    response.add_header("HX-Redirect", f"/view-rental/{new_id}")
