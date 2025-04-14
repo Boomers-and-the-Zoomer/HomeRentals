@@ -166,13 +166,16 @@ def get_search_results(
         image_path = (
             f"/static/uploads/{filename}" if filename else "/static/default.jpg"
         )
+        short_description = (
+            description[:100] + "..." if len(description) > 100 else description
+        )
 
         result_html += f"""
             <a href="/view-rental/{property_id}" class="property-link">
                 <div class="property-card">
                     <img src="{image_path}" alt="Bilde av {address}">
                     <h3>{address}</h3>
-                    <p>{description}</p>
+                    <p>{short_description}</p>
                     <p class="beds">{beds} Beds</p>
                     <p class="price">{price} kr / Night</p>
                 </div>
@@ -346,11 +349,11 @@ def search_bar():
                                     hx-include="#search-form,input.search-input">
                             </div>
                             <button popovertarget="sort-popover" type="button" class="icon-button" aria-label="Sort">
-                                {icons.sort_desc()}
+                                {icons.sort_desc()} <span class="button-label">Sort</span>
                             </button>
 
                             <button popovertarget="filter-popover" type="button" class="icon-button" aria-label="Filter">
-                                {icons.filter()}
+                                {icons.filter()} <span class="button-label">Filter</span>
                             </button>
 
                             <button type="submit" class="search-btn">🔍 Search</button>
