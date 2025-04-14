@@ -1,3 +1,5 @@
+import mimetypes
+
 from bottle import route, response, post, get, request
 
 from ..auth import requires_user_session, get_session_token
@@ -464,11 +466,40 @@ def new_listing_summary():
         pass
     new_id = result[0][0]
 
+    cur.close()
+
+    n = 0
     for file in request.files.getall("image-files"):
-        print(file)
-        file.save("static/uploads")
+        cur = cnx.cursor()
+        n += 1
+        print(file.filename)
+        print(file.content_type)
+        ft = mimetypes.guess_extension(file.content_type)
+        if ft == None:
+            # FIXME: Proper error handling
+            raise Exception("Unknown filetype")
+        filename = f"listing{new_id}pic{n}{ft}"
+        file.save(f"static/uploads/{filename}")
+        cur.execute(
+            """
+            INSERT INTO Picture(Filename)
+            VALUES (%s);
+            SELECT LAST_INSERT_ID();
+            """,
+            (filename,),
+        )
+        for _, result in cur.fetchsets():
+            pass
+        pic_id = result[0][0]
+        cur.execute(
+            """
+            INSERT INTO PropertyPicture(PropertyListingID, PictureID)
+            VALUES(%s, %s);
+            """,
+            (new_id, pic_id),
+        )
+        cur.close()
 
     cnx.commit()
-    cur.close()
 
     response.add_header("HX-Redirect", f"/view-rental/{new_id}")
