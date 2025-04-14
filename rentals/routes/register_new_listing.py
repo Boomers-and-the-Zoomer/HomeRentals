@@ -441,6 +441,7 @@ def new_listing_summary():
         """
         INSERT INTO PropertyListing (Email, Address, PostalCode, Description, Price, Bedrooms, Beds, Bathrooms, SquareMeters, ParkingSpots, Kitchens, RegistrationDate) VALUES
         (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, DATE(NOW()));
+        SELECT LAST_INSERT_ID();
         """,
         (
             email,
@@ -457,12 +458,19 @@ def new_listing_summary():
         ),
     )
 
+    # This loop will run twice, and we're only interested in the result of the
+    # second iteration. There's probably a better way to do this, but this is
+    # fine for now.
+    for _, result in cur.fetchsets():
+        pass
+    new_id = result[0][0]
+
     for file in request.files.getall("image-files"):
         print(file)
         file.save("static/uploads")
 
-    response.status = 303
-    response.add_header("Location", "/user-profile")
-
     cnx.commit()
     cur.close()
+
+    response.status = 303
+    response.add_header("Location", f"/view-rental/{new_id}")
