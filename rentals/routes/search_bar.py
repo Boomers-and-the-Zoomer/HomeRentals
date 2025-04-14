@@ -215,16 +215,9 @@ def search_results():
             check_in_date = datetime.strptime(check_in, "%Y-%m-%d")
             check_out_date = datetime.strptime(check_out, "%Y-%m-%d")
             if check_in_date >= check_out_date:
-                return html(
-                    "Search error",
-                    with_navbar(
-                        "<main><p>Ugyldig dato: Utsjekksdato må være etter innsjekksdato.</p></main>"
-                    ),
-                )
+                return '<div id="search-results"><p>Ugyldig dato: Utsjekksdato må være etter innsjekksdato.</p></div>'
         except ValueError:
-            return html(
-                "Search error", with_navbar("<main><p>Ugyldig dataformat.</p></main>")
-            )
+            return '<div id="search-results"><p>Ugyldig dataformat.</p></div>'
     result_html = get_search_results(
         location, check_in, check_out, guests, type_, tags, sort_by
     )
