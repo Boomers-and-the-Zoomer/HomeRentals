@@ -189,3 +189,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   InitImageUpload();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Gjelder bare på søkesiden
+  if (!document.querySelector("#search-page")) return;
+
+  const checkInInput = document.getElementById("checkin-input");
+  const checkOutInput = document.getElementById("checkout-input");
+
+  if (!checkInInput || !checkOutInput) return;
+
+  checkInInput.addEventListener("change", function() {
+    if (!checkInInput.value) return;
+
+    const checkInDate = new Date(checkInInput.value);
+    const currentCheckOut = new Date(checkOutInput.value);
+
+    const nextDay = new Date(checkInDate);
+    nextDay.setDate(checkInDate.getDate() + 1);
+
+    if (!checkOutInput.value || currentCheckOut <= checkInDate) {
+      checkOutInput.value = nextDay.toISOString().split("T")[0];
+
+      checkOutInput.dispatchEvent(new Event("change"));
+    }
+
+    checkOutInput.min = nextDay.toISOString().split("T")[0];
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (!document.querySelector("#search-page")) return;
+
+  document.querySelectorAll(".input-box").forEach(box => {
+    const input = box.querySelector("input[type='date']");
+    if (input && typeof input.showPicker === "function") {
+      box.addEventListener("click", () => {
+        input.showPicker();
+      });
+    }
+  });
+});
