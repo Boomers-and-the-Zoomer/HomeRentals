@@ -324,7 +324,7 @@ def search_bar():
                                     value="{check_in}"
                                     hx-get="/search_results"
                                     hx-target="#search-results"
-                                    hx-trigger="change"
+                                    hx-trigger="change delay:0.1s"
                                     hx-include="#search-form,input.search-input">
                             </div>
                             <div class="input-box">
