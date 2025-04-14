@@ -987,15 +987,14 @@ main#search-page {
     gap: 6px;
     font-size: 1rem;
     padding: 0.5rem 0.8rem;
-    border: none;
+    border: 1px solid;
     border-radius: 6px;
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
   }
   .icon-button:hover {
-    background-color: var(--slate-600);
-    transform: translateY(-1px);
+    background-color: hsl(from var(--slate-200) h s calc(l + 2));
   }
   .button-label {
     font-weight: 500;
