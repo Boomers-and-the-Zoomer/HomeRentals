@@ -259,6 +259,8 @@ def search_bar():
     property_type_tags = ["Any", "Apartment", "Cabin", "House", "Basement"]
 
     tags = hent_alle_tags()
+    if "Parking" not in tags:
+        tags.append("Parking")
 
     types = ["Any"] + [tag for tag in tags if tag in property_type_tags]
     features = [tag for tag in tags if tag not in property_type_tags]
