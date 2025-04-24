@@ -236,7 +236,7 @@ def booking_confirmation_template(
                 <form id="finalizeForm" action="/finalize-booking" method="post">
                     <input type="hidden" name="PropertyListingID" value="{property_id}">
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
-                    <label for="TOS">
+                    <label class="checkbox" for="TOS">
                         <input type="checkbox" id="TOS" name="TOS" required>
                         I accept the <a href="https://www.boilerplate.co/terms-of-service" target="_blank">terms and conditions</a>
                     </label>
@@ -246,8 +246,8 @@ def booking_confirmation_template(
                     <input type="hidden" name="from_date" value="{bConfirmation[1].isoformat()}">
                 </form>
                 <div class="buttons">
-                    <button class="button_confirm" form="finalizeForm" type="submit">Finalize booking</button>
                     <button class="button_cancel" form="cancelBooking" type="submit">Cancel booking</button>
+                    <button class="button_confirm" form="finalizeForm" type="submit">Finalize booking</button>
                 </div>
             </main>
         """),

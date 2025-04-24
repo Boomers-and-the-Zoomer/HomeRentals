@@ -1124,6 +1124,10 @@ main#book-confirm {
   display: grid;
   justify-content: center;
 
+  .checkbox {
+    font-size: x-large;
+  }
+
   > .buttons {
     > .button_cancel {
       background-color: var(--slate-300);
