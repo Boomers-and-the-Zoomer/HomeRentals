@@ -70,6 +70,11 @@ def sign_up_submit():
                VALUES (%s, %s)""",
             (email, pwhash),
         )
+    except mysql.connector.errors.DataError as e:
+        if "Data too long for column 'Email'" in str(e):
+            return error("Email is too long. Up to 30 symbols is allowed.")
+        else:
+            return error("Unexpected server error")
     except mysql.connector.errors.IntegrityError:
         # TODO: Better error handling
         return error("Email is already in use")
