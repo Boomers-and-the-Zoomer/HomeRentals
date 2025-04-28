@@ -76,7 +76,6 @@ def sign_up_submit():
         else:
             return error("Unexpected server error")
     except mysql.connector.errors.IntegrityError:
-        # TODO: Better error handling
         return error("Email is already in use")
     cnx.commit()
 
