@@ -3,7 +3,9 @@ import mysql.connector
 from argon2 import PasswordHasher
 from bottle import get, post, request, response
 
+
 from .. import db
+from ..auth import initialize_session
 from ..components import (
     html,
     simple_account_form,
@@ -51,11 +53,9 @@ def sign_up_submit():
     confirm_password = request.forms["confirm-password"]
 
     if password != confirm_password:
-        # TODO: Better error handling
         return error("Passwords do not match")
     if "@" not in email or email[-1] == "@" or email[0] in ["@", "+"]:
         # More complex sanity checks are likely not worth it.
-        # TODO: Better error handling
         return error("Invalid email")
 
     ph = PasswordHasher()
@@ -81,6 +81,9 @@ def sign_up_submit():
 
     cur.close()
 
+    # Automatically log in the user on sign-up for convenience
+    initialize_session(email)
+
     # TODO: Send actual confirmation email.
     response.status = 303
-    response.add_header("Location", chain_return_url("/log-in"))
+    response.add_header("Location", chain_return_url("/"))
