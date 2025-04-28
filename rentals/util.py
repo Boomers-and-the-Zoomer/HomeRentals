@@ -1,6 +1,6 @@
-from bottle import request, response
-
 from urllib.parse import quote, unquote, urlsplit
+
+from bottle import request, response
 
 
 def escape(s, **kwargs):
@@ -69,6 +69,12 @@ def pop_return(default="/"):
 
     response.status = 303
     response.add_header("Location", dbg(return_to))
+
+
+def error(msg: str):
+    response.add_header("HX-Retarget", "#error-target")
+    response.add_header("HX-Swap", "InnerHTML")
+    return msg
 
 
 def dbg(value):

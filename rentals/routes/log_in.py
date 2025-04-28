@@ -1,5 +1,3 @@
-from urllib.parse import unquote
-
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from bottle import get, post, request, response
@@ -12,7 +10,7 @@ from ..components import (
     with_navbar,
 )
 from .. import db
-from ..util import chain_return_url, pop_return
+from ..util import chain_return_url, pop_return, error
 
 
 @get("/log-in")
@@ -26,6 +24,7 @@ def log_in():
             <input type="email" name="email" id="email" placeholder="ola.nordmann@gmail.com" required>
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" placeholder="********" required>
+            <div id="error-target"></div>
             <button>Log in</button>
             <p class="centered"><a href="reset-password">Forgot your password?</a></p>
             <p class="centered">Don't have an account?</p>
@@ -66,7 +65,7 @@ def log_in_submit():
     )
     dbhash = cur.fetchone()
     if dbhash == None:
-        return html("Error", "Invalid email and password combination")
+        return error("Invalid email and password combination")
     dbhash = dbhash[0]
 
     # ============= Password validation ============= #
@@ -75,7 +74,7 @@ def log_in_submit():
     try:
         ph.verify(dbhash, password)
     except VerifyMismatchError:
-        return html("Error", "Invalid email and password combination")
+        return error("Invalid email and password combination")
 
     # ============= Password is valid below this line ============= #
 

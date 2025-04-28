@@ -268,9 +268,14 @@ form.simple-account-form {
     border: 1px solid var(--slate-700);
   }
 
-  > button, > h1, > p, > a {
+  > button, > h1, > p, > a, > #error-target {
     grid-column: 2;
     width: fit-content;
+  }
+
+  > #error-target {
+    font-size: 0.75em;
+    color: red;
   }
 
   > .centered, > button, > h1 {
