@@ -27,8 +27,7 @@ def log_in():
             <div id="error-target"></div>
             <button>Log in</button>
             <p class="centered"><a href="reset-password">Forgot your password?</a></p>
-            <p class="centered">Don't have an account?</p>
-            <p class="centered"><a href="{chain_return_url("/sign-up")}">Sign up instead</a></p>
+            <p class="centered"><a href="{chain_return_url("/sign-up")}">Sign up</a></p>
             """,
         )
     )

@@ -28,8 +28,7 @@ def sign_up():
             <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
             <div id="error-target"></div>
             <button>Sign up</button>
-            <p class="centered">Already have an account?</p>
-            <p class="centered"><a href="{chain_return_url("/log-in")}">Log in instead</a></p>
+            <p class="centered"><a href="{chain_return_url("/log-in")}">Log in</a></p>
             """,
         )
     )
