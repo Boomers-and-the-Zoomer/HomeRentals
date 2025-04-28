@@ -3,16 +3,14 @@ import mysql.connector
 from argon2 import PasswordHasher
 from bottle import get, post, request, response
 
-from ..util import chain_return_url
-
-
+from .. import db
 from ..components import (
     html,
     simple_account_form,
     simple_account_form_position,
     with_navbar,
 )
-from .. import db
+from ..util import chain_return_url, error
 
 
 @get("/sign-up")
@@ -28,6 +26,7 @@ def sign_up():
             <input type="password" name="password" id="password" placeholder="********" required>
             <label for="confirm-password">Confirm password:</label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="********" required>
+            <div id="error-target"></div>
             <button>Sign up</button>
             <p class="centered">Already have an account?</p>
             <p class="centered"><a href="{chain_return_url("/log-in")}">Log in instead</a></p>
@@ -54,11 +53,11 @@ def sign_up_submit():
 
     if password != confirm_password:
         # TODO: Better error handling
-        return html("Error", "Passwords do not match")
+        return error("Passwords do not match")
     if "@" not in email or email[-1] == "@" or email[0] in ["@", "+"]:
         # More complex sanity checks are likely not worth it.
         # TODO: Better error handling
-        return html("Error", "Invalid email")
+        return error("Invalid email")
 
     ph = PasswordHasher()
     pwhash = ph.hash(password)
@@ -74,7 +73,7 @@ def sign_up_submit():
         )
     except mysql.connector.errors.IntegrityError:
         # TODO: Better error handling
-        return html("Error", "Email is already in use")
+        return error("Email is already in use")
     cnx.commit()
 
     cur.close()
