@@ -230,3 +230,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+
+// =============== Active bookings ===============
+function confirmCancellation() {
+  return confirm("Are you sure you want to cancel this booking?");
+}

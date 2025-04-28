@@ -77,7 +77,7 @@ def active_booking_template(activeBookings, email):
                     <input type="hidden" name="PropertyListingID" value="{property_listing_id}">
                     <input type="hidden" name="StartTime" value="{start_time}">
                     <input type="hidden" name="Email" value="{email}">
-                    <button class="button_cancel" type="submit">Cancel Booking</button>
+                    <button class="button_cancel" type="submit" onclick="return confirmCancellation()">Cancel Booking</button>
                 </form>
                 </ul>
             </div><br>
