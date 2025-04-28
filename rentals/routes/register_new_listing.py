@@ -408,7 +408,7 @@ def new_listing_summary_content():
             </div>
         </div>
         """,
-        prev="page5",
+        prev="page6",
     )
 
 
