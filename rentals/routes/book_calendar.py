@@ -6,6 +6,7 @@ from urllib.parse import unquote
 from ..auth import requires_user_session, get_session_token
 from ..components import html, with_navbar
 from .. import db
+from ..util import error
 
 
 @route("/view-rental/<listing>")
@@ -63,7 +64,7 @@ def view_rental(listing: int):
         <p class="description">{description}</p>
     </div>
     <div class="calendar">
-        <form action="/book-rental" method="post">
+        <form hx-boost="true" action="/book-rental" method="post">
             <label for="from_date">From Date:</label>
             <input type="date" id="from_date" name="from_date" required value="{from_date}"><br>
             <label for="to_date">To Date:</label>
@@ -71,6 +72,7 @@ def view_rental(listing: int):
             <input type="hidden" name="PropertyListingID" value="{PropertyListingID}"><br>
             <div class="buttons">
                 <button class="button_confirm" type="submit">Book Now</button>
+                <div id="error-target"></div>
             </div>
         </form>
     </div>
@@ -108,10 +110,10 @@ def book_rental():
         from_date = datetime.strptime(raw_from_date, "%Y-%m-%d")
         to_date = datetime.strptime(raw_to_date, "%Y-%m-%d")
     except ValueError:
-        raise HTTPError(400, "Invalid date format provided.")
+        return error("Invalid date format provided.")
 
     if from_date >= to_date:
-        raise HTTPError(400, "Invalid booking: Start date must be before end date")
+        return error("Start date must be before end date")
 
     cnx = db.cnx()
     cursor = cnx.cursor()
@@ -126,7 +128,7 @@ def book_rental():
     cursor.execute(overlappingSjekk, parameterForBooking)
 
     if cursor.fetchone() is not None:
-        raise HTTPError(400, "Booking dates overlap with an existing booking.")
+        return error("Booking dates overlap with an existing booking.")
 
     print(
         "Booking rental: PropertyListingID={}, from_date={}, to_date={}".format(
@@ -175,7 +177,7 @@ def booking_confirmation(PropertyListingID):
     bConfirmation = cursor.fetchone()
 
     if not bConfirmation:
-        raise HTTPError(404, "Booking not found or session expired")
+        return error("Booking not found or session expired")
 
     cursor.execute(
         """
