@@ -61,17 +61,17 @@ def user_profile_edit():
                                 <h2>About</h2>
                                 <fieldset>
                                     <legend><b>Lives:</b></legend>
-                                    <textarea id="lives_form" name="lives_form" rows="3" cols="40"style="resize: none;">{lives}</textarea>
+                                    <textarea id="lives_form" name="lives_form" rows="2" cols="40"style="resize: none;">{lives}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
                                     <legend><b>Languages:</b></legend>
-                                    <textarea id="languages_form" name="languages_form" rows="3" cols="40"style="resize: none;">{languages}</textarea>
+                                    <textarea id="languages_form" name="languages_form" rows="2" cols="40"style="resize: none;">{languages}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
                                     <legend><b>Age:</b></legend>
-                                    <textarea id="age_form" name="age_form" rows="3" cols="40"style="resize: none;">{age}</textarea>
+                                    <textarea id="age_form" name="age_form" rows="1" cols="40"style="resize: none;">{age}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
