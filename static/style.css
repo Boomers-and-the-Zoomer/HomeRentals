@@ -762,6 +762,12 @@ main#register_new_listing {
         }
       }
 
+      > #error-target {
+        justify-self: center;
+        grid-column: 1 / 4;
+        color: red;
+      }
+
       > button {
         grid-column: 1 / 4;
       }

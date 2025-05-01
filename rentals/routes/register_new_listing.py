@@ -2,9 +2,10 @@ import mimetypes
 
 from bottle import route, response, post, get, request
 
-from ..auth import requires_user_session, get_session_token
 from .. import db
+from ..auth import requires_user_session, get_session_token
 from ..components import html, with_navbar, image_input, image_input_carrier
+from ..util import error
 
 
 @route("/new-listing")
@@ -399,6 +400,7 @@ def new_listing_summary_content():
                     <span class="right">NOK per night</span>
                 </p>
             </form>
+                <div id="error-target"></div>
                 <button
                     hx-post=""
                     hx-include="input,textarea"
@@ -437,6 +439,9 @@ def new_listing_summary():
     square_meters = request.forms["squaremeters"]
     parking_spots = request.forms["parkingspots"]
     kitchens = request.forms["kitchens"]
+
+    if len(request.files.getall("image-files")) == 0:
+        return error("You must add at least 1 picture")
 
     cur.execute(
         """
