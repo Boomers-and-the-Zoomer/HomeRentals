@@ -37,9 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   const vipps_info = document.querySelector(".vipps_info");
   const card_info = document.querySelector(".visa_info");
+  const no_info = document.querySelector(".no_info");
   const parent = vipps_info.parentElement;
   parent.removeChild(vipps_info);
   parent.removeChild(card_info);
+
+  const btn = document.querySelector(".submit-btn");
+  btn.disabled = true;
+
   Array.from(
     document.querySelectorAll("input[name=\"payment\"]"),
   ).forEach((radio, _i, _a) => {
@@ -52,6 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Only fires when the element is selected.
     radio.addEventListener("change", () => {
+      if (btn.disabled) {
+        parent.removeChild(no_info);
+        btn.disabled = false;
+      }
       if (radio.getAttribute("value") == "vipps") {
         Array.from(parent.children)[1].insertAdjacentElement("afterend", vipps_info);
         if (card_info.parentElement) {

@@ -100,6 +100,7 @@ def payment():
                         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" height="25">
                     </label>
                 </fieldset>
+                <fieldset class="no_info">Please select a payment method</fieldset>
                 <fieldset class="vipps_info">
                     <label for="phone">Enter your phone number:</label>
                     <input type="tel" id="phone" placeholder="+47 123 456 78" required>
