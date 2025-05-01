@@ -1332,6 +1332,9 @@ main#user-profile {
     gap: inherit;
     margin-top: 32px;
 
+    .error-msg {
+      color: red;
+    }
     > .buttons {
       display: flex;
       gap: 40px;
