@@ -1220,21 +1220,26 @@ main#user-profile {
     grid-template-columns: subgrid;
     margin: 2em 0px;
 
-    > .button {
+    > .buttons {
       grid-column: 3;
       grid-row: 1;
-      background-color: var(--slate-700);
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 1.7em;
-      border-radius: 5px;
-      cursor: pointer;
-      width: fit-content;
-      height: fit-content;
+
+      > .button {
+        background-color: var(--slate-700);
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 1.7em;
+        border-radius: 5px;
+        cursor: pointer;
+        width: fit-content;
+        height: fit-content;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
     }
 
     > .profile_box {

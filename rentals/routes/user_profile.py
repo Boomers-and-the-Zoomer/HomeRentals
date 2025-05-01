@@ -98,7 +98,10 @@ def user_profile():
             f"""
             <main id="user-profile">
                 <div class="top_page">
-                    <a href="http://localhost:8080/user-profile/edit" class="button">Edit profile</a>
+                    <div class="buttons">
+                        <a href="http://localhost:8080/user-profile/edit" class="button">Edit profile</a>
+                        <a href="http://localhost:8080/user-information/edit" class="button">Update account details</a>
+                    </div>
                     <div class="profile_box">
                         <div class="circle">
                             <img src="/static/profilepicture/{profile_picture}" class="profile_picture" alt="Profile picture">
