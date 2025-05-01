@@ -71,8 +71,8 @@ def pop_return(default="/"):
     response.add_header("Location", dbg(return_to))
 
 
-def error(msg: str):
-    response.add_header("HX-Retarget", "#error-target")
+def error(msg: str, target="#error-target"):
+    response.add_header("HX-Retarget", target)
     response.add_header("HX-Swap", "InnerHTML")
     return msg
 
