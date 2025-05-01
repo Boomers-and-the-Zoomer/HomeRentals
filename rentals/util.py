@@ -71,10 +71,16 @@ def pop_return(default="/"):
     response.add_header("Location", dbg(return_to))
 
 
-def error(msg: str, target="#error-target"):
-    response.add_header("HX-Retarget", target)
-    response.add_header("HX-Swap", "InnerHTML")
-    return msg
+def error(msg: str, target_id="error-target"):
+    response.add_header("HX-Retarget", f"#{target_id}")
+    response.add_header("HX-Reswap", "outerHTML")
+    return f"""
+        <div class="error-msg"
+             id="{target_id}"
+             hx-on:htmx:load='document.querySelectorAll(".error-msg").forEach((elem, _, __) => {{ if (elem.id != "{target_id}") {{ elem.innerHTML = "" }} }})'
+        >
+             {msg}
+        </div>"""
 
 
 def dbg(value):
