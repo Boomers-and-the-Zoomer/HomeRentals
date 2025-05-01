@@ -157,10 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function HandleImageRemoval(parent, gallery, img, identity, my_files) {
-    return () => {
+    return (event) => {
       img.removeEventListener("click", HandleImageRemoval);
       my_files.delete(identity);
       UpdateImageDisplay(parent, gallery, my_files);
+      event.stopImmediatePropogation();
     };
   }
 
@@ -173,6 +174,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Invalid image upload component", container);
         return;
       }
+
+      for (let img of Array.from(container.querySelectorAll(".img"))) {
+        img.addEventListener("click", (e) => {
+          input.showPicker();
+        });
+      }
+
       let carrier = container.querySelector("#image-upload-carrier");
       UpdateFilesFrom(carrier, false);
       input.addEventListener("change", (ev) => {
