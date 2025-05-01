@@ -53,31 +53,31 @@ def user_profile_edit():
                         </div>
                         <label for="picture_form" class="button_picture">Update Picture</label>
                         <input form="update_info" id="picture_form" name="picture_form" style=" display: none;" type="file">
-                        <p class="item"><b>Name:</b> {first_name}<p>
+                        <p class="item"><b>Name:</b>{first_name}</p>
                     </div>
                     <div class="info">
                         <div class="fieldset">
                             <form id="update_info" enctype="multipart/form-data" action="" method="POST">
                                 <h2>About</h2>
                                 <fieldset>
-                                    <legend><b>Lives:</b></legend>
-                                    <textarea id="lives_form" name="lives_form" rows="2" cols="40"style="resize: none;">{lives}</textarea>
+                                    <legend><b>Lives in:</b></legend>
+                                    <textarea id="lives_form" name="lives_form" rows="2" cols="40"style="resize: none;" placeholder="Hønefoss, Norway">{lives}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
                                     <legend><b>Languages:</b></legend>
-                                    <textarea id="languages_form" name="languages_form" rows="2" cols="40"style="resize: none;">{languages}</textarea>
+                                    <textarea id="languages_form" name="languages_form" rows="2" cols="40"style="resize: none;" placeholder="Norwegian">{languages}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
                                     <legend><b>Age:</b></legend>
-                                    <textarea id="age_form" name="age_form" rows="1" cols="40"style="resize: none;">{age}</textarea>
+                                    <textarea id="age_form" name="age_form" rows="1" cols="40"style="resize: none;" placeholder="25">{age}</textarea>
                                 </fieldset>
                                 <br>
                                 <fieldset>
                                     <legend><b>Fun fact:</b></legend>
                                     <label for="fun_fact_form"></label>
-                                    <textarea id="fun_fact_form" name="fun_fact_form" rows="3" cols="40"style="resize: none;">{fun_fact}</textarea>
+                                    <textarea id="fun_fact_form" name="fun_fact_form" rows="3" cols="40"style="resize: none;" placeholder="Something fun">{fun_fact}</textarea>
                                 </fieldset>
                             </form>
                         </div>
