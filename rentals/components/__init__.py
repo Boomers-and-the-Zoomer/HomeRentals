@@ -1,6 +1,7 @@
 from .. import icons
-from ..auth import validate_session_or_refresh
+from ..auth import get_session_and_refresh
 from ..util import dict_to_attr_string
+from .. import db
 
 
 def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
@@ -34,10 +35,10 @@ def html(title: str, content: str, html={"lang": "en"}, body={}) -> str:
 def with_navbar(content: str) -> str:
     """ """
 
-    logged_in = validate_session_or_refresh()
+    session_token = get_session_and_refresh()
 
     def if_logged_in_else(logged_in_content: str, logged_out_content: str):
-        if logged_in:
+        if session_token != None:
             return logged_in_content
         else:
             return logged_out_content
@@ -77,6 +78,27 @@ def with_navbar(content: str) -> str:
         """,
     )
 
+    if session_token == None:
+        profile_icon = icons.user()
+    else:
+        cnx = db.cnx()
+        cur = cnx.cursor()
+        cur.execute(
+            """
+            SELECT ProfilePicture
+            FROM User, Session
+            WHERE User.Email=Session.Email
+                AND Session.Token=_binary %s
+            """,
+            (session_token,),
+        )
+        row = cur.fetchone()
+        profile_icon = icons.user()  # "<img src='/static/profilepicture/default.jpg'>"
+        if row != None:
+            profile_picture = row[0]
+            if not (profile_picture == None or profile_picture == ""):
+                profile_icon = f"<img src='/static/profilepicture/{profile_picture}'>"
+
     return f"""
         <div id="navigated">
             <nav id="top-nav">
@@ -84,8 +106,8 @@ def with_navbar(content: str) -> str:
                     <li id="nav-homerentals"><a href="/">HomeRentals</a></li>
                     <li id="nav-rent-cta"><a href="/new-listing">Rent out your property</a></li>
                     <li id="nav-user">
-                        <button popovertarget="top-nav-user-popover">
-                            {icons.user()}
+                        <button popovertarget="top-nav-user-popover"{'class="logged-in"' if session_token != None else ''}>
+                            {profile_icon}
                         </button>
                     </li>
                 </ul>
