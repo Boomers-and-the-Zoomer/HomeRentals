@@ -105,7 +105,7 @@ def new_listing_page1_content_framed():
             <br>
             <br>
             <br>
-            <p>Follow these steps, this is <i><u>easy!</i></u></p>
+            <p>Follow these steps, this is <i>easy!</i></p>
         </div>
         """,
         1,
