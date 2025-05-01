@@ -50,7 +50,7 @@ def user_profile():
         age = ""
     if fun_fact == None:
         fun_fact = ""
-    if profile_picture == None or profile_picture == '':
+    if profile_picture == None or profile_picture == "":
         profile_picture = "default.jpg"
 
     cur.execute(
@@ -66,7 +66,7 @@ def user_profile():
     )
 
     pictures = cur.fetchall()
-        
+
     # noe rart kommer til å skje hvis man fjerner den tidligste listingen. variablet vil få ny verdi, slev om tidligere dato fortsatt er riktig
     cur.close()
 

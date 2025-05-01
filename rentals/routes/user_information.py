@@ -45,7 +45,7 @@ def user_information():
             <input id="lastname"name="lastname" type="text" required>
             <label for="phonenumber">Phone number:</label>
             <input id="phonenumber" name="phonenumber" type="tel" required>
-            <label for="address">Home adress:</label>
+            <label for="address">Home address:</label>
             <input id="address" name="address" type="text" required>
             <label for="postcode">Post code:</label>
             <input id="postcode" name="postcode" type="text" required>
