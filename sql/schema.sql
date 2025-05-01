@@ -46,7 +46,7 @@ CREATE TABLE PropertyListing
 (
     PropertyListingID INT PRIMARY KEY AUTO_INCREMENT,
     Email CHAR(30) NOT NULL,
-    Address CHAR(100) NOT NULL,
+    Address CHAR(100) NOT NULL UNIQUE,
     PostalCode CHAR(10) NOT NULL,
     Description VARCHAR(5000) NOT NULL,
     Price INT NOT NULL,
