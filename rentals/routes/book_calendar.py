@@ -307,10 +307,10 @@ def finalize_booking():
 
     cursor.execute(
         """
-        SELECT BookingSession.PropertyListingID, BookingSession.StartTime, BookingSession.EndTime, User.Email
-        FROM BookingSession, Session, User
+        SELECT BookingSession.PropertyListingID, BookingSession.StartTime, BookingSession.EndTime, UserAccount.Email
+        FROM BookingSession, Session, UserAccount
         WHERE BookingSession.Token=Session.Token
-            AND Session.Email=User.Email
+            AND Session.Email=UserAccount.Email
             AND BookingSession.Token=_binary %s
         """,
         (token,),
