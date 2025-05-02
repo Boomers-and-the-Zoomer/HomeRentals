@@ -34,15 +34,15 @@ def user_information():
             f"""
             <h1>User information</h1>
             <label for="firstname">First name:</label>
-            <input id="firstname" name="firstname" type="text" required value={first_name}>
+            <input id="firstname" name="firstname" type="text" required value="{first_name}">
             <label for="lastname">Last name:</label>
-            <input id="lastname"name="lastname" type="text" required value={last_name}>
+            <input id="lastname"name="lastname" type="text" required value="{last_name}">
             <label for="phonenumber">Phone number:</label>
-            <input id="phonenumber" name="phonenumber" type="tel" required value={phone_number}>
+            <input id="phonenumber" name="phonenumber" type="tel" required value="{phone_number}">
             <label for="address">Home address:</label>
-            <input id="address" name="address" type="text" required value={home_address}>
+            <input id="address" name="address" type="text" required value="{home_address}">
             <label for="postcode">Post code:</label>
-            <input id="postcode" name="postcode" type="text" required value={post_code}>
+            <input id="postcode" name="postcode" type="text" required value="{post_code}">
             <div id="error-target"></div>
             <button>Confirm</button>
             <p class="centered"><a href="http://localhost:8080/user-profile">Cancel</a></p>
