@@ -113,17 +113,11 @@ def user_profile_edit():
         if "Data too long for column 'LastName'" in str(e):
             return error("Last name is too long. Up to 30 symbols is allowed.")
         if "Data too long for column 'PhoneNumber'" in str(e):
-            return error(
-                "Phone number is too long. Up to 16 symbols is allowed."
-            )
+            return error("Phone number is too long. Up to 16 symbols is allowed.")
         if "Data too long for column 'HomeAddress'" in str(e):
-            return error(
-                "Home adress is too long. Up to 100 symbols is allowed."
-            )
+            return error("Home adress is too long. Up to 100 symbols is allowed.")
         if "Data too long for column 'PostalCode'" in str(e):
-            return error(
-                "Postal code is too long. Up to 10 symbols is allowed."
-            )
+            return error("Postal code is too long. Up to 10 symbols is allowed.")
         return error("Unexpected server error")
 
     cnx.commit()
