@@ -46,7 +46,7 @@ def log_in():
 @post("/log-in")
 def log_in_submit():
     if validate_session_or_refresh():
-        return html("Notice", "You were already logged in")
+        return error("You were already logged in")
 
     email = request.forms["email"]
     password = request.forms["password"]
